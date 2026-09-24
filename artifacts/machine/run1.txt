@@ -25,3 +25,6 @@ frame 1200  0.57 s/frame  pc ff8204e0  unimpl 0  late 0
 frame 1250  0.57 s/frame  pc ff8205a0  unimpl 0  late 0
 frame 1300  0.57 s/frame  pc ff8204b0  unimpl 0  late 0
 frame 1350  0.57 s/frame  pc ff8204b0  unimpl 0  late 0
+frame 1400  0.57 s/frame  pc ff8204d0  unimpl 0  late 0
+frame 1450  0.57 s/frame  pc ff8204a0  unimpl 0  late 0
+1450 frames, 2544405003 clocks, worst blitter frame 672895 clocks, unimpl 0, late lines 0, sound stalls 1

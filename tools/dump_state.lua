@@ -13,6 +13,10 @@
 -- in state N is what the scan-out of state N-1 must show (MAME's frame N is
 -- scanned from the page DPYSTRT selected at the end of frame N-1).
 --
+-- LOAD=file writes one line a frame: the blits started, their pixel count
+-- (width x height, MAME's timing count unscaled) and the sound commands --
+-- the timeline the machine bench's log is lined up against.
+--
 -- INPUTS=file replays a recorded input script (tools/inputs/*.txt): lines
 -- "frame port field value", value 1 = pressed, 0 = released.
 --
@@ -81,6 +85,8 @@ local control = 0xfff8          -- MAME resets it to 0; the game writes fff8 at 
 local dmaregs = {}
 for i = 0, 17 do dmaregs[i] = 0 end
 local ev = nil
+local load = os.getenv("LOAD") and io.open(os.getenv("LOAD"), "w") or nil
+local ld_blits, ld_pix, ld_snd = 0, 0, {}
 local busy = false              -- our own latch writes must not be logged
 
 local function evw(s) if ev then ev:write(s) end end
@@ -92,6 +98,10 @@ keep[#keep+1] = sp:install_write_tap(0x01a80000, 0x01a800ff, "dma", function(off
   if regbank == 0 and r == 12 then reg = 16 elseif regbank == 0 and r == 13 then reg = 17 end
   dmaregs[reg] = (dmaregs[reg] & ~mask) | (data & mask)
   evw(string.format("R %d %04x %04x\n", r, data, mask))
+  if r == 1 and (data & 0x8000) ~= 0 then
+    ld_blits = ld_blits + 1
+    ld_pix = ld_pix + (dmaregs[6] & 0x3ff) * (dmaregs[7] & 0x3ff)
+  end
 end)
 local function ctl(off, data, mask)
   if busy then return end
@@ -100,6 +110,9 @@ local function ctl(off, data, mask)
 end
 keep[#keep+1] = sp:install_write_tap(0x01b00000, 0x01b0001f, "ctl", ctl)
 keep[#keep+1] = sp:install_write_tap(0x01f00000, 0x01f0001f, "ctl2", ctl)
+keep[#keep+1] = sp:install_write_tap(0x01d01020, 0x01d0103f, "snd", function(off, data, mask)
+  ld_snd[#ld_snd + 1] = string.format("%04x", data)
+end)
 keep[#keep+1] = sp:install_write_tap(0x00000000, 0x003fffff, "vram", function(off, data, mask)
   evw(string.format("V %x %04x %04x\n", off >> 4, data, mask))
 end)
@@ -185,6 +198,11 @@ end
 keep[#keep+1] = emu.register_frame_done(function()
   for _, h in ipairs(keep) do if h.reinstall then h:reinstall() end end
   frame = frame + 1
+  if load then
+    load:write(string.format("frame %d blits %d pix %d snd %s\n", frame, ld_blits, ld_pix, table.concat(ld_snd, ",")))
+    load:flush()
+    ld_blits, ld_pix, ld_snd = 0, 0, {}
+  end
   if ev then
     ev:write(string.format("F %d\n", frame))
     ev:close(); ev = nil

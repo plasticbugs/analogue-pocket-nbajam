@@ -244,8 +244,28 @@ module tunit_main #(
         endcase
     end
 
+    // ---------------------------------------------- the program ROM cache
+    // The real TMS34010 fetches from its own instruction cache, and MAME's
+    // cycle counts assume it: a register instruction is charged one cycle
+    // (15.4 clocks) INCLUDING its fetch.  Every fetch as an SDRAM round trip
+    // (14-16 clocks through the controller and this bus) made the CPU finish
+    // only ~87,400 of the 114,251 cycles a frame it is paced for (measured in
+    // sim/run_machine.sh) -- 76% speed, and the game fell behind MAME's
+    // timeline in its busier stretches.  So: 4K words, direct mapped, one
+    // word a line, {valid, tag, data}.  The ROM never changes after the
+    // download, so an entry can never be stale, and a BRAM powers up zero, so
+    // nothing is valid before it has been filled.
+    logic        ic_we;
+    logic [11:0] ic_waddr;
+    logic [23:0] ic_wdata, ic_q;
+    sdpram #(.AW(12), .DW(24)) u_icache (
+        .clk(clk), .we(ic_we), .waddr(ic_waddr), .wdata(ic_wdata),
+        .raddr(A[15:4]), .q(ic_q)
+    );
+    wire ic_hit = ic_q[23] && (ic_q[22:16] == A[22:16]);
+
     // ------------------------------------------------------------ the bus
-    typedef enum logic [2:0] { B_IDLE, B_WAIT, B_VR2, B_SRT, B_DONE } bst_t;
+    typedef enum logic [2:0] { B_IDLE, B_WAIT, B_ICK, B_SRT, B_DONE } bst_t;
     bst_t bst;
     tgt_t tl;
     logic [15:0] vr_lo;                 // the first pixel of a VRAM word
@@ -262,6 +282,7 @@ module tunit_main #(
         cmos_we    <= 1'b0;
         snd_strobe <= 1'b0;
         sr_start   <= 1'b0;
+        ic_we      <= 1'b0;
         if (rst) begin
             bst <= B_IDLE; ctrl <= 16'h0000; sd_req <= 1'b0;
             snd_cmd <= 8'h00; snd_reset <= 1'b0; snd_fake <= 8'd0;
@@ -292,8 +313,10 @@ module tunit_main #(
                         sd_we <= c_we; sd_wdata <= c_wd; sd_be <= 2'b11;
                     end
                     T_ROM: begin
-                        sd_req <= 1'b1; sd_addr <= 24'(PROG_W + {5'd0, A[22:4]});
+                        // the cache is read on this clock; look at it on the next
+                        sd_addr <= 24'(PROG_W + {5'd0, A[22:4]});
                         sd_we <= 1'b0; sd_be <= 2'b11;
+                        bst <= c_we ? B_DONE : B_ICK;
                     end
                     T_GFX: begin
                         // midtunit_gfxrom_r: word o of the window, bank (o >> 21) & 1
@@ -340,7 +363,12 @@ module tunit_main #(
                         end
                     end
                     T_RAM, T_ROM, T_GFX:
-                        if (sd_ack) begin sd_req <= 1'b0; c_rd <= sd_q; c_ack <= 1'b1; bst <= B_DONE; end
+                        if (sd_ack) begin
+                            sd_req <= 1'b0; c_rd <= sd_q; c_ack <= 1'b1; bst <= B_DONE;
+                            if (tl == T_ROM) begin
+                                ic_we <= 1'b1; ic_waddr <= A[15:4]; ic_wdata <= {1'b1, A[22:16], sd_q};
+                            end
+                        end
                     T_CMOS, T_PAL: begin
                         // the RAMs answer a clock after the address
                         pal_wait <= pal_wait + 2'd1;
@@ -374,6 +402,10 @@ module tunit_main #(
                     T_SND:   begin c_rd <= 16'hffff; c_ack <= 1'b1; bst <= B_DONE; end
                     default: begin c_rd <= 16'hffff; c_ack <= 1'b1; bst <= B_DONE; end
                 endcase
+            end
+            B_ICK: begin
+                if (ic_hit) begin c_rd <= ic_q[15:0]; c_ack <= 1'b1; bst <= B_DONE; end
+                else begin sd_req <= 1'b1; bst <= B_WAIT; end
             end
             B_SRT: if (srs == SR_DONE) begin
                 c_rd <= sr_q_first; c_ack <= 1'b1; bst <= B_DONE;

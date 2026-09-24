@@ -49,3 +49,4 @@ sim/*/obj.log
 artifacts/insn/tr_*.txt
 sim/*/obj*/
 sim/*/obj*.log
+artifacts/**/*.wav

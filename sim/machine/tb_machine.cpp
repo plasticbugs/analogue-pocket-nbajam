@@ -106,6 +106,7 @@ int main(int argc, char **argv) {
     auto t0 = std::chrono::steady_clock::now();
     uint64_t busy = 0, busy_max = 0;
     FILE *log = fopen((outdir + "/machine.log").c_str(), "w");
+    uint32_t cyc_prev = 0;
 
     while (frame < frames) {
         tick();
@@ -136,6 +137,11 @@ int main(int argc, char **argv) {
                 FILE *f = fopen(name, "wb"); fwrite(pic.data(), 1, pic.size(), f); fclose(f);
             }
             capturing = false;
+            {
+                uint32_t ct = dut->rootp->tb_machine_top__DOT__core__DOT__u_main__DOT__u_cpu__DOT__cyc_total;
+                fprintf(log, "cyc %6u bal %6d  ", ct - cyc_prev, (int)(int32_t)(dut->rootp->tb_machine_top__DOT__core__DOT__u_main__DOT__u_cpu__DOT__bal << 4) >> 4);
+                cyc_prev = ct;
+            }
             fprintf(log, "in0 %04x in1 %04x  ", in[0], in[1]);
             fprintf(log, "frame %ld pc %08x blit %llu late %u skip %u snd_stalls %u snd_pc %04x unimpl %d\n",
                     frame, dut->dbg_pc, (unsigned long long)busy, dut->dbg_late, dut->dbg_skipmode,

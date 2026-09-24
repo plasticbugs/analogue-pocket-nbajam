@@ -13,7 +13,7 @@ verilator --cc --exe --build -j "${JOBS:-8}" -O3 --x-assign fast --x-initial fas
     -Wno-fatal -Wno-lint -Wno-style -Wno-TIMESCALEMOD -Wno-MULTIDRIVEN -Wno-SYNCASYNCNET \
     -Wno-UNOPTFLAT -Wno-BLKANDNBLK \
     -I"$root/modules/sound-jt6295/hdl" \
-    --top-module tb_machine_top -Mdir "$here/machine/${OBJ:-obj}" $VFLAGS \
+    "$here"/machine/tb_public.vlt --top-module tb_machine_top -Mdir "$here/machine/${OBJ:-obj}" $VFLAGS \
     "$root"/rtl/*.sv $MODS \
     "$root"/target/pocket/sdram_ctrl.sv "$root"/sim/sdram_model.sv \
     "$here"/machine/tb_machine_top.sv "$here"/machine/tb_machine.cpp > "$here/machine/${OBJ:-obj}.log" 2>&1 || { tail -40 "$here/machine/${OBJ:-obj}.log"; exit 1; }

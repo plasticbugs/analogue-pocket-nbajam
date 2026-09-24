@@ -1,0 +1,4 @@
+`verilator_config
+// what the machine bench reads inside the CPU: its running cycle count and pacing balance
+public_flat_rd -module "tms34010" -var "cyc_total"
+public_flat_rd -module "tms34010" -var "bal"

@@ -67,21 +67,56 @@ set_false_path -to   [get_ports {cram0_* cram1_*}]
 set_false_path -from [get_ports {cram0_dq[*] cram1_dq[*] cram0_wait cram1_wait}]
 
 # ------------------------------------------------------------------------------
-# Multicycle exceptions for clock-enabled blocks go here.  None are claimed
-# yet, because the skeleton has nothing that needs one.  Before adding any,
-# read METHODOLOGY.md sections 5.11 and 5.20:
-#
-#   * write down why EVERYTHING the filter matches qualifies, and register
-#     every input at the edge of the relaxed region;
-#   * a register Quartus merges into a block RAM's output no longer exists by
-#     name, the filter matches nothing, and the line is ignored with a warning
-#     -- CI fails the build on that (Check every constraint was applied);
-#   * a block RAM read closes on one clock.  Leave it alone.
-#
-# The shape the sibling cores use, proven on hardware, for a CPU that steps on
-# clock enables four or more system clocks apart:
-#
-#   set M68K [get_keepers {*|fx68k:*|*}]
-#   set_multicycle_path -setup 4 -from $M68K -to $M68K
-#   set_multicycle_path -hold  3 -from $M68K -to $M68K
+# Multicycle exceptions.  Read METHODOLOGY 5.11 and 5.20 before touching these:
+# each says why EVERYTHING its filter matches qualifies.  CI fails the build
+# on a constraint that matches nothing (Check every constraint was applied).
+# Both are Smash TV's, proven on hardware there, renamed for this hierarchy.
 # ------------------------------------------------------------------------------
+
+# The TMS34010 (rtl/tms34010.sv, parameter STEP = 3).  Its state machine - the
+# register file, the status register, the instruction register, every counter
+# and scratch register of the execute states - is enabled on one clock in
+# three, because its execute state is about 19.5 ns of logic in this part.  So
+# a path between two of those registers has three clocks.  The registers that
+# see EVERY clock are the ones in CPU_FAST and are left at one: the step
+# counter, the bus handshake's latched ack and data, the held display-interrupt
+# pulse, the cycle balance and the local copy of reset.  (cyc_total is also in
+# that block but is read by nothing, so synthesis removes it.)  If a register
+# is added to the every-clock block at the end of tms34010.sv it MUST be added
+# here, or it is given time it does not have.
+set CPU_ALL  [get_registers {*|tms34010:u_cpu|*}]
+set CPU_FAST [get_registers {*|tms34010:u_cpu|stepcnt[*] *|tms34010:u_cpu|q_ack *|tms34010:u_cpu|q_rdata[*] *|tms34010:u_cpu|dpy_l *|tms34010:u_cpu|bal[*] *|tms34010:u_cpu|rst_q}]
+set CPU_STEP [remove_from_collection $CPU_ALL $CPU_FAST]
+set_multicycle_path -setup 3 -from $CPU_STEP -to $CPU_STEP
+set_multicycle_path -hold  2 -from $CPU_STEP -to $CPU_STEP
+
+# The 6809 (rtl/tunit_sound.sv): enabled once in 48 clocks, and the module is
+# written so that (a) the 6809 sees its data only through din_r, whose sources
+# are all still for SETTLE (5) clocks before the cycle ends, and (b) nothing
+# acts on the 6809's address or data before phase SETTLE: the ROM request (to
+# the SRAM port in nbajam_mem), the YM2151's read select, and every write,
+# which happens on the cycle's last clock.  So these paths get SND_MC clocks:
+#     6809 -> 6809;  din_r -> 6809;  6809 -> the rest of the sound board;
+#     6809 -> the SRAM port's registers and the byte select (srom_lo), which
+#     take the address only when rom_req rises, after SETTLE.
+set SND_MC  4
+set SND_CPU [get_registers {*|tunit_sound:u_sound|mc6809e:cpu|*}]
+set SND_DIN [get_registers {*|tunit_sound:u_sound|din_r[*]}]
+set SND_ALL [get_registers {*|tunit_sound:u_sound|*}]
+set SND_EXT [remove_from_collection $SND_ALL $SND_CPU]
+set SND_ROM [get_registers {*|nbajam_mem:u_mem|sram_port:u_sram|* *|nbajam_mem:u_mem|srom_lo}]
+set_multicycle_path -setup $SND_MC -from $SND_CPU -to $SND_CPU
+set_multicycle_path -hold  [expr {$SND_MC - 1}] -from $SND_CPU -to $SND_CPU
+set_multicycle_path -setup $SND_MC -from $SND_DIN -to $SND_CPU
+set_multicycle_path -hold  [expr {$SND_MC - 1}] -from $SND_DIN -to $SND_CPU
+set_multicycle_path -setup $SND_MC -from $SND_CPU -to $SND_EXT
+set_multicycle_path -hold  [expr {$SND_MC - 1}] -from $SND_CPU -to $SND_EXT
+set_multicycle_path -setup $SND_MC -from $SND_CPU -to $SND_ROM
+set_multicycle_path -hold  [expr {$SND_MC - 1}] -from $SND_CPU -to $SND_ROM
+
+# jt51 advances only on its enables (3.58 MHz and half that), so paths inside
+# it have two clocks; its register file takes a write on a strobe that
+# rtl/tunit_sound.sv holds a clock past an enable (see "YM2151" there).
+set YM [get_registers {*|tunit_sound:u_sound|jt51:ym|*}]
+set_multicycle_path -setup 2 -from $YM -to $YM
+set_multicycle_path -hold  1 -from $YM -to $YM
