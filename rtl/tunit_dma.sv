@@ -427,11 +427,15 @@ module tunit_dma #(
                     gp  <= gp + 14'd8;
                 end
                 gsx <= xflip ? xpos - {3'd0, pre} : xpos + {3'd0, pre};
-                row_adv <= 14'd8 + ((bw > {3'd0, pre} + {3'd0, post})
-                                    ? 14'(bpp * 10'(bw - {3'd0, pre} - {3'd0, post})) : 14'd0);
                 state <= S_HDR4;
             end
-            S_HDR4: state <= (sy < topc || sy > botc || gix >= lim_r) ? S_ADV : S_GEN;
+            S_HDR4: begin
+                // from pre_u/post_u, registered in S_HDR3 (in one clock with the
+                // header's shifts this missed 96 MHz by 2.4 ns)
+                row_adv <= 14'd8 + ((bw > {3'd0, pre_u} + {3'd0, post_u})
+                                    ? 14'(bpp * 10'(bw - {3'd0, pre_u} - {3'd0, post_u})) : 14'd0);
+                state <= (sy < topc || sy > botc || gix >= lim_r) ? S_ADV : S_GEN;
+            end
 
             // ---- READ: bursts of up to PIECE words into the source buffer
             S_RD: begin
