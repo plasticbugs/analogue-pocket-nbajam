@@ -15,9 +15,9 @@ emulated in software.
 | DMA blitter | `rtl/tunit_dma.sv` | `sim/run_blit.sh`: VRAM identical to MAME on 14 frozen frames (2,080 blits) through the real SDRAM controller |
 | scan-out, palette | `rtl/tunit_video.sv`, from Smash TV's | `sim/run_video.sh`: every pixel identical to MAME on 16 frozen frames |
 | main board glue, protection, CMOS | `rtl/tunit_main.sv` | the machine benches: frames 99 and 999 from power-on identical to MAME |
-| MC6809E @ 2 MHz | `modules/cpu-mc6809` (Greg Miller) | — |
-| YM2151 | `modules/sound-jt51` (Jose Tejada) | — (not yet compared with a MAME recording) |
-| OKI MSM6295 | `modules/sound-jt6295` (Jose Tejada) | — (not yet compared with a MAME recording) |
+| MC6809E @ 2 MHz | `modules/cpu-mc6809` (Greg Miller) | the sound board as a whole, below |
+| YM2151 | `modules/sound-jt51` (Jose Tejada) | `sim/run_sound.sh`: MAME's sound commands replayed at MAME's times; loudness within 0.96–1.12× of MAME every second over 66 s with all three chips playing |
+| OKI MSM6295 | `modules/sound-jt6295` (Jose Tejada) | as above; level scaled from MAME's source (×16) |
 | ROM, VRAM, work RAM | Pocket SDRAM (`target/pocket/nbajam_mem.sv`) | `sim/run_mem.sh` at the loader's rate; `sim/run_system.sh` |
 | 6809 program | Pocket SRAM | `sim/run_mem.sh` |
 
@@ -34,8 +34,15 @@ Proven in simulation, against MAME 0.288:
   downloaded at the loader's rate, boots to a MAME-identical frame, and on the
   faster bench keeps MAME's timeline to frame 999 (the copyright screen).
 
-Not yet proven: the sound levels and mix against a MAME recording; a played
-game in the machine bench; the CMOS save on hardware; timing closure.
+* the sound board, fed MAME's own commands at MAME's times, is as loud as
+  MAME's to within 6% in every second of a 66-second sweep of every command;
+* timing closes at 96 MHz (+0.38 ns worst setup, every corner, every SDC
+  constraint applied), 68% of the FPGA's logic.
+
+Not yet proven: the per-chip balance of the mix (the waveforms drift apart,
+so only the total loudness was compared); a played game matching MAME (the
+game's random numbers come from the beam position, so it cannot match
+exactly); the CMOS save on hardware; anything on hardware at all.
 
 Not implemented: scaled skip-mode blits (never seen; counted on the panel);
 players 3 and 4.

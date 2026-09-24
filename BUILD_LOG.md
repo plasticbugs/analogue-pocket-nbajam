@@ -402,6 +402,36 @@ SD card, straight to the memory chip's address pins. Adding one more
 gives us sixteen — and the memory test (the whole 10 MB image in at the
 Pocket's rate, then read back byte for byte) still passes.
 
+**Compile eight: timing met.** Every path in the chip now finishes with at
+least 0.38 ns to spare at 96 million ticks a second, at the hottest and
+the coldest temperature Quartus models, and every relaxation we told the
+tool about was actually applied (a rule that matches nothing is silently
+ignored, so this is checked). The design fills 68% of the Pocket's FPGA.
+
+Then the whole machine was run once more exactly as the Pocket will run it —
+the 10 MB image fed in at the Pocket's speed, through the real memory
+controller — and its 99th frame is still identical to MAME's, pixel for
+pixel.
+
+## Step 19 — Ready for the Pocket
+
+Everything that can be proven without the Pocket has been:
+
+| what | how it was checked |
+|---|---|
+| the picture | pixel-identical to MAME on 16 frozen moments of the game |
+| the blitter | memory identical to MAME after 2,080 drawing jobs |
+| the main CPU | 69.6 million instructions identical to MAME's, in order |
+| the whole machine | boots to a MAME-identical screen through the real memory path |
+| the sound | as loud as MAME's, second by second, across every sound command |
+| the memory | a full 10 MB image in at the Pocket's speed, read back byte for byte |
+| the screen | no flicker between frames (which could mark the Pocket's OLED) |
+| speed | timing met on every path |
+
+What is *not* proven is the real thing: nobody has held a Pocket running
+this yet. That's next — flash it, and read the on-screen debug panel the
+core draws during bring-up (docs/bringup.md says what healthy looks like).
+
 ---
 
 *(continues as the work goes on)*
