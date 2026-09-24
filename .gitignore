@@ -45,3 +45,5 @@ artifacts/probe*/nbajam/
 # Verilator build directories of the benches
 sim/*/obj/
 sim/*/obj.log
+# raw MAME instruction traces (tens of MB); hist.txt beside them is kept
+artifacts/insn/tr_*.txt

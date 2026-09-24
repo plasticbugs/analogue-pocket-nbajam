@@ -181,6 +181,25 @@ instructions traced in MAME): all the graphics instructions it uses exist in
 Smash TV's core except one variation — writing through the shift register,
 the page eraser from above. So: Smash TV's CPU, plus that one addition.
 
+## Step 6 — The picture itself (scan-out)
+
+The part that turns video memory into a picture on the screen. It follows the
+TMS34010's rules for which memory row each screen line shows (the game
+flips between its two pages by changing one register), fetches each row of
+512 pixels from SDRAM in one burst, looks every pixel up in the 32,768-colour
+palette and sends it to the Pocket's screen at exactly the arcade's 8 MHz
+pixel rate — so the Pocket runs at the arcade's own 54.7 frames a second.
+
+The catch: SDRAM can be busy (the blitter might be mid-burst). So the
+circuit fetches each row **one line early**, into a second buffer, giving
+itself a whole line's worth of time (63 microseconds) instead of the 12
+microseconds before the picture starts. It keeps a counter of any line whose
+fetch was late, which should always read zero.
+
+Adapted from Smash TV's version, which already works on a Pocket. Checked the
+same way as everything else: 16 frozen frames, every one of the 101,600
+pixels the same colour as MAME's. First try.
+
 ---
 
 *(continues as the work goes on)*

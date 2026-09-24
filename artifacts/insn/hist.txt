@@ -1,0 +1,293 @@
+6631391 instructions, 72 mnemonics, 218 forms
+   1270625  MOVE
+    550773  SLL
+    546533  JREQ
+    544055  MOVI
+    541416  JR
+    540137  MOVK
+    540135  RETS
+    538766  JRNE
+    538758  CALLA
+    520077  DSJS
+    383528  NOP
+     10902  SUBXY
+      9523  RL
+      8635  MOVX
+      8272  PIXT
+      5190  EXGPC
+      5140  FILL
+      5106  ADDXY
+      4891  ADDK
+      4696  CLR
+      4432  ADDI
+      3927  ADD
+      3771  JRGT
+      3705  BTST
+      3122  CMP
+      3100  DEC
+      2946  INC
+      2385  NEG
+      2304  SRL
+      2120  SRA
+      1874  MOVB
+      1612  SUBK
+      1571  CALLR
+      1526  MMTM
+      1500  MMFM
+      1426  JRLE
+      1295  SUB
+      1030  JRN
+       956  AND
+       876  SETF
+       802  NOT
+       664  JRNC
+       644  CMPI
+       623  ANDI
+       606  PIXBLT
+       580  JUMP
+       564  MOVY
+       446  OR
+       439  JA
+       345  JRNN
+       342  RETI
+       294  DINT
+       294  ANDN
+       288  XOR
+       286  EINT
+       286  ORI
+       209  ZEXT
+       205  JRLS
+       201  JRHI
+       183  JRGE
+       171  LMO
+       100  DSJ
+        65  GETPC
+        51  MPYU
+        23  SEXT
+        19  JANC
+        11  SUBI
+         5  PUSHST
+         5  POPST
+         2  TRAP
+         1  JRC
+         1  JAEQ
+
+forms:
+    550687  SLL n,R
+    544196  JREQ n
+    543063  MOVI n,R
+    540572  MOVE @n,R,0
+    540137  MOVK n,R
+    540135  RETS 
+    539628  MOVE *R,R,1
+    538177  CALLA n
+    538086  JRNE n
+    536716  JR FF8205Rh
+    383621  DSJS R,FF9Rh
+    383528  NOP 
+    131969  MOVE R,*R+,1
+     68742  DSJS R,n
+     65280  DSJS R,FF82ERh
+     35968  MOVE R,R
+     10902  SUBXY R,R
+      9239  RL n,R
+      8635  MOVX R,R
+      8128  PIXT R,*R,XY
+      5190  EXGPC R
+      5140  FILL XY
+      5106  ADDXY R,R
+      4891  ADDK n,R
+      4696  CLR R
+      4594  JR n
+      4430  ADDI n,R
+      3927  ADD R,R
+      3534  JRGT n
+      3122  CMP R,R
+      3100  DEC R
+      3017  BTST n,R
+      2946  INC R
+      2521  MOVE @n,R,1
+      2447  MOVE *R+,R,1
+      2385  NEG R
+      2280  SRL n,R
+      2224  MOVE *R(n),R,0
+      2208  DSJS R,FF9C37Rh
+      2178  MOVE -*R,-*R,1
+      2120  SRA n,R
+      2065  MOVE R,@n,0
+      1874  MOVB *R,R
+      1612  SUBK n,R
+      1507  MOVE R,-*R,1
+      1362  MOVE *R,R,0
+      1301  MOVE *R+,R,0
+      1295  SUB R,R
+      1243  CALLR n
+      1200  MOVE R,*R(n),0
+      1142  JRLE n
+      1084  MMTM R,R-R
+       956  AND R,R
+       945  MOVE R,*R,0
+       922  MOVE R,@n,1
+       885  MMFM R,R-R
+       852  JREQ FF9157Rh
+       802  NOT R
+       688  BTST R,R
+       641  CMPI n,R
+       623  ANDI n,R
+       606  PIXBLT B,XY
+       602  MOVE *R(n),R,1
+       586  JRN n
+       580  JUMP R
+       570  MOVE R,-*R,0
+       564  MOVY R,R
+       446  OR R,R
+       437  SETF n,1,0
+       437  SETF n,0,0
+       430  MOVE R,*R,1
+       426  JRNC FF830Rh
+       372  JA n
+       363  JREQ FF9C30Rh
+       345  JRNN n
+       342  RETI 
+       294  DINT 
+       294  ANDN R,R
+       288  XOR R,R
+       286  EINT 
+       286  ORI n,R
+       286  JREQ FF8277Rh
+       284  JREQ FF830Rh
+       284  MOVE *R+,*R+,1
+       284  CALLR FF81Rn
+       284  JRNE FF81Rh
+       284  RL R,R
+       259  MMFM R,R
+       242  JRN FF9Rh
+       237  JRGT FF82D8Rh
+       232  MOVI FF9RRh,R
+       209  ZEXT R,0
+       201  JRHI n
+       198  JRLS n
+       198  MOVE -*R,R,1
+       198  JRN FF8000Rh
+       192  DSJS R,FF9RRh
+       192  JREQ FF9BRRh
+       183  JRGE n
+       171  LMO R,R
+       169  MOVE R,*R+,0
+       158  MOVI FF9Rh,R
+       152  MMTM R,R,R,R
+       152  MMFM R,R,R,R
+       149  MMTM R,R-R,R
+       149  MMFM R,R-R,R
+       144  PIXT *R,R
+       144  MOVI 10755Rh,R
+       144  MOVE @10FCBRh,R,1
+       142  MOVE @10754Rh,R,0
+       142  MOVE @10754Rh,@n,0
+       142  CALLA FF81C2Rh
+       142  MOVI 1Rh,R
+       142  MOVI 1Rn,R
+       142  MOVE @10748Rh,R,0
+       142  JREQ FF81C6Rh
+       142  MOVI 10748Rh,R
+       142  JRNC FF81CRh
+       142  JRNE FF81CCRh
+       142  MOVE @10FCRh,R,0
+       142  MOVE R,@10FCRh,0
+       142  CALLA FF8307Rh
+       142  CALLA FF8618Rh
+       142  JRLE FF836FRh
+       142  JRLE FF8370Rh
+       142  MOVE @10FC8Rh,R,0
+       142  MOVE R,@10FC8Rh,0
+       142  MOVE @n,R
+       142  CALLA FF8333Rh
+       138  MOVE @10FCDRh,R,1
+       110  JRNE FF9RRh
+       100  DSJ R,n
+        96  JRNE FF9BRRh
+        96  JRNC n
+        90  MMTM R,R
+        86  SLL R,R
+        82  JREQ FF9ABRh
+        72  JR FF9BDRh
+        66  JREQ FF9Rn
+        65  GETPC R
+        57  MOVE *R+,*R+,0
+        51  MPYU R,R
+        49  JA FF9ARh
+        47  MOVE R,*R(n),1
+        41  JRNE FF9ABRh
+        33  DSJS R,FF9Rn
+        30  JREQ FF9BDRh
+        28  JREQ FF9RRh
+        24  SRL R,R
+        24  MOVI FF9BD3Rh,R
+        23  SEXT R,0
+        22  MMTM R,R,R
+        22  MMFM R,R,R
+        19  JANC n
+        19  MOVE @10FCBRh,R,0
+        17  JR FF9Rh
+        15  MMTM R,R-R,R,R,R
+        15  MMFM R,R-R,R,R,R
+        12  MMTM R,R-R,R,R
+        12  MMFM R,R-R,R,R
+        11  SUBI n,R
+        10  CALLR FF9Rh
+        10  CALLR FF9ARh
+         7  MOVE *R(1Rh),R,0
+         7  JA FF9AADRh
+         7  JREQ FF9AAERh
+         7  JRLS FF9RERh
+         6  CALLA FF9DRh
+         6  MMFM R,R,R,R-R
+         6  JR FF9BRh
+         6  MOVE R,@10FCDRh,1
+         6  CALLR FF9BDRh
+         6  JR FF9BRRh
+         5  JA FF9Rh
+         5  MOVE R,@1Rh,0
+         5  CALLR FF9Rn
+         5  PUSHST 
+         5  POPST 
+         5  CALLR FF9AC7Rh
+         4  MOVI FF9Rn,R
+         4  JRN FF81CRh
+         4  JA FF9Rn
+         4  CALLA FF9Rh
+         3  JREQ FF9Rh
+         3  CALLR FF9AARh
+         2  SETF n,0,1
+         2  JRNE FF836Rh
+         2  MOVI FFRn,R
+         2  JRNE FF9Rn
+         2  CALLR FF9ARn
+         2  MMTM R,R,R,R-R
+         2  CMPI FF82CBRh,R
+         2  JRNE FF9ARRh
+         2  JR FF9ARn
+         2  TRAP n
+         2  MOVE *R,*R,1
+         2  MOVE @1Rh,R,0
+         2  JR FF826Rh
+         1  CMPI 1RRn,R
+         1  CALLA FF9RFRh
+         1  CALLA FF99Rh
+         1  JRNE FF99Rh
+         1  CALLR FF9DRn
+         1  DSJS R,FF9RBRh
+         1  JREQ FF9RARh
+         1  MOVI 2Rh,R
+         1  CALLR FF9RRh
+         1  ADDI 4Rh,R
+         1  MOVI FF9AE3Rh,R
+         1  JA FF9RRh
+         1  JR FF9RBRh
+         1  CALLA FF833Rh
+         1  JRC n
+         1  ADDI 5Rh,R
+         1  JA FF9ARn
+         1  CALLR FF9AC4Rh
+         1  JREQ FF9AC5Rh
+         1  JAEQ FF997ARh
