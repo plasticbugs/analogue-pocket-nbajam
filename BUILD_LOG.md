@@ -200,6 +200,43 @@ Adapted from Smash TV's version, which already works on a Pocket. Checked the
 same way as everything else: 16 frozen frames, every one of the 101,600
 pixels the same colour as MAME's. First try.
 
+## Step 7 — The CPU, proven one instruction at a time
+
+Smash TV's TMS34010 got one addition — writing through the video chips'
+shift register, for NBA Jam's page eraser — and then a hard test. MAME can
+record every single thing its CPU does: every instruction, the contents of
+all 32 registers before each one, and every read and write on the bus. A test
+bench runs our hardware CPU on NBA Jam's own program and compares, instruction
+by instruction, and it also feeds our CPU exactly the data MAME's CPU saw, so
+the two stay in lockstep.
+
+From power-on: **436,019 instructions and over a million memory accesses,
+identical — and the same number of clock cycles for every instruction.** A
+gameplay stretch: 315,100 more, including interrupts, identical. (Cycle
+counts matter: the game's speed and its sound timing depend on the CPU taking
+exactly as long as the real one.) A longer run, streaming MAME live into the
+bench for over a minute of play, is still going as this is written.
+**[deep dive: lockstep testing a CPU against an emulator]**
+
+## Step 8 — The whole machine wakes up
+
+With the CPU, the blitter, the display, the memory and the sound board wired
+together, the entire arcade board runs in simulation — about 0.6 seconds of
+computer time per frame. From power-on it tests its memory, finds the CMOS
+blank, restores factory settings and draws the message — and **frame 99 is
+identical to MAME's frame, all 101,600 pixels.** That's the first time the
+real game code has drawn a picture on our hardware.
+
+Along the way the sibling cores paid off again: Smash TV's first time on a
+real Pocket had shown a blank screen because the template's video clock was
+set for a different game. Its lint script now checks the clock against the
+core's pixel rate — and caught the same leftover setting here before it could
+cost a hardware test.
+
+The sound board is wired too: the 6809 sound CPU, the FM chip, the sample
+player and the DAC, with MAME's mixing levels — but not yet compared against
+a MAME recording, so its levels are unproven.
+
 ---
 
 *(continues as the work goes on)*
