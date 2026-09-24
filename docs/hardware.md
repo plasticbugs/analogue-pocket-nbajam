@@ -227,7 +227,8 @@ pixels `2o` and `2o+1`.
   bytes only).
 
 Shift-register transfers copy 1024 pixels (two rows) at pixel `address >> 3`
-to/from the TMS34010's shift register. (Whether NBA Jam uses them: §10.)
+to/from the TMS34010's shift register — see §7.4, the game uses them to clear
+a page every frame.
 
 ### 7.2 Scan-out
 
@@ -308,6 +309,39 @@ yes, Y flip never, skip mode never, bit 6 never**; every bpp 1–8. Scaling:
 not yet measured (§10). Load: mean 144K pixels per frame, **max 326,270**, max
 223 blits in a frame.
 
+### 7.4 The frame, as the game runs it
+
+Measured in MAME (`tools/dump_state.lua`, every I/O write logged with the
+beam's line), identical in attract, menus and gameplay:
+
+1. VCOUNT = DPYINT = 274 (start of vblank): the display interrupt. The
+   handler (PC ff8262f0) first waits for any blit still running — polling
+   DMA_COMMAND bit 15 up to 0xcb2 times — and **aborts it by writing 0 to
+   DMA_COMMAND** if it has not finished. An earlier loop (ff826440) does the
+   same with 0x1964 iterations. The RTL must honour a write of 0 as a cancel.
+2. It writes DPYCTL = 0x6810 (SRT on, **ENV off**), and with SRT on does
+   `PIXT *A2,A2`, A2 = 0x1fe000: the shift register is loaded from pixel
+   0x3fc00, i.e. rows 510–511, which are always zero.
+3. It flips the page: DPYADR and DPYSTRT both ← 0xfffc or 0xeffc (at line
+   ~274.5, still in vblank), alternating each frame.
+4. CONTROL ← 8, PSIZE ← 16, then `FILL L` with DADDR = 0 or 0x100000 (the
+   page *not* being shown next), DPTCH = 0x2000, DYDX = 0x007f0001: 127
+   one-pixel-wide rows, each a shift-register write = 1024 zero pixels. That
+   clears the 254 rows of the page about to be drawn. CONTROL ← 0x2c,
+   PSIZE ← 8, DPYCTL ← 0xf010 (line ~275.4).
+5. The rest of the frame the game blits the new picture into that page
+   (100–220 blits, ~150–290K pixels a frame in play), shown from the next
+   vblank.
+
+MAME's DMA draws instantly; the real blitter takes time, and step 1 is the
+game's defence against a blit that has not finished by the next vblank.
+
+Two things about MAME's own output that the reference renderer had to learn
+(`tools/render_model.py`): `screen:pixels()` at the end of frame N returns the
+picture scanned during frame N−1 (MAME keeps two bitmaps), and that bitmap is
+palette indices, coloured with the palette as it is when read out (the
+match-up screen blinks its text by palette).
+
 ## 8. ROMs
 
 | file | CRC32 | size | region | layout |
@@ -340,8 +374,7 @@ the TMS34010 opcode coverage of the GSP bench.
    find in the program (Ghidra) which bit it polls and what the real board
    returns. Until then follow MAME exactly, since MAME is the oracle the
    traces are compared against.
-2. **Shift-register transfers.** DPYCTL.SRE is clear in every sample; confirm
-   no SRT ever happens (the stunrunner GSP flags them on `mem_srt`).
-3. **Scaling** and the largest source widths/heights in real play.
-4. **Page flip.** MAME's note: "page flipping seems off in NBA Jam (or else
-   there's a blank-the-screen bit we're missing)". Compare frames.
+2. **Scaling** is used in play (players and the ball, steps 0x10a–0x239);
+   the largest source widths/heights are still to be measured.
+3. **Page flip.** MAME's note ("page flipping seems off in NBA Jam") is not
+   borne out: §7.4 is a clean double buffer in every captured frame.

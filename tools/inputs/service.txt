@@ -1,0 +1,5 @@
+# fresh CMOS: button past the factory-restore screen, then the Test DIP on:
+# the game drops into its service menu
+150 :IN0 P1 Turbo 1
+158 :IN0 P1 Turbo 0
+400 :IN1 Service Mode 1

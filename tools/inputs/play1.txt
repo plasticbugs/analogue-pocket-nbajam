@@ -1,0 +1,365 @@
+# fresh CMOS: button past the factory-restore screen, two coins, 1P start,
+# then turbo every second and shoot every 200 frames
+150 :IN0 P1 Turbo 1
+158 :IN0 P1 Turbo 0
+1500 :IN1 Coin 1 1
+1508 :IN1 Coin 1 0
+1520 :IN1 Coin 1 1
+1528 :IN1 Coin 1 0
+1600 :IN1 1 Player Start 1
+1608 :IN1 1 Player Start 0
+1740 :IN0 P1 Turbo 1
+1748 :IN0 P1 Turbo 0
+1800 :IN0 P1 Turbo 1
+1800 :IN0 P1 Shoot / Block 1
+1800 :IN0 P1 Right 1
+1808 :IN0 P1 Turbo 0
+1820 :IN0 P1 Shoot / Block 0
+1860 :IN0 P1 Turbo 1
+1868 :IN0 P1 Turbo 0
+1890 :IN0 P1 Right 0
+1920 :IN0 P1 Turbo 1
+1928 :IN0 P1 Turbo 0
+1950 :IN0 P1 Up 1
+1980 :IN0 P1 Turbo 1
+1988 :IN0 P1 Turbo 0
+2000 :IN0 P1 Shoot / Block 1
+2000 :IN0 P1 Up 0
+2020 :IN0 P1 Shoot / Block 0
+2040 :IN0 P1 Turbo 1
+2048 :IN0 P1 Turbo 0
+2100 :IN0 P1 Turbo 1
+2100 :IN0 P1 Right 1
+2108 :IN0 P1 Turbo 0
+2160 :IN0 P1 Turbo 1
+2168 :IN0 P1 Turbo 0
+2190 :IN0 P1 Right 0
+2200 :IN0 P1 Shoot / Block 1
+2220 :IN0 P1 Turbo 1
+2220 :IN0 P1 Shoot / Block 0
+2228 :IN0 P1 Turbo 0
+2250 :IN0 P1 Up 1
+2280 :IN0 P1 Turbo 1
+2288 :IN0 P1 Turbo 0
+2300 :IN0 P1 Up 0
+2340 :IN0 P1 Turbo 1
+2348 :IN0 P1 Turbo 0
+2400 :IN0 P1 Turbo 1
+2400 :IN0 P1 Shoot / Block 1
+2400 :IN0 P1 Right 1
+2408 :IN0 P1 Turbo 0
+2420 :IN0 P1 Shoot / Block 0
+2460 :IN0 P1 Turbo 1
+2468 :IN0 P1 Turbo 0
+2490 :IN0 P1 Right 0
+2520 :IN0 P1 Turbo 1
+2528 :IN0 P1 Turbo 0
+2550 :IN0 P1 Up 1
+2580 :IN0 P1 Turbo 1
+2588 :IN0 P1 Turbo 0
+2600 :IN0 P1 Shoot / Block 1
+2600 :IN0 P1 Up 0
+2620 :IN0 P1 Shoot / Block 0
+2640 :IN0 P1 Turbo 1
+2648 :IN0 P1 Turbo 0
+2700 :IN0 P1 Turbo 1
+2700 :IN0 P1 Right 1
+2708 :IN0 P1 Turbo 0
+2760 :IN0 P1 Turbo 1
+2768 :IN0 P1 Turbo 0
+2790 :IN0 P1 Right 0
+2800 :IN0 P1 Shoot / Block 1
+2820 :IN0 P1 Turbo 1
+2820 :IN0 P1 Shoot / Block 0
+2828 :IN0 P1 Turbo 0
+2850 :IN0 P1 Up 1
+2880 :IN0 P1 Turbo 1
+2888 :IN0 P1 Turbo 0
+2900 :IN0 P1 Up 0
+2940 :IN0 P1 Turbo 1
+2948 :IN0 P1 Turbo 0
+3000 :IN0 P1 Turbo 1
+3000 :IN0 P1 Shoot / Block 1
+3000 :IN0 P1 Right 1
+3008 :IN0 P1 Turbo 0
+3020 :IN0 P1 Shoot / Block 0
+3060 :IN0 P1 Turbo 1
+3068 :IN0 P1 Turbo 0
+3090 :IN0 P1 Right 0
+3120 :IN0 P1 Turbo 1
+3128 :IN0 P1 Turbo 0
+3150 :IN0 P1 Up 1
+3180 :IN0 P1 Turbo 1
+3188 :IN0 P1 Turbo 0
+3200 :IN0 P1 Shoot / Block 1
+3200 :IN0 P1 Up 0
+3220 :IN0 P1 Shoot / Block 0
+3240 :IN0 P1 Turbo 1
+3248 :IN0 P1 Turbo 0
+3300 :IN0 P1 Turbo 1
+3300 :IN0 P1 Right 1
+3308 :IN0 P1 Turbo 0
+3360 :IN0 P1 Turbo 1
+3368 :IN0 P1 Turbo 0
+3390 :IN0 P1 Right 0
+3400 :IN0 P1 Shoot / Block 1
+3420 :IN0 P1 Turbo 1
+3420 :IN0 P1 Shoot / Block 0
+3428 :IN0 P1 Turbo 0
+3450 :IN0 P1 Up 1
+3480 :IN0 P1 Turbo 1
+3488 :IN0 P1 Turbo 0
+3500 :IN0 P1 Up 0
+3540 :IN0 P1 Turbo 1
+3548 :IN0 P1 Turbo 0
+3600 :IN0 P1 Turbo 1
+3600 :IN0 P1 Shoot / Block 1
+3600 :IN0 P1 Right 1
+3608 :IN0 P1 Turbo 0
+3620 :IN0 P1 Shoot / Block 0
+3660 :IN0 P1 Turbo 1
+3668 :IN0 P1 Turbo 0
+3690 :IN0 P1 Right 0
+3720 :IN0 P1 Turbo 1
+3728 :IN0 P1 Turbo 0
+3750 :IN0 P1 Up 1
+3780 :IN0 P1 Turbo 1
+3788 :IN0 P1 Turbo 0
+3800 :IN0 P1 Shoot / Block 1
+3800 :IN0 P1 Up 0
+3820 :IN0 P1 Shoot / Block 0
+3840 :IN0 P1 Turbo 1
+3848 :IN0 P1 Turbo 0
+3900 :IN0 P1 Turbo 1
+3900 :IN0 P1 Right 1
+3908 :IN0 P1 Turbo 0
+3960 :IN0 P1 Turbo 1
+3968 :IN0 P1 Turbo 0
+3990 :IN0 P1 Right 0
+4000 :IN0 P1 Shoot / Block 1
+4020 :IN0 P1 Turbo 1
+4020 :IN0 P1 Shoot / Block 0
+4028 :IN0 P1 Turbo 0
+4050 :IN0 P1 Up 1
+4080 :IN0 P1 Turbo 1
+4088 :IN0 P1 Turbo 0
+4100 :IN0 P1 Up 0
+4140 :IN0 P1 Turbo 1
+4148 :IN0 P1 Turbo 0
+4200 :IN0 P1 Turbo 1
+4200 :IN0 P1 Shoot / Block 1
+4200 :IN0 P1 Right 1
+4208 :IN0 P1 Turbo 0
+4220 :IN0 P1 Shoot / Block 0
+4260 :IN0 P1 Turbo 1
+4268 :IN0 P1 Turbo 0
+4290 :IN0 P1 Right 0
+4320 :IN0 P1 Turbo 1
+4328 :IN0 P1 Turbo 0
+4350 :IN0 P1 Up 1
+4380 :IN0 P1 Turbo 1
+4388 :IN0 P1 Turbo 0
+4400 :IN0 P1 Shoot / Block 1
+4400 :IN0 P1 Up 0
+4420 :IN0 P1 Shoot / Block 0
+4440 :IN0 P1 Turbo 1
+4448 :IN0 P1 Turbo 0
+4500 :IN0 P1 Turbo 1
+4500 :IN0 P1 Right 1
+4508 :IN0 P1 Turbo 0
+4560 :IN0 P1 Turbo 1
+4568 :IN0 P1 Turbo 0
+4590 :IN0 P1 Right 0
+4600 :IN0 P1 Shoot / Block 1
+4620 :IN0 P1 Turbo 1
+4620 :IN0 P1 Shoot / Block 0
+4628 :IN0 P1 Turbo 0
+4650 :IN0 P1 Up 1
+4680 :IN0 P1 Turbo 1
+4688 :IN0 P1 Turbo 0
+4700 :IN0 P1 Up 0
+4740 :IN0 P1 Turbo 1
+4748 :IN0 P1 Turbo 0
+4800 :IN0 P1 Turbo 1
+4800 :IN0 P1 Shoot / Block 1
+4800 :IN0 P1 Right 1
+4808 :IN0 P1 Turbo 0
+4820 :IN0 P1 Shoot / Block 0
+4860 :IN0 P1 Turbo 1
+4868 :IN0 P1 Turbo 0
+4890 :IN0 P1 Right 0
+4920 :IN0 P1 Turbo 1
+4928 :IN0 P1 Turbo 0
+4950 :IN0 P1 Up 1
+4980 :IN0 P1 Turbo 1
+4988 :IN0 P1 Turbo 0
+5000 :IN0 P1 Shoot / Block 1
+5000 :IN0 P1 Up 0
+5020 :IN0 P1 Shoot / Block 0
+5040 :IN0 P1 Turbo 1
+5048 :IN0 P1 Turbo 0
+5100 :IN0 P1 Turbo 1
+5100 :IN0 P1 Right 1
+5108 :IN0 P1 Turbo 0
+5160 :IN0 P1 Turbo 1
+5168 :IN0 P1 Turbo 0
+5190 :IN0 P1 Right 0
+5200 :IN0 P1 Shoot / Block 1
+5220 :IN0 P1 Turbo 1
+5220 :IN0 P1 Shoot / Block 0
+5228 :IN0 P1 Turbo 0
+5250 :IN0 P1 Up 1
+5280 :IN0 P1 Turbo 1
+5288 :IN0 P1 Turbo 0
+5300 :IN0 P1 Up 0
+5340 :IN0 P1 Turbo 1
+5348 :IN0 P1 Turbo 0
+5400 :IN0 P1 Turbo 1
+5400 :IN0 P1 Shoot / Block 1
+5400 :IN0 P1 Right 1
+5408 :IN0 P1 Turbo 0
+5420 :IN0 P1 Shoot / Block 0
+5460 :IN0 P1 Turbo 1
+5468 :IN0 P1 Turbo 0
+5490 :IN0 P1 Right 0
+5520 :IN0 P1 Turbo 1
+5528 :IN0 P1 Turbo 0
+5550 :IN0 P1 Up 1
+5580 :IN0 P1 Turbo 1
+5588 :IN0 P1 Turbo 0
+5600 :IN0 P1 Shoot / Block 1
+5600 :IN0 P1 Up 0
+5620 :IN0 P1 Shoot / Block 0
+5640 :IN0 P1 Turbo 1
+5648 :IN0 P1 Turbo 0
+5700 :IN0 P1 Turbo 1
+5700 :IN0 P1 Right 1
+5708 :IN0 P1 Turbo 0
+5760 :IN0 P1 Turbo 1
+5768 :IN0 P1 Turbo 0
+5790 :IN0 P1 Right 0
+5800 :IN0 P1 Shoot / Block 1
+5820 :IN0 P1 Turbo 1
+5820 :IN0 P1 Shoot / Block 0
+5828 :IN0 P1 Turbo 0
+5850 :IN0 P1 Up 1
+5880 :IN0 P1 Turbo 1
+5888 :IN0 P1 Turbo 0
+5900 :IN0 P1 Up 0
+5940 :IN0 P1 Turbo 1
+5948 :IN0 P1 Turbo 0
+6000 :IN0 P1 Turbo 1
+6000 :IN0 P1 Shoot / Block 1
+6000 :IN0 P1 Right 1
+6008 :IN0 P1 Turbo 0
+6020 :IN0 P1 Shoot / Block 0
+6060 :IN0 P1 Turbo 1
+6068 :IN0 P1 Turbo 0
+6090 :IN0 P1 Right 0
+6120 :IN0 P1 Turbo 1
+6128 :IN0 P1 Turbo 0
+6150 :IN0 P1 Up 1
+6180 :IN0 P1 Turbo 1
+6188 :IN0 P1 Turbo 0
+6200 :IN0 P1 Shoot / Block 1
+6200 :IN0 P1 Up 0
+6220 :IN0 P1 Shoot / Block 0
+6240 :IN0 P1 Turbo 1
+6248 :IN0 P1 Turbo 0
+6300 :IN0 P1 Turbo 1
+6300 :IN0 P1 Right 1
+6308 :IN0 P1 Turbo 0
+6360 :IN0 P1 Turbo 1
+6368 :IN0 P1 Turbo 0
+6390 :IN0 P1 Right 0
+6400 :IN0 P1 Shoot / Block 1
+6420 :IN0 P1 Turbo 1
+6420 :IN0 P1 Shoot / Block 0
+6428 :IN0 P1 Turbo 0
+6450 :IN0 P1 Up 1
+6480 :IN0 P1 Turbo 1
+6488 :IN0 P1 Turbo 0
+6500 :IN0 P1 Up 0
+6540 :IN0 P1 Turbo 1
+6548 :IN0 P1 Turbo 0
+6600 :IN0 P1 Turbo 1
+6600 :IN0 P1 Shoot / Block 1
+6600 :IN0 P1 Right 1
+6608 :IN0 P1 Turbo 0
+6620 :IN0 P1 Shoot / Block 0
+6660 :IN0 P1 Turbo 1
+6668 :IN0 P1 Turbo 0
+6690 :IN0 P1 Right 0
+6720 :IN0 P1 Turbo 1
+6728 :IN0 P1 Turbo 0
+6750 :IN0 P1 Up 1
+6780 :IN0 P1 Turbo 1
+6788 :IN0 P1 Turbo 0
+6800 :IN0 P1 Shoot / Block 1
+6800 :IN0 P1 Up 0
+6820 :IN0 P1 Shoot / Block 0
+6840 :IN0 P1 Turbo 1
+6848 :IN0 P1 Turbo 0
+6900 :IN0 P1 Turbo 1
+6900 :IN0 P1 Right 1
+6908 :IN0 P1 Turbo 0
+6960 :IN0 P1 Turbo 1
+6968 :IN0 P1 Turbo 0
+6990 :IN0 P1 Right 0
+7000 :IN0 P1 Shoot / Block 1
+7020 :IN0 P1 Turbo 1
+7020 :IN0 P1 Shoot / Block 0
+7028 :IN0 P1 Turbo 0
+7050 :IN0 P1 Up 1
+7080 :IN0 P1 Turbo 1
+7088 :IN0 P1 Turbo 0
+7100 :IN0 P1 Up 0
+7140 :IN0 P1 Turbo 1
+7148 :IN0 P1 Turbo 0
+7200 :IN0 P1 Turbo 1
+7200 :IN0 P1 Shoot / Block 1
+7200 :IN0 P1 Right 1
+7208 :IN0 P1 Turbo 0
+7220 :IN0 P1 Shoot / Block 0
+7260 :IN0 P1 Turbo 1
+7268 :IN0 P1 Turbo 0
+7290 :IN0 P1 Right 0
+7320 :IN0 P1 Turbo 1
+7328 :IN0 P1 Turbo 0
+7350 :IN0 P1 Up 1
+7380 :IN0 P1 Turbo 1
+7388 :IN0 P1 Turbo 0
+7400 :IN0 P1 Shoot / Block 1
+7400 :IN0 P1 Up 0
+7420 :IN0 P1 Shoot / Block 0
+7440 :IN0 P1 Turbo 1
+7448 :IN0 P1 Turbo 0
+7500 :IN0 P1 Turbo 1
+7500 :IN0 P1 Right 1
+7508 :IN0 P1 Turbo 0
+7560 :IN0 P1 Turbo 1
+7568 :IN0 P1 Turbo 0
+7590 :IN0 P1 Right 0
+7600 :IN0 P1 Shoot / Block 1
+7620 :IN0 P1 Turbo 1
+7620 :IN0 P1 Shoot / Block 0
+7628 :IN0 P1 Turbo 0
+7650 :IN0 P1 Up 1
+7680 :IN0 P1 Turbo 1
+7688 :IN0 P1 Turbo 0
+7700 :IN0 P1 Up 0
+7740 :IN0 P1 Turbo 1
+7748 :IN0 P1 Turbo 0
+7800 :IN0 P1 Turbo 1
+7800 :IN0 P1 Shoot / Block 1
+7800 :IN0 P1 Right 1
+7808 :IN0 P1 Turbo 0
+7820 :IN0 P1 Shoot / Block 0
+7860 :IN0 P1 Turbo 1
+7868 :IN0 P1 Turbo 0
+7890 :IN0 P1 Right 0
+7920 :IN0 P1 Turbo 1
+7928 :IN0 P1 Turbo 0
+7950 :IN0 P1 Up 1
+7980 :IN0 P1 Turbo 1
+7988 :IN0 P1 Turbo 0
