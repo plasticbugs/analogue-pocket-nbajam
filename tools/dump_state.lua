@@ -15,7 +15,9 @@
 --
 -- LOAD=file writes one line a frame: the blits started, their pixel count
 -- (width x height, MAME's timing count unscaled) and the sound commands --
--- the timeline the machine bench's log is lined up against.
+-- the timeline the machine bench's log is lined up against -- then how many
+-- blits were skip-mode, and how many of those scaled (the case the RTL counts
+-- on the panel rather than drawing exactly).
 --
 -- INPUTS=file replays a recorded input script (tools/inputs/*.txt): lines
 -- "frame port field value", value 1 = pressed, 0 = released.
@@ -87,6 +89,7 @@ for i = 0, 17 do dmaregs[i] = 0 end
 local ev = nil
 local load = os.getenv("LOAD") and io.open(os.getenv("LOAD"), "w") or nil
 local ld_blits, ld_pix, ld_snd = 0, 0, {}
+local ld_skip, ld_scaled = 0, 0     -- skip-mode blits, and those also scaled
 local busy = false              -- our own latch writes must not be logged
 
 local function evw(s) if ev then ev:write(s) end end
@@ -101,6 +104,11 @@ keep[#keep+1] = sp:install_write_tap(0x01a80000, 0x01a800ff, "dma", function(off
   if r == 1 and (data & 0x8000) ~= 0 then
     ld_blits = ld_blits + 1
     ld_pix = ld_pix + (dmaregs[6] & 0x3ff) * (dmaregs[7] & 0x3ff)
+    if (dmaregs[1] & 0x80) ~= 0 then
+      ld_skip = ld_skip + 1
+      local function sc(v) return v ~= 0 and v ~= 0x100 end
+      if sc(dmaregs[10]) or sc(dmaregs[11]) then ld_scaled = ld_scaled + 1 end
+    end
   end
 end)
 local function ctl(off, data, mask)
@@ -199,9 +207,10 @@ keep[#keep+1] = emu.register_frame_done(function()
   for _, h in ipairs(keep) do if h.reinstall then h:reinstall() end end
   frame = frame + 1
   if load then
-    load:write(string.format("frame %d blits %d pix %d snd %s\n", frame, ld_blits, ld_pix, table.concat(ld_snd, ",")))
+    load:write(string.format("frame %d blits %d pix %d snd %s skip %d scaled %d\n", frame, ld_blits, ld_pix,
+                             table.concat(ld_snd, ","), ld_skip, ld_scaled))
     load:flush()
-    ld_blits, ld_pix, ld_snd = 0, 0, {}
+    ld_blits, ld_pix, ld_snd, ld_skip, ld_scaled = 0, 0, {}, 0, 0
   end
   if ev then
     ev:write(string.format("F %d\n", frame))
