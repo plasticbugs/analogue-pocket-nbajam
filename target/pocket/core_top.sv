@@ -986,50 +986,23 @@ module core_top
     wire        srom_req, srom_ack;  wire [16:0] srom_addr;  wire [7:0] srom_q;
 
     //! ------------------------------------------------------------------
-    //! SRAM bring-up test.  The SRAM holds the sound CPU's program, and a
-    //! dead one is a silent machine that otherwise looks healthy.  So before
-    //! the core is let out of reset -- and after the download has written
-    //! the program -- two known words go into the SRAM's top and come back
-    //! out, and what came back is shown on the panel.  A55A and 5AA5 are
-    //! each other's byte-swap and nibble inverse, so a stuck bit, a swapped
-    //! byte lane and a dead bus all read differently from a pass.  The test
-    //! uses the last two words, which the 64K-word program never reaches.
+    //! SRAM bring-up test (target/pocket/sram_selftest.sv): after the download
+    //! has written the sound CPU's program and before the core is let out of
+    //! reset, A55A and 5AA5 go into two words and come back out, and the
+    //! panel shows what came back.  The two words are put back afterwards:
+    //! the program uses all 64K words.  They sit either side of A15, the top
+    //! address line this 16-bit port drives.
     //! ------------------------------------------------------------------
-    localparam logic [15:0] SRAM_T0 = 16'hA55A, SRAM_T1 = 16'h5AA5;
-    logic [15:0] sram_rd0, sram_rd1;
-    logic  [2:0] sram_st;
-    logic        sram_done, tv_req, tv_we;
-    logic [16:0] tv_addr;
-    logic [15:0] tv_din;
-    wire         tv_ack;  wire [15:0] tv_q;
-    // a port that never acknowledges must not hold the core in reset for good
-    logic [16:0] sram_tmo;
-
-    always_ff @(posedge clk_sys) begin
-        if (!mem_ready || !loaded) begin
-            sram_st <= 3'd0; sram_done <= 1'b0; tv_req <= 1'b0; tv_we <= 1'b0;
-            sram_rd0 <= '0; sram_rd1 <= '0; sram_tmo <= '0;
-        end else if (!sram_done) begin
-            sram_tmo <= sram_tmo + 17'd1;
-            if (&sram_tmo) sram_done <= 1'b1;       // ~1.4 ms at 96 MHz
-            case (sram_st)
-                3'd0: begin tv_we <= 1'b1; tv_addr <= 17'h1fffe; tv_din <= SRAM_T0;
-                            tv_req <= 1'b1; sram_st <= 3'd1; end
-                3'd1: if (tv_ack) begin tv_req <= 1'b0; sram_st <= 3'd2; end
-                3'd2: begin tv_we <= 1'b1; tv_addr <= 17'h1ffff; tv_din <= SRAM_T1;
-                            tv_req <= 1'b1; sram_st <= 3'd3; end
-                3'd3: if (tv_ack) begin tv_req <= 1'b0; sram_st <= 3'd4; end
-                3'd4: begin tv_we <= 1'b0; tv_addr <= 17'h1fffe;
-                            tv_req <= 1'b1; sram_st <= 3'd5; end
-                3'd5: if (tv_ack) begin sram_rd0 <= tv_q; tv_req <= 1'b0; sram_st <= 3'd6; end
-                3'd6: begin tv_we <= 1'b0; tv_addr <= 17'h1ffff;
-                            tv_req <= 1'b1; sram_st <= 3'd7; end
-                3'd7: if (tv_ack) begin sram_rd1 <= tv_q; tv_req <= 1'b0;
-                                          sram_done <= 1'b1; end
-                default: ;
-            endcase
-        end
-    end
+    wire [15:0] sram_rd0, sram_rd1;
+    wire        sram_done, tv_req, tv_we;
+    wire [16:0] tv_addr;
+    wire [15:0] tv_din;
+    wire        tv_ack;  wire [15:0] tv_q;
+    sram_selftest #(.A0(17'h00000), .A1(17'h08000)) u_sramtest (
+        .clk(clk_sys), .hold(!mem_ready || !loaded),
+        .req(tv_req), .we(tv_we), .addr(tv_addr), .d(tv_din), .ack(tv_ack), .q(tv_q),
+        .done(sram_done), .rd0(sram_rd0), .rd1(sram_rd1)
+    );
 
     nbajam_mem u_mem (
         .clk(clk_sys), .clk_sdram(clk_sdram), .init(mem_init), .ready(mem_ready),

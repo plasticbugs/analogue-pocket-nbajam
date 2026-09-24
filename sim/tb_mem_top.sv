@@ -19,9 +19,17 @@ module tb_mem_top (
     output logic        oki_ack, output logic [7:0] oki_q,
     input  logic        srom_req, input logic [16:0] srom_addr,
     output logic        srom_ack, output logic [7:0] srom_q,
-    input  logic        tst_active, tst_req, tst_we, input logic [16:0] tst_addr, input logic [15:0] tst_din,
-    output logic        tst_ack, output logic [15:0] tst_q
+    // the power-on self-test, the real module, as core_top runs it
+    input  logic        tst_hold,
+    output logic        tst_done, output logic [15:0] tst_rd0, tst_rd1
 );
+    logic        tst_req, tst_we, tst_ack;
+    logic [16:0] tst_addr;
+    logic [15:0] tst_din, tst_q;
+    sram_selftest #(.A0(17'h00000), .A1(17'h08000)) selftest (
+        .clk(clk), .hold(tst_hold), .req(tst_req), .we(tst_we), .addr(tst_addr), .d(tst_din),
+        .ack(tst_ack), .q(tst_q), .done(tst_done), .rd0(tst_rd0), .rd1(tst_rd1)
+    );
     wire [15:0] SDRAM_DQ; wire [12:0] SDRAM_A; wire [1:0] SDRAM_BA;
     wire        SDRAM_DQML, SDRAM_DQMH, SDRAM_nCS, SDRAM_nWE, SDRAM_nRAS, SDRAM_nCAS;
     wire        SDRAM_CKE, SDRAM_CLK;
@@ -39,7 +47,7 @@ module tb_mem_top (
         .b_wr(b_wr), .b_idx(b_idx), .b_data(b_data), .b_done(b_done), .b_widx(b_widx), .b_wpre(b_wpre),
         .oki_req(oki_req), .oki_addr(oki_addr), .oki_ack(oki_ack), .oki_q(oki_q),
         .srom_req(srom_req), .srom_addr(srom_addr), .srom_ack(srom_ack), .srom_q(srom_q),
-        .tst_active(tst_active), .tst_req(tst_req), .tst_we(tst_we), .tst_addr(tst_addr),
+        .tst_active(!tst_done), .tst_req(tst_req), .tst_we(tst_we), .tst_addr(tst_addr),
         .tst_din(tst_din), .tst_ack(tst_ack), .tst_q(tst_q),
         .SDRAM_DQ(SDRAM_DQ), .SDRAM_A(SDRAM_A), .SDRAM_BA(SDRAM_BA),
         .SDRAM_DQML(SDRAM_DQML), .SDRAM_DQMH(SDRAM_DQMH),

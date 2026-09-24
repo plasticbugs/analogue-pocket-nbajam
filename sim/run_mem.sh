@@ -15,7 +15,7 @@ verilator --cc --exe --build -j "${JOBS:-8}" -O2 \
     -Wno-PINCONNECTEMPTY -Wno-TIMESCALEMOD \
     -Wno-BLKSEQ -Wno-MULTIDRIVEN -Wno-WIDTHTRUNC -Wno-WIDTHEXPAND -Wno-SYNCASYNCNET -Wno-UNUSEDSIGNAL \
     --top-module tb_mem_top -Mdir obj_mem \
-    ../target/pocket/nbajam_mem.sv ../target/pocket/sdram_ctrl.sv ../target/pocket/sram_port.sv \
+    ../target/pocket/nbajam_mem.sv ../target/pocket/sdram_ctrl.sv ../target/pocket/sram_port.sv ../target/pocket/sram_selftest.sv \
     sdram_model.sv sram_model.sv tb_mem_top.sv tb_mem.cpp > obj_mem.log 2>&1 \
     || { tail -40 obj_mem.log; exit 1; }
 exec ./obj_mem/Vtb_mem_top "$@"

@@ -53,8 +53,8 @@ int main(int argc, char **argv) {
 
     dut = new Vtb_mem_top;
     dut->init = 1; dut->rd_late = 1; dut->burst_slow = 0;
-    dut->dl_we = 0; dut->dl_active = 1; dut->tst_active = 0;
-    dut->sd_req = dut->b_req = dut->oki_req = dut->srom_req = dut->tst_req = 0;
+    dut->dl_we = 0; dut->dl_active = 1; dut->tst_hold = 1;
+    dut->sd_req = dut->b_req = dut->oki_req = dut->srom_req = 0;
     for (int i = 0; i < 16; i++) tick();
     dut->init = 0;
     long t = 0; while (!dut->ready && t++ < 200000) tick();
@@ -110,24 +110,24 @@ int main(int argc, char **argv) {
     }
     printf("SDRAM: %ld words checked through the core's ports, %ld wrong\n", checked, bad);
 
-    // the sound CPU's bytes, out of the SRAM
+    // The power-on self-test, as the Pocket runs it: after the download, before
+    // the sound CPU reads a byte.  It must read back A55A 5AA5 AND leave the
+    // program as it found it -- the first hardware build wrote over the 6809's
+    // reset vector here and was silent, while its panel read a pass.
     long sbad = 0;
-    for (uint32_t a = 0; a < 0x20000; a += (quick ? 7 : 1)) {
+    dut->tst_hold = 0;
+    { int g = 0; while (!dut->tst_done && g++ < 200000) tick(); }
+    if (!dut->tst_done || dut->tst_rd0 != 0xA55A || dut->tst_rd1 != 0x5AA5) {
+        sbad++; printf("  self-test: done %d, read back %04X %04X, want A55A 5AA5\n",
+                       dut->tst_done, dut->tst_rd0, dut->tst_rd1);
+    }
+    // then the sound CPU's bytes, every one, out of the SRAM
+    for (uint32_t a = 0; a < 0x20000; a++) {
         dut->srom_addr = a; dut->srom_req = 1;
         int g = 0; while (!dut->srom_ack && g++ < 4000) tick();
         dut->srom_req = 0; tick();
         if (dut->srom_q != rom[SROM_B + a]) { if (sbad < 8) printf("  srom [%05X] got %02X want %02X\n", a, dut->srom_q, rom[SROM_B + a]); sbad++; }
     }
-    // the self-test port
-    dut->tst_active = 1;
-    auto sram = [&](bool we, uint32_t a, uint16_t d) {
-        dut->tst_we = we; dut->tst_addr = a; dut->tst_din = d; dut->tst_req = 1;
-        int g = 0; while (!dut->tst_ack && g++ < 4000) tick();
-        dut->tst_req = 0; tick();
-        return (uint16_t)dut->tst_q;
-    };
-    sram(true, 0x1234, 0xA55A); sram(true, 0x1235, 0x5AA5);
-    if (sram(false, 0x1234, 0) != 0xA55A || sram(false, 0x1235, 0) != 0x5AA5) { sbad++; printf("  self-test port: read back wrong\n"); }
     printf("SRAM:  %ld wrong\n", sbad);
 
     delete dut;
