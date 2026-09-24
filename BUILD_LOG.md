@@ -237,6 +237,37 @@ The sound board is wired too: the 6809 sound CPU, the FM chip, the sample
 player and the DAC, with MAME's mixing levels — but not yet compared against
 a MAME recording, so its levels are unproven.
 
+## Step 9 — Through the Pocket's real memory, and a thousand frames in step
+
+Up to now the simulated machine had its ROMs magically pre-loaded. On a real
+Pocket the 10.6 MB file arrives one byte at a time, every eight clock ticks,
+and the loader **cannot be told to wait** — if the memory is busy, a byte is
+simply lost. (That exact problem cost an earlier core its first hardware
+test.) So the memory module has a queue, and a test pushes the whole image
+through it at the real rate — even faster than real — then reads every region
+back: identical. One real bug found on the way: the sound program, which now
+goes into the Pocket's separate SRAM chip, was having one word written twice
+and the next skipped, because the queue moved on one tick too late.
+
+Then the whole machine again, but fed through that real memory path: frame
+99 identical to MAME. And the long run: **frame 999 — the copyright screen,
+drawn by 204 blitter commands, 18 seconds after power-on — identical to
+MAME's, every pixel.** The machine is keeping time with the arcade frame for
+frame through boot, a button press and the attract sequence.
+
+**The CPU marathon finished too:** 69.6 million instructions — about 21
+seconds of boot, attract and gameplay — identical to MAME, including 2,077
+interrupts and 1,603 uses of the page eraser. It stopped at a difference that
+isn't a bug: MAME cheats slightly on long fill operations (draws instantly,
+then pretends to be busy), so when an interrupt lands in that pretend-busy
+time, MAME writes a different return address on the stack than real
+hardware would. Both carry on identically.
+
+**Also done:** the Pocket menu (free play, 2- or 4-player cabinet, attract
+clips), button names, and **saving the game's settings and high scores** to
+the SD card — borrowed from S.T.U.N. Runner, where getting the Pocket to
+actually write the file took several hardware experiments.
+
 ---
 
 *(continues as the work goes on)*
