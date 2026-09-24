@@ -88,7 +88,18 @@ module nbajam_mem (
     logic  [7:0] dl_hi;
     logic        dl_we_d;
     wire         dlq_empty = (dlq_wp == dlq_rp);
-    wire  [40:0] dlq_head  = dlq[dlq_rp[5:0]];
+    // The head is a registered read of the FIFO's RAM: taken combinationally,
+    // through the RAM's read-during-write bypass, it went on to the SDRAM
+    // address pins in one clock and missed 96 MHz (sixth compile).  head_ok
+    // says the register holds the entry at the current read pointer; a word
+    // costs one more clock, well inside the loader's sixteen a word.
+    // It must also have been sampled while the FIFO was already non-empty:
+    // sampled on the clock a word is written into an empty FIFO, the RAM
+    // returns the slot's OLD contents (sim/run_mem.sh failed on exactly that).
+    logic [40:0] dlq_head;
+    logic  [6:0] dlq_rp_d;
+    logic        dlq_full_at_rd;
+    wire         head_ok   = dlq_full_at_rd && (dlq_rp_d == dlq_rp);
     wire         nb        = dl_we && !dl_we_d;       // one byte, once
     wire         dl_sram   = (dl_addr >= SROM_B);
     wire  [24:1] dl_target = dl_sram ? 24'((dl_addr - SROM_B) >> 1) : dl_addr[24:1];
@@ -111,6 +122,9 @@ module nbajam_mem (
             end
             if (pop_sd || pop_sr) dlq_rp <= dlq_rp + 7'd1;
         end
+        dlq_head       <= dlq[dlq_rp[5:0]];
+        dlq_rp_d       <= init ? 7'h7f : dlq_rp;
+        dlq_full_at_rd <= !init && !dlq_empty;
     end
 
     // ---------------------------------------------------- SDRAM clients
@@ -125,7 +139,7 @@ module nbajam_mem (
 
     // 0: the download (SDRAM words only)
     assign c_addr[0]  = dlq_head[39:16];
-    assign c_req[0]   = !dlq_empty && !head_sram;
+    assign c_req[0]   = head_ok && !head_sram;
     assign c_we[0]    = 1'b1;
     assign c_wdata[0] = dlq_head[15:0];
     assign c_be[0]    = 2'b11;
@@ -192,7 +206,7 @@ module nbajam_mem (
     always_comb begin
         unique case (sown)
             R_DL: begin
-                s_req = !dlq_empty && head_sram; s_we = 1'b1;
+                s_req = head_ok && head_sram; s_we = 1'b1;
                 s_addr = dlq_head[32:16]; s_wdata = dlq_head[15:0]; s_be = 2'b11;
             end
             R_TST: begin

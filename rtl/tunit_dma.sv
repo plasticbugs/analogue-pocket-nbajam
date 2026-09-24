@@ -146,6 +146,7 @@ module tunit_dma #(
     logic  [6:0] pre_u, post_u;      // skip mode: this row's header, in pixels
     logic [12:0] pp_r, pq_r;         // bpp * pre_u, bpp * post_u
     logic        ssgt;               // the start skip reaches past pre
+    logic signed [17:0] wrow_r, wes_r;
     // per-blit products, so no row or pixel does a multiply (96 MHz)
     logic [15:0] dv_qf;              // the start-skip quotient, registered
     logic [11:0] bs_first;           // bpp * s_first
@@ -179,7 +180,7 @@ module tunit_dma #(
     typedef enum logic [4:0] {
         S_IDLE, S_START, S_DIV, S_PREP, S_ROW, S_RD, S_RDGAP, S_GEN, S_DRAIN,
         S_WR, S_WRGAP, S_ADV, S_DONE, S_HDR1, S_HDR2, S_HDR3, S_HDR4, S_TDIV, S_TSET, S_RWAIT,
-        S_DIVM, S_PREP2, S_ROW2, S_ROW3, S_HDR5
+        S_DIVM, S_PREP2, S_ROW2, S_ROW3, S_HDR5, S_HDR6, S_TSET2
     } state_t;
     state_t      state;
     logic        cancel;             // the command register was written while busy
@@ -188,6 +189,7 @@ module tunit_dma #(
     // MAME's completion time, in clocks: pixels x 41 ns x 96 MHz = x 3.936
     logic [31:0] pace_cnt, pace_target;
     logic [19:0] mame_px_w, mame_px_h;   // the two factors of MAME's pixel count
+    logic [39:0] mame_px;
     logic        tdiv_y;                 // which factor the timing divider is on
     logic [17:0] td_num, td_q;
     logic [16:0] td_rem;
@@ -342,8 +344,13 @@ module tunit_dma #(
                 end
             end
             S_TSET: begin
-                // clocks = pixels x 3.936 (41 ns at 96 MHz), as pixels x 4031 / 1024
-                pace_target <= 32'((64'(mame_px_w) * 64'(mame_px_h) * 64'd4031) >> 10);
+                // clocks = pixels x 3.936 (41 ns at 96 MHz), as pixels x 4031 / 1024,
+                // over two states (in one it missed 96 MHz)
+                mame_px <= 40'(mame_px_w) * 40'(mame_px_h);
+                state   <= S_TSET2;
+            end
+            S_TSET2: begin
+                pace_target <= 32'((52'(mame_px) * 52'd4031) >> 10);
                 // nothing to draw: op 0, or an offset out of range
                 if (c_cmd[3:0] == 4'd0 || go_adj >= 32'h1000_0000) state <= S_DONE;
                 else if (sskip != 16'd0) begin
@@ -445,14 +452,11 @@ module tunit_dma #(
                 ssgt   <= ({1'b0, ss_l} > {2'd0, pre});
                 state  <= S_HDR4;
             end
-            S_HDR4: begin : hdr4
+            S_HDR4: begin
                 // the start skip applies past pre; the end skip clamps the width
-                // that post has already shortened
-                logic signed [17:0] wrow, wes, wl;
-                wrow = 18'($signed({8'd0, bw}) - $signed({11'd0, post_u}));
-                wes  = 18'($signed({8'd0, bw}) - $signed({2'd0, es_l}));
-                wl   = (es_l != 16'd0 && wrow > wes) ? wes : wrow;
-                lim_r <= (wl > 0) ? {2'd0, wl[9:0], 8'd0} : 20'd0;
+                // that post has already shortened (finished in S_HDR5)
+                wrow_r <= 18'($signed({8'd0, bw}) - $signed({11'd0, post_u}));
+                wes_r  <= 18'($signed({8'd0, bw}) - $signed({2'd0, es_l}));
                 if (ssgt) begin
                     gix <= {4'd0, ss_l, 8'd0};
                     gp  <= gp + 14'd8 + 14'(bss) - 14'(pp_r);
@@ -463,11 +467,15 @@ module tunit_dma #(
                 gsx <= xflip ? xpos - {3'd0, pre_u} : xpos + {3'd0, pre_u};
                 state <= S_HDR5;
             end
-            S_HDR5: begin
+            S_HDR5: begin : hdr5
+                logic signed [17:0] wl;
+                wl = (es_l != 16'd0 && wrow_r > wes_r) ? wes_r : wrow_r;
+                lim_r <= (wl > 0) ? {2'd0, wl[9:0], 8'd0} : 20'd0;
                 // 8 + bpp * (width - pre - post), as 8 + wb - bpp*pre - bpp*post
                 row_adv <= 14'd8 + ((wb > pp_r + pq_r) ? 14'(wb - pp_r - pq_r) : 14'd0);
-                state <= (sy < topc || sy > botc || gix >= lim_r) ? S_ADV : S_GEN;
+                state <= S_HDR6;
             end
+            S_HDR6: state <= (sy < topc || sy > botc || gix >= lim_r) ? S_ADV : S_GEN;
 
             // ---- READ: bursts of up to PIECE words into the source buffer
             S_RD: begin
