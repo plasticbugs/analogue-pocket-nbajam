@@ -29,19 +29,25 @@ someone decodes squares off a screen.
 goes in `Assets/nbajam/common/nbajam.rom`. Verify the bitstream's md5 on the
 card.
 
-## The skeleton, before there is a game
+## What a healthy first boot looks like
 
-A white crosshatch every 16 pixels with red, green and blue bars across the
-middle, dark above bright. A cyan square moves with the d-pad, turns yellow on
-button 1 (A or Y) and magenta on button 2 (B or X); button 1 also beeps. Every
-grid cell the same size and every line unbroken means the raster, the video
-hand-over, the scaler settings, the controls and the audio path all work.
+With no save file: after the load, a black screen with yellow and red text,
+"NBA JAM REV 3.01 4/07/93 ... CMOS INVALID -- FACTORY SETTINGS RESTORED ...
+ERRORS DETECTED -- ANY BUTTON TO CONTINUE" (about 1.5 s after the core
+starts). Press any button: the title screen (the NBA JAM logo on a wooden
+court), then the copyright screen, then attract. Once the game has written its
+CMOS the core saves it (`Saves/nbajam/.../nbajam.sav`), and the next boot
+skips the CMOS message.
+
+The game's own test screens: menu -> **Service Switch** on, then Reset Core:
+the test menu; **Monitor Patterns** there has the crosshatch and colour bars
+to ask for before any photograph of gameplay (METHODOLOGY 5.18).
 
 ## The panel
 
 Menu → **Bring-up: panel**. Four rows of 32 squares along the bottom edge of
-the picture (the *right* edge if the picture is rotated 270, read bottom to
-top). Green is 1. Read each row from the end where row 0 shows `1010 1010`.
+the picture. Green is 1. Read each row from the end where row 0 shows
+`1010 1010`.
 
 | row | squares | meaning | healthy |
 |---|---|---|---|
@@ -53,22 +59,26 @@ top). Green is 1. Read each row from the end where row 0 shows `1010 1010`.
 | 0 | 20 | all slots complete | 1 |
 | 0 | 21 | loaded | 1 |
 | 0 | 22 | core in reset | 0 |
-| 0 | 23 | CPU halted | 0 |
-| 0 | 24 | watchdog has fired | 0 (expected 1 after the menu has been open a while) |
-| 0 | 25–32 | system inputs, active low | `1111 1111` with nothing pressed |
-| 1 | 1–8, 9–32 | first fault: vector, then the code address before it | all 0 |
-| 2 | 1–16, 17–24, 25–32 | first program ROM word, first sound ROM byte, first graphics byte | *fill in from the image* |
+| 0 | 23 | SRAM self-test finished | 1 |
+| 0 | 24 | blitter busy | flickering during play |
+| 0 | 25–32 | IN1 bits 7–0, active low: 25 coin 3, 26 service credit, 27 start 2, 28 service (test), 29 tilt, 30 start 1, 31 coin 2, 32 coin 1 | `1111 1111` with nothing pressed |
+| 1 | 1 | the CPU met an instruction it does not implement | 0 |
+| 1 | 2–32 | the TMS34010's program counter (bits 30–0): live, or frozen where it first met that instruction | changing, in `0xFF8xxxxx`–`0xFFFxxxxx` |
+| 2 | 1–8 | scan-out lines whose SDRAM fetch was late (saturates at 255) | 0 |
+| 2 | 9–16 | scaled skip-mode blits (not drawn exactly) | 0 |
+| 2 | 17–24 | sound-ROM stalls of the 6809 | 0 or 1 (one is seen at power-up in simulation) |
+| 2 | 25–32 | the 6809's address, high byte | changing |
 | 3 | 1–16, 17–32 | SRAM self-test | `1010 0101 0101 1010`, `0101 1010 1010 0101` |
-
-Row 2 proves the path, not the image; `sim/run_mem.sh` proves the image.
 
 ## If it is wrong
 
 | symptom | look at |
 |---|---|
-| black, counter running, row 2 right, watchdog 1 | the image in SDRAM — rerun `sim/run_mem.sh`; section 5.16 |
-| row 3 not the pattern | **Bring-up: SRAM** switches; then the SRAM port |
-| row 2 wrong | **Bring-up: SDRAM** switches; then the PLL phase (SDC, section 5.20) |
+| black, counter running, PC stuck or wandering outside `0xFF8xxxxx` | the image in SDRAM — rerun `sim/run_mem.sh`; section 5.16; then **Bring-up: SDRAM** switches and the PLL phase (SDC, 5.20) |
+| row 1 square 1 lit | the PC shown is the unimplemented instruction: tell Claude the 31 bits |
+| row 3 not the pattern, silence | **Bring-up: SRAM** switches; then the SRAM port |
+| row 2 squares 1–8 non-zero, or horizontal tearing | the scan-out fetch is losing to the blitter/CPU on the SDRAM |
+| graphics missing only in busy scenes | the blitter is not finishing by vblank and the game cancels it (hardware.md 7.4) |
 | garbled picture | ask for the service-mode test pattern first; section 5.18 |
 | glitches only while playing, gone in the menu | something the CPU shares with the video; section 5.17 |
 | menu restarts the game | `pause` has reached a reset; section 5.5 |
