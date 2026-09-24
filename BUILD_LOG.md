@@ -353,6 +353,38 @@ out where the next row of a picture starts in the ROM) crammed into a single
 clock tick. It only changes once per row, so it's now computed in advance
 while the row is being drawn. Third compile running.
 
+## Step 16 — Timing whack-a-mole, and why
+
+Compiles three, four and five each got closer (−2.36, −2.67, −2.12 ns) and
+each time every remaining failure was a *different* spot in the blitter.
+That's normal for logic first written to be *correct* and only then made
+*fast*: each fix exposes the next-slowest path. The blitter was doing
+multiplications inside its innermost loop — one per pixel. The rewrite
+works out the two possible step sizes once per picture and then just picks
+one per pixel (depending on whether a fractional counter "carries"), and
+splits the per-row setup across three clock ticks, each doing a single
+addition. Checked after every change: all 14 frozen frames still identical
+to MAME. **[deep dive: timing closure — why a chip that works in simulation
+can still fail at speed]**
+
+## Step 17 — Listening properly
+
+Comparing two recordings of *gameplay* turned out to be comparing two
+different games: the computer players make random choices, and our random
+numbers differ from MAME's (step 14). So the sound board was tested on its
+own, the way the methodology recommends: record every command MAME's main
+CPU sends to the sound board, with its exact time, then feed exactly those
+commands, at exactly those times, into our sound board, and compare.
+
+First result: **level within about 7% of MAME's, second by second** — after
+fixing one real mistake found by reading MAME's source: the speech chip's
+volume was a quarter of what it should be (MAME treats each of its four
+voices as full-scale; we'd divided by four). But that capture turned out to
+contain no speech at all — MAME's own sound CPU never started a sample in
+those 66 seconds. So a second test: while the game sits quietly, MAME is
+made to send every sound command from 0 to 95 in turn, recorded, and the
+same sequence replayed into ours. That comparison is running.
+
 ---
 
 *(continues as the work goes on)*
