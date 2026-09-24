@@ -144,6 +144,7 @@ module tunit_dma #(
     logic [19:0] lim_r;              // this row's limit for ix
     logic [13:0] row_adv;            // skip mode: bits to the next row
     logic  [6:0] pre_u, post_u;      // skip mode: this row's header, in pixels
+    logic [12:0] pp_r, pq_r;         // bpp * pre_u, bpp * post_u
     logic  [7:0] hdr;
     logic  [9:0] nwords;
 
@@ -415,6 +416,9 @@ module tunit_dma #(
                 post = 7'({3'd0, hdr[7:4]} << postskip);
                 pre_u  <= pre;
                 post_u <= post;
+                // the products the next row's step needs, a state ahead of it
+                pp_r   <= 13'(bpp * pre);
+                pq_r   <= 13'(bpp * post);
                 wrow = 18'($signed({8'd0, bw}) - $signed({11'd0, post}));
                 wes  = 18'($signed({8'd0, bw}) - $signed({2'd0, es_l}));
                 wl   = (es_l != 16'd0 && wrow > wes) ? wes : wrow;
@@ -430,10 +434,10 @@ module tunit_dma #(
                 state <= S_HDR4;
             end
             S_HDR4: begin
-                // from pre_u/post_u, registered in S_HDR3 (in one clock with the
-                // header's shifts this missed 96 MHz by 2.4 ns)
-                row_adv <= 14'd8 + ((bw > {3'd0, pre_u} + {3'd0, post_u})
-                                    ? 14'(bpp * 10'(bw - {3'd0, pre_u} - {3'd0, post_u})) : 14'd0);
+                // 8 + bpp * (width - pre - post), as 8 + wb - bpp*pre - bpp*post
+                // from products registered in S_HDR3: with the multiply after the
+                // subtract this missed 96 MHz by 2.4, then 2.7 ns
+                row_adv <= 14'd8 + ((wb > pp_r + pq_r) ? 14'(wb - pp_r - pq_r) : 14'd0);
                 state <= (sy < topc || sy > botc || gix >= lim_r) ? S_ADV : S_GEN;
             end
 

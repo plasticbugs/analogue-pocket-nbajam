@@ -60,3 +60,14 @@ frame 2950  0.64 s/frame  pc ff820560  unimpl 0  late 0
 frame 3000  0.64 s/frame  pc ff8204a0  unimpl 0  late 0
 frame 3050  0.64 s/frame  pc ff8205b0  unimpl 0  late 0
 frame 3100  0.64 s/frame  pc ff8204b0  unimpl 0  late 0
+frame 3150  0.64 s/frame  pc ff8204a0  unimpl 0  late 0
+frame 3200  0.64 s/frame  pc ff8205b0  unimpl 0  late 0
+frame 3250  0.64 s/frame  pc ff8205b0  unimpl 0  late 0
+frame 3300  0.64 s/frame  pc ff820480  unimpl 0  late 0
+frame 3350  0.64 s/frame  pc ff8204b0  unimpl 0  late 0
+frame 3400  0.64 s/frame  pc ff8204a0  unimpl 0  late 0
+frame 3450  0.64 s/frame  pc ff820470  unimpl 0  late 0
+frame 3500  0.64 s/frame  pc ff820570  unimpl 0  late 0
+frame 3550  0.64 s/frame  pc ff8204a0  unimpl 0  late 0
+frame 3600  0.64 s/frame  pc ff8204c0  unimpl 0  late 0
+3600 frames, 6317241723 clocks, worst blitter frame 1006445 clocks, unimpl 0, late lines 0, sound stalls 1

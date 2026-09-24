@@ -311,12 +311,21 @@ module tunit_sound (
     end
 
     // ---------------- mixer ----------------
-    // MAME's routes: YM2151 both channels x0.10, DAC x0.10, OKI x0.15, each at
-    // a 16-bit full scale.  In 1/4096: 410, 410, 614.  To be checked against a
-    // MAME recording by band energy (CLAUDE.md step 8) before it is trusted.
+    // MAME's routes: YM2151 both channels x0.10, DAC x0.10, OKI x0.15.  The
+    // full scales, from MAME 0.288's device code (ref/mame/src/devices/sound):
+    //   YM2151: ymfm sums 14-bit operator outputs into a 16-bit word, as jt51
+    //           does (jt51_acc.v), and MAME divides by 32768 -- the same scale
+    //   DAC:    AD7524, unsigned, range -1..+1: 0 -> -1, 0x80 -> 0 (dac.cpp)
+    //   OKI:    each voice's 12-bit sample / 2048 is full scale (okim6295.cpp
+    //           add_int(..., 2048)); jt6295 sums the four 12-bit voices into
+    //           14 bits, so one voice at full scale is 2048 of its range:
+    //           x16 to a 16-bit full scale (it was x4, a quarter too quiet)
+    // In 1/4096: 410, 410, 614.  The OKI term can exceed 16 bits (four voices
+    // at full scale); the sum is saturated below.
     wire signed [15:0] dac_s = {~dac[7], dac[6:0], 8'h00};
-    wire signed [15:0] oki_s = {oki_snd, 2'b00};
-    logic signed [15:0] m_yl, m_yr, m_dac, m_oki;
+    wire signed [17:0] oki_s = {oki_snd, 4'b0000};
+    logic signed [15:0] m_yl, m_yr, m_dac;
+    logic signed [17:0] m_oki;
     logic signed [31:0] p_ym, p_dac, p_oki, m_sum;
     wire  signed [16:0] m_ysum = {m_yl[15], m_yl} + {m_yr[15], m_yr};
     wire  signed [19:0] mix_s  = m_sum[31:12];
