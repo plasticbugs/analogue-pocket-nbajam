@@ -70,13 +70,28 @@ the picture. Green is 1. Read each row from the end where row 0 shows
 | 2 | 25–32 | the 6809's address, high byte | changing |
 | 3 | 1–16, 17–32 | SRAM self-test | `1010 0101 0101 1010`, `0101 1010 1010 0101` |
 
+Row 3 proves the SRAM answers; it does NOT prove the sound program in it is
+intact. The first build's test overwrote the 6809's reset vector and still
+read a pass (log, below). The test now puts back what it overwrote, and
+`sim/run_mem.sh` checks all 128 KB of the program after it.
+
+## The debug switches
+
+| menu item | what it does | healthy setting |
+|---|---|---|
+| **SDRAM bursts** | how fast the graphics memory streams: Normal (a word every 2 clocks), Fast (every clock), Slow (every 5) | Normal (default) |
+| **SDRAM read late** | the label is inverted: ticked samples the memory's data one clock **earlier** | unticked |
+| **SRAM read late** / **SRAM long writes** | stretch the SRAM timing | unticked |
+
 ## If it is wrong
 
 | symptom | look at |
 |---|---|
 | black, counter running, PC stuck or wandering outside `0xFF8xxxxx` | the image in SDRAM — rerun `sim/run_mem.sh`; section 5.16; then **Bring-up: SDRAM** switches and the PLL phase (SDC, 5.20) |
 | row 1 square 1 lit | the PC shown is the unimplemented instruction: tell Claude the 31 bits |
-| row 3 not the pattern, silence | **Bring-up: SRAM** switches; then the SRAM port |
+| row 3 not the pattern, silence | **SRAM read late / long writes**; then the SRAM port |
+| row 3 a pass, silence | the sound program in the SRAM; row 2 squares 25–32 should change |
+| colours wrong, shapes right | **SDRAM bursts**: try Slow, then Normal; then Fast with **SDRAM read late** ticked |
 | row 2 squares 1–8 non-zero, or horizontal tearing | the scan-out fetch is losing to the blitter/CPU on the SDRAM |
 | graphics missing only in busy scenes | the blitter is not finishing by vblank and the game cancels it (hardware.md 7.4) |
 | garbled picture | ask for the service-mode test pattern first; section 5.18 |
@@ -87,3 +102,11 @@ the picture. Green is 1. Read each row from the end where row 0 shows
 
 Date, build md5, what was seen, what it ruled out. One line each. The theories
 that died belong here as much as the one that lived.
+
+- 2026-09-24, `6f7d0f99…` (compile 8): boots, plays. **Colours wrong,
+  shapes okay-ish** with fast bursts; **perfect with SDRAM slow bursts** —
+  the fast (one word a clock) burst read is unreliable on hardware at the
+  default capture phase; the logic is right. **Silent**, apart from pops and
+  clicks, in attract and gameplay: the SRAM self-test wrote 0x1fffe/0x1ffff
+  through a 16-bit port, landing on the 6809's NMI/RESET vectors after the
+  download (reproduced in `sim/run_mem.sh`: ROM bytes 1FFFC–1FFFF damaged).

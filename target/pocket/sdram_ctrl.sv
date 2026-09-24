@@ -36,6 +36,7 @@ module sdram_ctrl #(
     input  logic        init,         // reset / (re)initialise the chip
     input  logic        rd_late,      // 1: capture read data at READ+4 (in-phase chip clock)
     input  logic        burst_slow,   // 1: one burst READ every 5 clocks instead of 2
+    input  logic        burst_fast,   // with FAST_BURST: 1 = one a clock, 0 = one every 2 (a menu choice)
     output logic        ready,        // init complete
 
     // chip
@@ -140,6 +141,7 @@ module sdram_ctrl #(
     logic        b_aborted;      // this burst was cut short (b_done even if nothing was issued)
     logic        b_is_we;        // this burst is a write
     logic  [2:0] b_gap;
+    wire         fast = FAST_BURST && burst_fast;
     assign b_widx = b_issued;
     wire   b_issue_now;
 
@@ -332,16 +334,16 @@ module sdram_ctrl #(
                     b_issued <= b_issued + 10'd1;
                     b_remain <= b_remain - 10'd1;
                     b_chunk  <= b_chunk + 6'd1;
-                    b_gap    <= burst_slow ? 3'd4 : FAST_BURST ? 3'd0 : 3'd1;
+                    b_gap    <= burst_slow ? 3'd4 : fast ? 3'd0 : 3'd1;
                     // stop at: end of burst, end of chunk, end of SDRAM row.  In
                     // FAST_BURST mode a chunk only ends if someone is waiting for
                     // the chip -- a random client or the refresh -- otherwise the
                     // burst runs on in the open row (the chunk count restarts), so
                     // the other clients' worst-case wait is unchanged.
-                    if (FAST_BURST && b_chunk == 6'(BURST_CHUNK - 10'd1) && !any_req_q && !refresh_due)
+                    if (fast && b_chunk == 6'(BURST_CHUNK - 10'd1) && !any_req_q && !refresh_due)
                         b_chunk <= '0;
                     if (b_remain == 10'd1 || b_next[9:1] == 9'h1ff ||
-                        (b_chunk == 6'(BURST_CHUNK - 10'd1) && !(FAST_BURST && !any_req_q && !refresh_due))) begin
+                        (b_chunk == 6'(BURST_CHUNK - 10'd1) && !(fast && !any_req_q && !refresh_due))) begin
                         state  <= S_BEND;
                         wait_n <= 3'd1;
                     end

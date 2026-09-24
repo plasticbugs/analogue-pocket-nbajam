@@ -65,7 +65,7 @@ module tb_machine_top (
 
     sdram_ctrl #(.NCLI(2), .FAST_BURST(1'b1)) u_sdram (
         .clk(clk), .clk_pin(clk), .init(init),
-        .rd_late(1'b1), .burst_slow(1'b0), .ready(ready),
+        .rd_late(1'b1), .burst_slow(1'b0), .burst_fast(1'b1), .ready(ready),
         .SDRAM_DQ(SDRAM_DQ), .SDRAM_A(SDRAM_A),
         .SDRAM_DQML(SDRAM_DQML), .SDRAM_DQMH(SDRAM_DQMH), .SDRAM_BA(SDRAM_BA),
         .SDRAM_nCS(SDRAM_nCS), .SDRAM_nWE(SDRAM_nWE),

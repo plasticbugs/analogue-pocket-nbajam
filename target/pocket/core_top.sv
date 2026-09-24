@@ -975,6 +975,12 @@ module core_top
     //! and mod_sw1 bit 7 stretched SRAM writes.
     wire g_rd_late      = ~mod_sw0[4];
     wire g_burst_slow   =  mod_sw0[5];
+    // SDRAM bursts, a menu list: Fast (one word a clock), Normal (one every 2,
+    // the spacing the earlier cores run on hardware), Slow (one every 5).  The
+    // first flash showed wrong colours with Fast and a perfect picture with
+    // Slow; Normal was not on that build.  Normal is all bits clear, so it is
+    // what runs whether or not the firmware writes the menu's default.
+    wire g_burst_fast   =  mod_sw0[6] & ~mod_sw0[5];
     wire g_sram_slow    =  mod_sw0[7];
     wire g_sram_slow_wr =  mod_sw1[7];
 
@@ -1006,7 +1012,7 @@ module core_top
 
     nbajam_mem u_mem (
         .clk(clk_sys), .clk_sdram(clk_sdram), .init(mem_init), .ready(mem_ready),
-        .rd_late(g_rd_late), .burst_slow(g_burst_slow),
+        .rd_late(g_rd_late), .burst_slow(g_burst_slow), .burst_fast(g_burst_fast),
         .sram_slow(g_sram_slow), .sram_slow_wr(g_sram_slow_wr),
         .dl_we(dl_we), .dl_addr(dl_addr), .dl_data(dl_data), .dl_active(ioctl_isROM),
         .sd_req(sd_req), .sd_we(sd_we), .sd_addr(sd_addr), .sd_wdata(sd_wdata), .sd_be(sd_be),

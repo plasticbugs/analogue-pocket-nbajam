@@ -13,7 +13,7 @@ rom="$root/.build/nbajam.rom"
 [ -f "$rom" ] || { mkdir -p "$root/.build"; python3 "$root/tools/mra_build.py" \
     "$root/nbajam.mra" "$root/nbajam" "$rom" >/dev/null; }
 MODS=$(ls "$root"/modules/cpu-mc6809/*.v "$root"/modules/sound-jt51/*.v "$root"/modules/sound-jt6295/hdl/*.v)
-verilator --cc --exe --build -j "${JOBS:-8}" -O3 --x-assign fast --x-initial fast \
+verilator --cc --exe --build -j "${JOBS:-8}" -O3 -GBURST_FAST=${BURST_FAST:-1} --x-assign fast --x-initial fast \
     -Wno-fatal -Wno-lint -Wno-style -Wno-TIMESCALEMOD -Wno-MULTIDRIVEN -Wno-SYNCASYNCNET \
     -Wno-UNOPTFLAT -Wno-BLKANDNBLK -I"$root/modules/sound-jt6295/hdl" \
     --top-module tb_system_top -Mdir "$here/obj_system" $VFLAGS \

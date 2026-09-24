@@ -53,6 +53,8 @@ int main(int argc, char **argv) {
 
     dut = new Vtb_mem_top;
     dut->init = 1; dut->rd_late = 1; dut->burst_slow = 0;
+    dut->burst_fast = getenv("BURST_FAST") ? atoi(getenv("BURST_FAST")) : 1;
+    printf("bursts: %s\n", dut->burst_fast ? "one word a clock" : "one word every 2 clocks");
     dut->dl_we = 0; dut->dl_active = 1; dut->tst_hold = 1;
     dut->sd_req = dut->b_req = dut->oki_req = dut->srom_req = 0;
     for (int i = 0; i < 16; i++) tick();

@@ -3,7 +3,7 @@
 // the pins and the ROM image sent in through the download port at the APF
 // loader's rate (METHODOLOGY section 5.16).  sim/tb_system.cpp drives it.
 `default_nettype none
-module tb_system_top (
+module tb_system_top #(parameter bit BURST_FAST = 1'b1) (
     input  logic        clk,
     input  logic        mem_init,
     output logic        mem_ready,
@@ -52,7 +52,7 @@ module tb_system_top (
 
     nbajam_mem mem (
         .clk(clk), .clk_sdram(clk), .init(mem_init), .ready(mem_ready),
-        .rd_late(1'b1), .burst_slow(1'b0), .sram_slow(1'b0), .sram_slow_wr(1'b0),
+        .rd_late(1'b1), .burst_slow(1'b0), .burst_fast(BURST_FAST), .sram_slow(1'b0), .sram_slow_wr(1'b0),
         .dl_we(dl_we), .dl_addr(dl_addr), .dl_data(dl_data), .dl_active(dl_active),
         .sd_req(sd_req), .sd_we(sd_we), .sd_addr(sd_addr), .sd_wdata(sd_wdata), .sd_be(sd_be),
         .sd_ack(sd_ack), .sd_q(sd_q),

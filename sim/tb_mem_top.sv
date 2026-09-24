@@ -7,7 +7,7 @@ module tb_mem_top (
     input  logic        clk,
     input  logic        init,
     output logic        ready,
-    input  logic        rd_late, burst_slow,
+    input  logic        rd_late, burst_slow, burst_fast,
     input  logic        dl_we, input logic [24:0] dl_addr, input logic [7:0] dl_data,
     input  logic        dl_active,
     input  logic        sd_req, input logic sd_we, input logic [24:1] sd_addr,
@@ -39,7 +39,7 @@ module tb_mem_top (
 
     nbajam_mem dut (
         .clk(clk), .clk_sdram(clk), .init(init), .ready(ready),
-        .rd_late(rd_late), .burst_slow(burst_slow), .sram_slow(1'b0), .sram_slow_wr(1'b0),
+        .rd_late(rd_late), .burst_slow(burst_slow), .burst_fast(burst_fast), .sram_slow(1'b0), .sram_slow_wr(1'b0),
         .dl_we(dl_we), .dl_addr(dl_addr), .dl_data(dl_data), .dl_active(dl_active),
         .sd_req(sd_req), .sd_we(sd_we), .sd_addr(sd_addr), .sd_wdata(sd_wdata), .sd_be(sd_be),
         .sd_ack(sd_ack), .sd_q(sd_q),
