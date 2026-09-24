@@ -35,6 +35,15 @@
 // scaling MAME chases the headers of the rows the y step skips, and that is
 // counted in stat_skipmode rather than drawn right.
 //
+// Completion is paced to MAME's: dma_w sets a timer of 41 ns x pixels, with
+// pixels = width x height (unscaled), (width*256/xstep) x (height*256/ystep)
+// (scaled), and only when it fires is DMA_COMMAND bit 15 cleared and INT1
+// raised -- whether or not anything was drawn (op 0 blits still take their
+// time).  This blitter usually draws faster than that; it then waits.  So the
+// game's polling loops see what MAME's saw, and whatever they feed (the
+// title screen's static is seeded from timing) stays in step.  Smash TV's
+// blitter is paced to the same 41 ns, for the same reason.
+//
 // Cancel: the game's vblank handler writes 0 to the command register when a
 // blit is still running (hardware.md 7.4).  A write to the command register
 // while busy stops the blit at the next phase boundary (never mid-burst) and
@@ -160,11 +169,21 @@ module tunit_dma #(
     // ------------------------------------------------------------ state
     typedef enum logic [4:0] {
         S_IDLE, S_START, S_DIV, S_PREP, S_ROW, S_RD, S_RDGAP, S_GEN, S_DRAIN,
-        S_WR, S_WRGAP, S_ADV, S_DONE, S_HDR1, S_HDR2, S_HDR3, S_HDR4
+        S_WR, S_WRGAP, S_ADV, S_DONE, S_HDR1, S_HDR2, S_HDR3, S_HDR4, S_TDIV, S_TSET
     } state_t;
     state_t      state;
     logic        cancel;             // the command register was written while busy
     logic        restart;            // ... with bit 15 set: start it when the old one stops
+
+    // MAME's completion time, in clocks: pixels x 41 ns x 96 MHz = x 3.936
+    logic [31:0] pace_cnt, pace_target;
+    logic [19:0] mame_px_w, mame_px_h;   // the two factors of MAME's pixel count
+    logic        tdiv_y;                 // which factor the timing divider is on
+    logic [17:0] td_num, td_q;
+    logic [16:0] td_rem;
+    logic  [4:0] td_n;
+    wire  [17:0] td_r   = {td_rem[16:0], td_num[17]};
+    wire         td_ge  = ({1'b0, td_r} >= {3'b0, (tdiv_y ? ys : xs)});
 
     // divider for the start skip: q = (ss << 8) / xs, restoring, 16 steps
     logic [15:0] dv_num, dv_q;
@@ -222,6 +241,8 @@ module tunit_dma #(
     always_ff @(posedge clk) begin
         sb_we <= 1'b0;
         db_we <= 1'b0;
+        // before the state machine, so S_START's reset of it wins
+        if (pace_cnt != 32'hffff_ffff) pace_cnt <= pace_cnt + 32'd1;
 
         // ---------------------------------------------- CPU writes
         if (reg_wr) begin
@@ -273,6 +294,39 @@ module tunit_dma #(
                 row_off <= go_adj;
                 lim     <= lim_c;
                 iy      <= 20'd0;
+                pace_cnt <= '0;
+                // MAME's pixel count: offset out of range -> 0 (skipdma);
+                // otherwise w x h, or with scaling the two quotients
+                if (go_adj >= 32'h1000_0000) begin
+                    mame_px_w <= '0; mame_px_h <= '0; state <= S_TSET;
+                end else if ((regs[10] == 16'd0 || regs[10] == 16'h0100) && (regs[11] == 16'd0 || regs[11] == 16'h0100)) begin
+                    mame_px_w <= {10'd0, regs[6][9:0]}; mame_px_h <= {10'd0, regs[7][9:0]}; state <= S_TSET;
+                end else begin
+                    tdiv_y <= 1'b0; td_num <= {regs[6][9:0], 8'd0}; td_rem <= '0; td_q <= '0; td_n <= 5'd18;
+                    state <= S_TDIV;
+                end
+            end
+
+            // MAME's scaled count, (w << 8) / xstep then (h << 8) / ystep
+            S_TDIV: begin
+                td_num <= {td_num[16:0], 1'b0};
+                td_rem <= td_ge ? 17'(td_r - {2'b0, (tdiv_y ? ys : xs)}) : td_r[16:0];
+                td_q   <= {td_q[16:0], td_ge};
+                td_n   <= td_n - 5'd1;
+                if (td_n == 5'd1) begin
+                    if (!tdiv_y) begin
+                        mame_px_w <= {2'd0, td_q[16:0], td_ge};
+                        tdiv_y <= 1'b1; td_num <= hlim;
+                        td_rem <= '0; td_q <= '0; td_n <= 5'd18;
+                    end else begin
+                        mame_px_h <= {2'd0, td_q[16:0], td_ge};
+                        state <= S_TSET;
+                    end
+                end
+            end
+            S_TSET: begin
+                // clocks = pixels x 3.936 (41 ns at 96 MHz), as pixels x 4031 / 1024
+                pace_target <= 32'((64'(mame_px_w) * 64'(mame_px_h) * 64'd4031) >> 10);
                 // nothing to draw: op 0, or an offset out of range
                 if (c_cmd[3:0] == 4'd0 || go_adj >= 32'h1000_0000) state <= S_DONE;
                 else if (sskip != 16'd0) begin
@@ -444,7 +498,9 @@ module tunit_dma #(
                 // it starts, without it simply lands in the register
                 if ((cancel && restart) || (reg_wr && wr_reg == 5'd1 && merged[15]))
                     state <= S_START;
-                else begin
+                else if (pace_cnt < pace_target) begin
+                    // drawn; MAME's timer has not fired yet
+                end else begin
                     if (!(reg_wr && wr_reg == 5'd1)) regs[1][15] <= 1'b0;
                     irq   <= 1'b1;
                     state <= S_IDLE;

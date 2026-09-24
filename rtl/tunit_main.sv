@@ -184,19 +184,36 @@ module tunit_main #(
     // MAME's to_shiftreg / from_shiftreg (midtunit_v.cpp): 1024 pixels at
     // pixel address (bit address >> 3), copied into or out of the register.
     // Done as two 512-word bursts each way (docs/hardware.md 7.4).
+    //
+    // A WRITE is queued and the CPU released at once: the game's page clear
+    // is a FILL of 127 of them, and waiting out each 1024-word copy cost the
+    // CPU ~9,000 of its 114,251 cycles a frame (measured), where MAME's are
+    // instantaneous.  Order is kept: the queue has the burst port ahead of
+    // the blitter, and a CPU VRAM access or a shift-register READ waits
+    // until the queue is empty and the engine idle.
     logic        sr_we;
     logic  [9:0] sr_waddr, sr_raddr;
     logic [15:0] sr_q;
     sdpram #(.AW(10), .DW(16)) u_sr (
         .clk(clk), .we(sr_we), .waddr(sr_waddr), .wdata(b_data), .raddr(sr_raddr), .q(sr_q)
     );
-    typedef enum logic [2:0] { SR_IDLE, SR_GO, SR_GAP, SR_DONE } srst_t;
+    typedef enum logic [2:0] { SR_IDLE, SR_POP, SR_GO, SR_GAP, SR_DONE } srst_t;
     srst_t       srs;
     logic        sr_dir;                // 1 = VRAM <- register
     logic        sr_half;
     logic [18:0] sr_pix;
-    logic        sr_start, sr_busy;
-    assign sr_busy  = (srs != SR_IDLE);
+    logic        sr_start;              // a read: start now
+    logic [18:0] sr_rd_pix;
+    // the queue of writes: pixel addresses
+    logic        srq_we;
+    logic [18:0] srq_wdata, srq_q;
+    logic  [8:0] srq_wp, srq_rp;
+    sdpram #(.AW(8), .DW(19)) u_srq (
+        .clk(clk), .we(srq_we), .waddr(srq_wp[7:0]), .wdata(srq_wdata), .raddr(srq_rp[7:0]), .q(srq_q)
+    );
+    wire         srq_empty = (srq_wp == srq_rp);
+    wire         srq_full  = (srq_wp[7:0] == srq_rp[7:0]) && (srq_wp[8] != srq_rp[8]);
+    wire         sr_all_idle = (srs == SR_IDLE) && srq_empty;
     assign s_addr   = 24'(VRAM_W + {5'd0, 19'(sr_pix + {9'd0, sr_half, 9'd0})});
     assign s_len    = 10'd512;
     assign s_we     = sr_dir;
@@ -205,9 +222,16 @@ module tunit_main #(
     always_ff @(posedge clk) begin
         sr_we <= 1'b0;
         if (rst) begin
-            srs <= SR_IDLE; s_req <= 1'b0;
+            srs <= SR_IDLE; s_req <= 1'b0; srq_rp <= '0;
         end else case (srs)
-            SR_IDLE: if (sr_start) begin sr_half <= 1'b0; srs <= SR_GO; end
+            SR_IDLE:
+                if (sr_start)        begin sr_dir <= 1'b0; sr_pix <= sr_rd_pix; sr_half <= 1'b0; srs <= SR_GO; end
+                else if (!srq_empty) srs <= SR_POP;          // the queue's head is read this clock
+            SR_POP: begin
+                sr_dir <= 1'b1; sr_pix <= srq_q; sr_half <= 1'b0;
+                srq_rp <= srq_rp + 9'd1;
+                srs <= SR_GO;
+            end
             SR_GO: begin
                 s_req <= 1'b1;
                 if (own_srt && b_wr && !sr_dir) begin
@@ -215,7 +239,8 @@ module tunit_main #(
                 end
                 if (own_srt && b_done) begin s_req <= 1'b0; srs <= SR_GAP; end
             end
-            SR_GAP: if (sr_half) srs <= SR_DONE; else begin sr_half <= 1'b1; srs <= SR_GO; end
+            SR_GAP: if (!sr_half) begin sr_half <= 1'b1; srs <= SR_GO; end
+                    else srs <= sr_dir ? SR_IDLE : SR_DONE;      // a write is nobody's to wait for
             default: srs <= SR_IDLE;
         endcase
     end
@@ -226,7 +251,9 @@ module tunit_main #(
         else case (own)
             O_NONE: if (v_req)      own <= O_VID;
                     else if (s_req) own <= O_SRT;
-                    else if (d_req) own <= O_DMA;
+                    // not while shift-register writes are queued: the game's
+                    // blits into a page must land after its clear
+                    else if (d_req && sr_all_idle) own <= O_DMA;
             // an owner keeps the port to the end of its burst, and hands it
             // back once it has dropped its request (the controller's gap)
             O_VID: if (!v_req) own <= O_NONE;
@@ -264,8 +291,26 @@ module tunit_main #(
     );
     wire ic_hit = ic_q[23] && (ic_q[22:16] == A[22:16]);
 
+    // ---------------------------------------------- the work RAM cache
+    // Only the CPU ever touches work RAM, so a write-through cache of it can
+    // never disagree with the SDRAM.  Reads that hit answer at once; every
+    // write goes to both, and the SDRAM write is POSTED: the CPU is released
+    // on the clock it asks, and the next access that needs the SDRAM waits
+    // for the write to land.  4K words, direct mapped, {valid, tag, data}.
+    // (Measured before it: the CPU completed ~92% of its cycles on frames
+    // where the blitter keeps the SDRAM busy.)
+    logic        dc_we;
+    logic [11:0] dc_waddr;
+    logic [22:0] dc_wdata, dc_q;
+    sdpram #(.AW(12), .DW(23)) u_dcache (
+        .clk(clk), .we(dc_we), .waddr(dc_waddr), .wdata(dc_wdata),
+        .raddr(A[15:4]), .q(dc_q)
+    );
+    wire dc_hit = dc_q[22] && (dc_q[21:16] == A[21:16]);
+    logic posted;                       // a work-RAM write is still on its way to the SDRAM
+
     // ------------------------------------------------------------ the bus
-    typedef enum logic [2:0] { B_IDLE, B_WAIT, B_ICK, B_SRT, B_DONE } bst_t;
+    typedef enum logic [2:0] { B_IDLE, B_WAIT, B_ICK, B_DCK, B_SRT, B_DONE } bst_t;
     bst_t bst;
     tgt_t tl;
     logic [15:0] vr_lo;                 // the first pixel of a VRAM word
@@ -283,21 +328,34 @@ module tunit_main #(
         snd_strobe <= 1'b0;
         sr_start   <= 1'b0;
         ic_we      <= 1'b0;
+        dc_we      <= 1'b0;
+        srq_we     <= 1'b0;
+        if (srq_we) srq_wp <= srq_wp + 9'd1;
+        // the posted write lands; nothing else can be waiting on the port then
+        if (posted && sd_ack) begin posted <= 1'b0; sd_req <= 1'b0; end
         if (rst) begin
+            posted <= 1'b0; srq_wp <= '0;
             bst <= B_IDLE; ctrl <= 16'h0000; sd_req <= 1'b0;
             snd_cmd <= 8'h00; snd_reset <= 1'b0; snd_fake <= 8'd0;
             pq_i <= 3'd0; for (int i = 0; i < 8; i++) pq[i] <= 16'd0;
         end else case (bst)
-            B_IDLE: if (c_req) begin
+            // a new access that needs the SDRAM port waits for a posted write
+            // a VRAM access waits for the shift-register queue (order), and a
+            // queued write for room in it
+            B_IDLE: if (c_req && !(posted && (tgt == T_VRAM || tgt == T_GFX || (tgt == T_RAM && c_we)))
+                              && !(tgt == T_VRAM && (c_srt && c_we ? srq_full : !sr_all_idle))) begin
                 tl  <= tgt;
                 bst <= B_WAIT;
                 pal_wait <= 2'd0;
                 case (tgt)
                     T_VRAM: begin
-                        if (c_srt) begin
-                            // a shift-register transfer, either way
-                            sr_dir <= c_we;
-                            sr_pix <= A[21:3];
+                        if (c_srt && c_we) begin
+                            // a shift-register write: queued, the CPU released now
+                            srq_we <= 1'b1; srq_wdata <= A[21:3];
+                            c_ack <= 1'b1; bst <= B_DONE;
+                        end else if (c_srt) begin
+                            // a read: the register is loaded before the CPU goes on
+                            sr_rd_pix <= A[21:3];
                             sr_start <= 1'b1;
                             bst <= B_SRT;
                         end else begin
@@ -309,13 +367,17 @@ module tunit_main #(
                         end
                     end
                     T_RAM: begin
-                        sd_req <= 1'b1; sd_addr <= 24'(RAM_W + {6'd0, A[21:4]});
-                        sd_we <= c_we; sd_wdata <= c_wd; sd_be <= 2'b11;
+                        if (c_we) begin
+                            // write through, posted: the cache now, the SDRAM behind
+                            dc_we <= 1'b1; dc_waddr <= A[15:4]; dc_wdata <= {1'b1, A[21:16], c_wd};
+                            sd_req <= 1'b1; sd_addr <= 24'(RAM_W + {6'd0, A[21:4]});
+                            sd_we <= 1'b1; sd_wdata <= c_wd; sd_be <= 2'b11;
+                            posted <= 1'b1;
+                            c_ack <= 1'b1; bst <= B_DONE;
+                        end else bst <= B_DCK;
                     end
                     T_ROM: begin
                         // the cache is read on this clock; look at it on the next
-                        sd_addr <= 24'(PROG_W + {5'd0, A[22:4]});
-                        sd_we <= 1'b0; sd_be <= 2'b11;
                         bst <= c_we ? B_DONE : B_ICK;
                     end
                     T_GFX: begin
@@ -368,6 +430,9 @@ module tunit_main #(
                             if (tl == T_ROM) begin
                                 ic_we <= 1'b1; ic_waddr <= A[15:4]; ic_wdata <= {1'b1, A[22:16], sd_q};
                             end
+                            if (tl == T_RAM) begin
+                                dc_we <= 1'b1; dc_waddr <= A[15:4]; dc_wdata <= {1'b1, A[21:16], sd_q};
+                            end
                         end
                     T_CMOS, T_PAL: begin
                         // the RAMs answer a clock after the address
@@ -405,7 +470,17 @@ module tunit_main #(
             end
             B_ICK: begin
                 if (ic_hit) begin c_rd <= ic_q[15:0]; c_ack <= 1'b1; bst <= B_DONE; end
-                else begin sd_req <= 1'b1; bst <= B_WAIT; end
+                else if (!posted) begin
+                    sd_req <= 1'b1; sd_addr <= 24'(PROG_W + {5'd0, A[22:4]});
+                    sd_we <= 1'b0; sd_be <= 2'b11; bst <= B_WAIT;
+                end
+            end
+            B_DCK: begin
+                if (dc_hit) begin c_rd <= dc_q[15:0]; c_ack <= 1'b1; bst <= B_DONE; end
+                else if (!posted) begin
+                    sd_req <= 1'b1; sd_addr <= 24'(RAM_W + {6'd0, A[21:4]});
+                    sd_we <= 1'b0; sd_be <= 2'b11; bst <= B_WAIT;
+                end
             end
             B_SRT: if (srs == SR_DONE) begin
                 c_rd <= sr_q_first; c_ack <= 1'b1; bst <= B_DONE;

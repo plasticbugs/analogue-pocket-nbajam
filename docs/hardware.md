@@ -345,6 +345,18 @@ picture scanned during frame N−1 (MAME keeps two bitmaps), and that bitmap is
 palette indices, coloured with the palette as it is when read out (the
 match-up screen blinks its text by palette).
 
+### 7.5 Randomness comes from the beam
+
+The game's random-number routine (FF836E00) reads HCOUNT — the 34010's
+horizontal position counter — rotates its seed by it and adds SP. So every
+random choice depends on the dot the beam is at when that instruction runs:
+sub-line timing that MAME only approximates (it runs the CPU in time slices)
+and that no reimplementation will reproduce exactly. Consequence for the
+benches: a frame from the machine bench matches MAME's exactly only where
+nothing random has been drawn yet — boot, the CMOS screen, the copyright and
+credits screens match; the title screen's TV static (a random pattern) and
+everything the attract demo's AI decides do not, and are judged by eye.
+
 ## 8. ROMs
 
 | file | CRC32 | size | region | layout |
