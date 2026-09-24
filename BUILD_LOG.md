@@ -432,6 +432,15 @@ What is *not* proven is the real thing: nobody has held a Pocket running
 this yet. That's next — flash it, and read the on-screen debug panel the
 core draws during bring-up (docs/bringup.md says what healthy looks like).
 
+## The explainer video
+
+`tools/explainer/make_video.py` turns this log into a 9½-minute narrated
+video (`artifacts/video/nbajam_explainer.mp4`, not committed): 20 slides
+built from the project's own evidence — MAME's frames, our hardware's
+frames, the loudness comparison, the timing results — with a few seconds of
+our sound board playing. The [deep dive] topics are listed at the end as
+candidates for follow-up videos.
+
 ---
 
-*(continues as the work goes on)*
+*(continues as the work goes on — next: the first flash)*
