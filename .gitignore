@@ -2,7 +2,7 @@
 .mame/
 # The user's romset — never commit ROMs.  Anchored: an unanchored name also
 # matches pkg/pocket/Assets/<name>/ (METHODOLOGY section 5.6).
-/mycore/
+/nbajam/
 *.zip
 *.rom
 *.bin

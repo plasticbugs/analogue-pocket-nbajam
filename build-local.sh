@@ -1,5 +1,5 @@
 #!/bin/sh
-# Compile the My Core Pocket core with Quartus 18.1 in Docker (x86 emulation on ARM Macs).
+# Compile the NBA Jam Pocket core with Quartus 18.1 in Docker (x86 emulation on ARM Macs).
 #
 #   ./build-local.sh          full compile + package
 #   ./build-local.sh map      analysis & synthesis only (~a couple of minutes)
@@ -10,8 +10,8 @@ set -e
 cd "$(dirname "$0")"
 FLOW=${1:-compile}
 case "$FLOW" in
-    map) CMD="quartus_map --read_settings_files=on projects/mycore_pocket.qpf -c mycore_pocket" ;;
-    compile) CMD="quartus_sh --flow compile projects/mycore_pocket.qpf" ;;
+    map) CMD="quartus_map --read_settings_files=on projects/nbajam_pocket.qpf -c nbajam_pocket" ;;
+    compile) CMD="quartus_sh --flow compile projects/nbajam_pocket.qpf" ;;
     *) echo "usage: $0 [map|compile]"; exit 2 ;;
 esac
 docker run --rm --platform linux/amd64 \

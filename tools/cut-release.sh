@@ -55,7 +55,7 @@ done
 for d in "$OUT"/Cores/*/; do
     [ -f "$d/bitstream.rbf_r" ] || { echo "no bitstream for $(basename "$d") in run $RUN"; exit 1; }
 done
-for extra in mycore.mra README.md tools/mra_build.py; do
+for extra in nbajam.mra README.md tools/mra_build.py; do
     [ -f "$extra" ] && cp "$extra" "$OUT/$(basename "$extra")"
 done
 
@@ -77,7 +77,7 @@ if find "$OUT" -name '*.rom' | grep -q .; then
     echo "refusing to publish: a ROM is in the package"; exit 1
 fi
 
-VER=$(python3 -c "import json;print(json.load(open('pkg/pocket/Cores/plasticbugs.mycore/core.json'))['core']['metadata']['version'])")
+VER=$(python3 -c "import json;print(json.load(open('pkg/pocket/Cores/plasticbugs.nbajam/core.json'))['core']['metadata']['version'])")
 ZIP="$PWD/mcr68-pocket-sdcard.zip"
 rm -f "$ZIP"
 (cd "$OUT" && zip -qr "$ZIP" .)
