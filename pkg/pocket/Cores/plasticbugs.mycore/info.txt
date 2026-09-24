@@ -1,0 +1,16 @@
+My Core
+MANUFACTURER, YEAR
+
+One paragraph on what the game is and
+what is in the gateware. Plain
+characters only, 32 lines at most,
+* for bullets.
+
+ROMs are not included. Build the image
+from your own MAME mycore romset with
+mra_build.py and mycore.mra, and copy
+it to Assets/mycore/common/mycore.rom
+
+* A / Y  button 1
+* B / X  button 2
+* Select coin, Start start
