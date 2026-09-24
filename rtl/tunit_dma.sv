@@ -190,6 +190,12 @@ module tunit_dma #(
     logic [31:0] pace_cnt, pace_target;
     logic [19:0] mame_px_w, mame_px_h;   // the two factors of MAME's pixel count
     logic [39:0] mame_px;
+    // The product is kept in its own register and copied into pace_target a
+    // clock later: with pace_target itself the product's register, Quartus
+    // folded it into the DSP and left the product's final addition and the
+    // pace_cnt < pace_target compare in one clock (ninth compile, -0.54 ns).
+    // pace_target is only read in S_DONE, long after.
+    logic [51:0] pace_prod;
     logic        tdiv_y;                 // which factor the timing divider is on
     logic [17:0] td_num, td_q;
     logic [16:0] td_rem;
@@ -260,6 +266,7 @@ module tunit_dma #(
         db_we <= 1'b0;
         gdy_q    <= gdy;
         row_step <= 32'(gdy_q * wb);
+        pace_target <= 32'(pace_prod >> 10);
         // before the state machine, so S_START's reset of it wins
         if (pace_cnt != 32'hffff_ffff) pace_cnt <= pace_cnt + 32'd1;
 
@@ -350,7 +357,7 @@ module tunit_dma #(
                 state   <= S_TSET2;
             end
             S_TSET2: begin
-                pace_target <= 32'((52'(mame_px) * 52'd4031) >> 10);
+                pace_prod <= 52'(mame_px) * 52'd4031;
                 // nothing to draw: op 0, or an offset out of range
                 if (c_cmd[3:0] == 4'd0 || go_adj >= 32'h1000_0000) state <= S_DONE;
                 else if (sskip != 16'd0) begin

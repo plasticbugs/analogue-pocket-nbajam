@@ -441,6 +441,40 @@ frames, the loudness comparison, the timing results — with a few seconds of
 our sound board playing. The [deep dive] topics are listed at the end as
 candidates for follow-up videos.
 
+## Step 20 — The first flash
+
+The first time on a real Pocket: **it boots, and the game plays.** Two
+things were wrong, and both were exactly the kind simulation can't see by
+itself.
+
+**The colours were scrambled, but the shapes were right.** And a debug
+switch in the menu, "slow bursts", made the picture perfect. The memory
+chip hands back data in bursts; our fast mode asks for a new word *every*
+clock tick, so each word is on the wires for only about 10 nanoseconds, and
+the real board's wiring evidently doesn't leave enough margin to catch it
+reliably. Slowing down gives each word more time on the wires. The drawing
+logic was fine all along — only the handoff between two chips wasn't. The
+next build defaults to the "normal" speed that earlier cores run on real
+Pockets, with the menu offering all three so one flash can compare them.
+**[deep dive: why a memory that works in simulation can fail on the board]**
+
+**There was no sound — just pops and clicks.** The cause was a self-check.
+Before the game starts, the core writes two test values into the Pocket's
+SRAM chip and reads them back, to prove the chip works. But the SRAM also
+holds the sound board's program, which the loader had *just* written there,
+and the two test values landed on top of the last two words of it: the
+"start here" address the sound processor reads when it powers on. So the
+sound processor started at a nonsense address and ran garbage — hence the
+clicks — while the self-check proudly reported a pass. In simulation the
+test never ran in the same place, so it never collided. The fix, borrowed
+from the Smash TV core, which had once made a similar mistake: read what's
+there first, and put it back afterwards. And the memory test bench now runs
+the real self-check in the real order and then checks all 131,072 bytes of
+the sound program; put the old behaviour back and the bench fails on exactly
+those four bytes.
+
+The lesson, again: a test that says "pass" only proves what it looks at.
+
 ---
 
-*(continues as the work goes on — next: the first flash)*
+*(continues as the work goes on)*
