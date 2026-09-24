@@ -45,7 +45,7 @@ to ask for before any photograph of gameplay (METHODOLOGY 5.18).
 
 ## The panel
 
-Menu → **Bring-up: panel**. Four rows of 32 squares along the bottom edge of
+Menu → **Bring-up: panel** (restore it first; see "The debug switches"). Four rows of 32 squares along the bottom edge of
 the picture. Green is 1. Read each row from the end where row 0 shows
 `1010 1010`.
 
@@ -76,6 +76,12 @@ read a pass (log, below). The test now puts back what it overwrote, and
 `sim/run_mem.sh` checks all 128 KB of the program after it.
 
 ## The debug switches
+
+**Not on the release menu.** They were taken off `interact.json` once the
+core worked; the logic is still in `core_top.sv` and every switch's
+all-clear value is the tested setting. To debug on hardware, restore their
+entries (ids 90-94) from commit `684fce7`'s `interact.json` -- the panel
+(id 90) included.
 
 | menu item | what it does | healthy setting |
 |---|---|---|

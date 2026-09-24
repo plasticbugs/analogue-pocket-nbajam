@@ -26,9 +26,6 @@ A shoot, B pass, X / Y / R turbo, Select coin, Start start.
 
 - **Free Play**, **Cabinet** (2 or 4 player), **Attract Video Clips**.
 - **Service Switch** + Reset Core: the game's own test menu.
-- **SDRAM bursts**: leave on **Normal**. *Fast* scrambles the colours on
-  hardware; *Slow* also works.
-- The **Bring-up** items are diagnostics (docs/bringup.md).
 
 ## Known limits
 
