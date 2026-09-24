@@ -110,3 +110,8 @@ that died belong here as much as the one that lived.
   clicks, in attract and gameplay: the SRAM self-test wrote 0x1fffe/0x1ffff
   through a 16-bit port, landing on the 6809's NMI/RESET vectors after the
   download (reproduced in `sim/run_mem.sh`: ROM bytes 1FFFC–1FFFF damaged).
+- 2026-09-24, `6f7d0f99…` again (the card had not been updated): with the
+  Normal/Fast/Slow list absent, only "SDRAM slow bursts" gave a clean
+  picture; still silent. Says nothing about compile 10.
+- 2026-09-24, `05629f94…` (compile 10): **"it's perfect"** — picture and
+  sound. The SRAM self-test fix is confirmed on hardware.
