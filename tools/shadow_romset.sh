@@ -19,4 +19,8 @@ for spec in $PLACEHOLDERS; do
     p=${spec%%:*}; n=${spec##*:}
     [ -e "$src/$p" ] || python3 -c "open('$dst/$p','wb').write(b'\xff'*$n)"
 done
+# Some dumps carry the OKI ROMs under their older names; MAME looks a
+# directory up by name, so give it the names 0.288 asks for as well.
+[ -e "$src/nbau12.u12" ] && ln -sf "$src/nbau12.u12" "$dst/l1_nba_jam_u12_sound_rom.u12"
+[ -e "$src/nbau13.u13" ] && ln -sf "$src/nbau13.u13" "$dst/l1_nba_jam_u13_sound_rom.u13"
 echo "shadow romset ready: $dst"

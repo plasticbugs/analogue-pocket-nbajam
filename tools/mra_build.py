@@ -69,9 +69,15 @@ def get_part(parts, node):
     if name is None:
         return literal_bytes(node)
     data = parts.get(name.lower())
+    crc = node.get('crc')
+    if data is None and crc:
+        # Older dumps carry some files under other names (nbau12.u12 for
+        # l1_nba_jam_u12_sound_rom.u12); the CRC identifies them exactly.
+        want = int(crc, 16)
+        data = next((d for d in parts.values()
+                     if zlib.crc32(d) & 0xffffffff == want), None)
     if data is None:
         sys.exit(f'error: {name} is missing from the romset')
-    crc = node.get('crc')
     if crc:
         actual = zlib.crc32(data) & 0xffffffff
         if actual != int(crc, 16):

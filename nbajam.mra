@@ -3,25 +3,68 @@
         The ROM recipe.  tools/mra_build.py reads this and your MAME romset and
         writes nbajam.rom; any standard MRA tool does the same.
 
-        One <part> per ROM file, in image order.  Interleaved ROMs go inside an
-        <interleave output="16"> (or 32): each `map` digit is one byte of the
-        output word, left to right, and its value is the 1-based byte of THIS
-        part that lands there, 0 for none.  So two byte-wide ROMs making
-        big-endian 16-bit words are map="10" (this part is the first byte) and
-        map="01".  Check the result against the bytes MAME hands the CPU with
-        tools/verify_rom.py; do not reason about it.  METHODOLOGY section 5.7.
+        Image layout (byte offsets; docs/core-design.md section 3), every
+        region at a power-of-two boundary and none padded:
 
-        The image layout must match target/pocket/nbajam_mem.sv and
-        sim/tb_mem.cpp.
+          0x000000  graphics ROM   8 MB   16-bit words, LITTLE-endian in the
+                                          word: SDRAM word k = {byte 2k+1,
+                                          byte 2k} of MAME's "video" region
+          0x800000  TMS34010 prog  1 MB   SDRAM word k = {ug12[k], uj12[k]} =
+                                          the 34010's little-endian word k
+          0x900000  OKI ADPCM      1 MB   u12 then u13, as bytes
+          0xa00000  6809 program 128 KB   u3, as bytes
+
+        The Pocket loads the image a byte at a time and the memory module
+        pairs each two bytes into one SDRAM word, first byte high.  So a
+        word-wide region whose CPU reads little-endian words puts the odd byte
+        first.  For the graphics that is (per 4 bytes of MAME's region)
+        byte 1, byte 0, byte 3, byte 2 = uj, ug, uj, ug.
+
+        tools/verify_rom.py checks every region against the bytes MAME hands
+        the chips; do not reason about the maps, run it.
     -->
-    <name>NBA Jam</name>
+    <name>NBA Jam (rev 3.01 4/07/93)</name>
     <setname>nbajam</setname>
     <rbf>nbajam</rbf>
-    <mameversion>0000</mameversion>
-    <year>1980</year>
-    <manufacturer>MANUFACTURER</manufacturer>
-    <switches default="ff,ff"/>
-    <rom index="0" zip="nbajam.zip" md5="none">
-        <!-- <part name="prog0.bin" crc="00000000"/> -->
+    <mameversion>0288</mameversion>
+    <year>1993</year>
+    <manufacturer>Midway</manufacturer>
+    <switches default="fd,7f"/>
+    <rom index="0" zip="nbajam.zip" md5="b6a0b85732103ba8ec4fa6a65ddd2c32">
+        <!-- graphics: MAME LOAD32_BYTE, ug = bytes 0 and 2, uj = bytes 1 and 3 -->
+        <interleave output="32">
+            <part name="l1_nba_jam_game_rom_uj14.uj14" crc="b34b7af3" map="1000"/>
+            <part name="l1_nba_jam_game_rom_ug14.ug14" crc="04bb9f64" map="0100"/>
+            <part name="l1_nba_jam_game_rom_uj19.uj19" crc="8130a8a2" map="0010"/>
+            <part name="l1_nba_jam_game_rom_ug19.ug19" crc="a8f22fbb" map="0001"/>
+        </interleave>
+        <interleave output="32">
+            <part name="l1_nba_jam_game_rom_uj16.uj16" crc="d2e554f1" map="1000"/>
+            <part name="l1_nba_jam_game_rom_ug16.ug16" crc="8591c572" map="0100"/>
+            <part name="l1_nba_jam_game_rom_uj20.uj20" crc="f9cebbb6" map="0010"/>
+            <part name="l1_nba_jam_game_rom_ug20.ug20" crc="44fd6221" map="0001"/>
+        </interleave>
+        <interleave output="32">
+            <part name="l1_nba_jam_game_rom_uj17.uj17" crc="b2e14981" map="1000"/>
+            <part name="l1_nba_jam_game_rom_ug17.ug17" crc="6f921886" map="0100"/>
+            <part name="l1_nba_jam_game_rom_uj22.uj22" crc="59a95878" map="0010"/>
+            <part name="l1_nba_jam_game_rom_ug22.ug22" crc="ab05ed89" map="0001"/>
+        </interleave>
+        <interleave output="32">
+            <part name="l1_nba_jam_game_rom_uj18.uj18" crc="fdee0037" map="1000"/>
+            <part name="l1_nba_jam_game_rom_ug18.ug18" crc="5162d3d6" map="0100"/>
+            <part name="l1_nba_jam_game_rom_uj23.uj23" crc="427d2eee" map="0010"/>
+            <part name="l1_nba_jam_game_rom_ug23.ug23" crc="7b934c7a" map="0001"/>
+        </interleave>
+        <!-- TMS34010 program: MAME LOAD16_BYTE, uj12 = low byte, ug12 = high -->
+        <interleave output="16">
+            <part name="l3_nba_jam_game_rom_ug12.ug12" crc="407d3390" map="10"/>
+            <part name="l3_nba_jam_game_rom_uj12.uj12" crc="b93e271c" map="01"/>
+        </interleave>
+        <!-- OKI6295 samples -->
+        <part name="l1_nba_jam_u12_sound_rom.u12" crc="b94847f1"/>
+        <part name="l1_nba_jam_u13_sound_rom.u13" crc="b6fe24bd"/>
+        <!-- 6809 program -->
+        <part name="l2_nba_jam_u3_sound_rom.u3" crc="3a3ea480"/>
     </rom>
 </misterromdescription>
