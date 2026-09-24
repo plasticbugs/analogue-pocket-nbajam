@@ -144,9 +144,9 @@ int main(int argc, char **argv) {
             }
             capturing = false;
             fprintf(log, "in0 %04x in1 %04x  ", in[0], in[1]);
-            fprintf(log, "frame %ld pc %08x blit %llu late %u skip %u snd_stalls %u snd_pc %04x unimpl %d\n",
+            fprintf(log, "frame %ld pc %08x blit %llu late %u skip %u snd_stalls %u unimpl %d\n",
                     frame, dut->dbg_pc, (unsigned long long)busy, dut->dbg_late, dut->dbg_skipmode,
-                    dut->dbg_snd_stalls, 0, dut->dbg_unimpl);
+                    dut->dbg_snd_stalls, dut->dbg_unimpl);
             fflush(log);
             busy = 0;
             // inputs for the frame that starts now (MAME applies them in frame_done)
