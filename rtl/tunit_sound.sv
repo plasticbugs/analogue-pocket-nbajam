@@ -231,7 +231,7 @@ module tunit_sound (
     // ---------------- DAC ----------------
     logic [7:0] dac;
     always_ff @(posedge clk)
-        if (rst) dac <= 8'h80;
+        if (rst) dac <= 8'h00;          // MAME's DAC powers up at 0 (measured: -3276 from t = 0)
         else if (sel_dac && wr_now) dac <= cpu_dout;
 
     // ---------------- OKI6295 ----------------

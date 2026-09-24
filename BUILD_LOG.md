@@ -268,6 +268,50 @@ clips), button names, and **saving the game's settings and high scores** to
 the SD card — borrowed from S.T.U.N. Runner, where getting the Pocket to
 actually write the file took several hardware experiments.
 
+## Step 10 — Why was the game running late? (a speed bug)
+
+Frame 999 matched MAME perfectly, but by frame 1400 MAME was already showing
+the attract-mode basketball game while ours was still on the black
+"loading" screen — about half a second behind. Nothing was drawn *wrong*; it
+was *late*.
+
+Measuring how much work the CPU got done per frame explained it. The real
+CPU completes 114,251 clock cycles of work every frame. Ours: **87,400 — only
+76% speed.** The reason is a detail of the real chip: the TMS34010 has a tiny
+built-in memory (an *instruction cache*) that holds recently used program
+code, so most instructions don't have to be fetched from the slow main
+memory. MAME's timing assumes that. Ours fetched every instruction from the
+Pocket's SDRAM, which takes about as long as a whole instruction should. On
+quiet screens the game just waits for the next frame anyway, so nothing
+looked wrong — until a busy stretch.
+
+Fix: an instruction cache of our own (4,096 words). The program ROM never
+changes, so the cache can never hold a wrong value. Result: **full speed on
+quiet screens (114,247 of 114,251), and 92% while the blitter is working
+hardest** — the remaining gap is the CPU's data waiting behind the blitter's
+bursts, a known next thing to improve. **[deep dive: caches, and why "it
+looks right" can hide a speed problem]**
+
+## Step 11 — The first real compile
+
+The whole design, turned into an actual FPGA configuration by Intel's
+Quartus tools: it **fits** — 72% of the chip's logic, 39% of its memory
+blocks. But it **failed timing**: some signals couldn't get through their
+logic within one tick of the 96 MHz clock. All of them were inside the CPU,
+which by design only takes a step every third tick — the tools just hadn't
+been told that. Smash TV's constraint file says exactly that ("these paths
+have three ticks"), plus similar rules for the sound CPU, so those were
+carried over. A second compile is running to check.
+
+## Step 12 — First listen
+
+MAME's audio and ours, recorded over the same 27 seconds of boot and
+attract mode: both are silent (the attract sequence plays no sound in this
+setup) — but even the silence was useful. The small DC offset left by the
+sound board's DAC sitting at zero came out at −3280 in ours and −3276 in
+MAME's: the DAC's scaling and polarity match. A played game is being
+recorded in both now, to compare music and speech.
+
 ---
 
 *(continues as the work goes on)*
