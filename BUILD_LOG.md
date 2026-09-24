@@ -383,7 +383,24 @@ voices as full-scale; we'd divided by four). But that capture turned out to
 contain no speech at all — MAME's own sound CPU never started a sample in
 those 66 seconds. So a second test: while the game sits quietly, MAME is
 made to send every sound command from 0 to 95 in turn, recorded, and the
-same sequence replayed into ours. That comparison is running.
+same sequence replayed into ours.
+
+Result of that sweep: all three sound chips (music, speech, and the simple
+"DAC" channel) were busy, and **our loudness was within 6% of MAME's in
+every one of the 66 seconds** — mostly within 3%. The waveforms themselves
+drift out of step after a few seconds (two clocks that differ by a hair
+eventually disagree about exactly when a note starts), so "same loudness,
+second by second" is the fair test, not "same wiggle, sample by sample".
+**[deep dive: how do you prove two recordings are the same sound?]**
+
+## Step 18 — The last timing failure
+
+Compile seven got the design to −0.36 ns: every failure was now one path,
+from the little queue that holds the ROM image while it streams in from the
+SD card, straight to the memory chip's address pins. Adding one more
+"waiting room" register between them costs one clock per word — the loader
+gives us sixteen — and the memory test (the whole 10 MB image in at the
+Pocket's rate, then read back byte for byte) still passes.
 
 ---
 

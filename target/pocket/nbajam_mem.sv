@@ -96,10 +96,13 @@ module nbajam_mem (
     // It must also have been sampled while the FIFO was already non-empty:
     // sampled on the clock a word is written into an empty FIFO, the RAM
     // returns the slot's OLD contents (sim/run_mem.sh failed on exactly that).
-    logic [40:0] dlq_head;
-    logic  [6:0] dlq_rp_d;
-    logic        dlq_full_at_rd;
-    wire         head_ok   = dlq_full_at_rd && (dlq_rp_d == dlq_rp);
+    // Registered once, Quartus made the register the RAM's own output, and
+    // that output still reached the address pins in one clock (-0.36 ns,
+    // seventh compile); a second stage puts a plain flop in between.
+    logic [40:0] dlq_head1, dlq_head;
+    logic  [6:0] dlq_rp_d, dlq_rp_dd;
+    logic        dlq_full_at_rd, dlq_full_at_rd2;
+    wire         head_ok   = dlq_full_at_rd2 && (dlq_rp_dd == dlq_rp);
     wire         nb        = dl_we && !dl_we_d;       // one byte, once
     wire         dl_sram   = (dl_addr >= SROM_B);
     wire  [24:1] dl_target = dl_sram ? 24'((dl_addr - SROM_B) >> 1) : dl_addr[24:1];
@@ -122,9 +125,12 @@ module nbajam_mem (
             end
             if (pop_sd || pop_sr) dlq_rp <= dlq_rp + 7'd1;
         end
-        dlq_head       <= dlq[dlq_rp[5:0]];
-        dlq_rp_d       <= init ? 7'h7f : dlq_rp;
-        dlq_full_at_rd <= !init && !dlq_empty;
+        dlq_head1       <= dlq[dlq_rp[5:0]];
+        dlq_rp_d        <= init ? 7'h7f : dlq_rp;
+        dlq_full_at_rd  <= !init && !dlq_empty;
+        dlq_head        <= dlq_head1;
+        dlq_rp_dd       <= init ? 7'h7f : dlq_rp_d;
+        dlq_full_at_rd2 <= !init && dlq_full_at_rd;
     end
 
     // ---------------------------------------------------- SDRAM clients
