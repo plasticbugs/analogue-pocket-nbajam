@@ -26,6 +26,13 @@ for d in $(ls -d modules/*/ 2>/dev/null | sort); do
     for f in $(cd "$d" && ls *.v 2>/dev/null | sort); do
         echo "set_global_assignment -name VERILOG_FILE [file join \$::quartus(qip_path) \"../modules/$m/$f\"]"
     done
+    # cores that keep their sources in hdl/ (jt6295)
+    if [ -d "$d/hdl" ]; then
+        echo "set_global_assignment -name SEARCH_PATH [file join \$::quartus(qip_path) \"../modules/$m/hdl\"]"
+        for f in $(cd "$d/hdl" && ls *.v 2>/dev/null | sort); do
+            echo "set_global_assignment -name VERILOG_FILE [file join \$::quartus(qip_path) \"../modules/$m/hdl/$f\"]"
+        done
+    fi
 done
 } > "$out"
 echo "wrote $out"

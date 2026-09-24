@@ -13,7 +13,7 @@ verilator --version >/dev/null 2>&1 || { echo "verilator not found" >&2; exit 2;
 verilator --cc --exe --build -j "${JOBS:-8}" -O2 \
     -Wall -Wno-DECLFILENAME -Wno-UNUSEDSIGNAL -Wno-UNUSEDPARAM \
     -Wno-PINCONNECTEMPTY -Wno-TIMESCALEMOD \
-    -Wno-BLKSEQ -Wno-MULTIDRIVEN -Wno-WIDTHTRUNC -Wno-WIDTHEXPAND -Wno-SYNCASYNCNET \
+    -Wno-BLKSEQ -Wno-MULTIDRIVEN -Wno-WIDTHTRUNC -Wno-WIDTHEXPAND -Wno-SYNCASYNCNET -Wno-UNUSEDSIGNAL \
     --top-module tb_mem_top -Mdir obj_mem \
     ../target/pocket/nbajam_mem.sv ../target/pocket/sdram_ctrl.sv ../target/pocket/sram_port.sv \
     sdram_model.sv sram_model.sv tb_mem_top.sv tb_mem.cpp > obj_mem.log 2>&1 \

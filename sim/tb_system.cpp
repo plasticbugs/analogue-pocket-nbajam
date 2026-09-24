@@ -1,154 +1,180 @@
-// Driver for sim/tb_system_top.sv: the whole machine through the Pocket's real
-// memory glue.  Loads a ROM image the way the Pocket's loader does, runs
-// frames, and writes what the core drew.
+// The whole machine through the Pocket's real memory glue (nbajam_mem, the
+// SDRAM controller, the SRAM port, behavioural chips), the image pushed in
+// through the download port at the loader's rate (-gap, default 8 clocks a
+// byte, strobe held 4).  Otherwise as sim/machine/tb_machine.cpp, whose
+// options it takes.
 //
-//   obj_system/Vtb_system_top [rom] -frames N [-gap N] [-o DIR] [-snap a,b,c]
+//   obj/Vtb_system_top image.rom -frames N [-inputs script] [-snap f1,f2,...]
+//                       [-out dir] [-wav file]
 //
-// With no rom a pseudo-random image is used, which is enough to exercise the
-// memory path and the skeleton core; a real machine needs the real image.
-//
-// -gap is clocks between download bytes.  The APF loader delivers one per 8.
-// A core that survives 12 and fails at 8 has the fault METHODOLOGY 5.16 is
-// about, so 8 is the default and smaller is a harder test.
+// Frames are counted as MAME counts them (the start of each vblank, the
+// raster starting at line 274 as MAME's does), so frame N here is MAME's
+// frame N.  -snap writes frame_NNNNN.rgb (400x254 RGB) of the picture
+// SCANNED during that frame; MAME's screen:pixels() for frame N+1 is the same
+// picture (tools/render_model.py says why).  Inputs: the same scripts as
+// tools/inputs/*.txt, "frame port field value", MAME's field names.
 #include "Vtb_system_top.h"
 #include "verilated.h"
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
-#include <set>
 #include <string>
 #include <vector>
-
-static const int W = 320, H = 224;
-static const uint32_t IMG = 0x190000;      // must match <core>_mem.sv's layout
+#include <map>
+#include <set>
+#include <fstream>
+#include <sstream>
+#include <chrono>
 
 static Vtb_system_top *dut;
-static void tick() { dut->clk = 0; dut->eval(); dut->clk = 1; dut->eval(); }
+static uint64_t clocks = 0;
 
-static void write_png(const std::string &path, const std::vector<uint8_t> &rgb);
+struct Ev { std::string port, field; int v; };
+
+static int bit_of(const std::string &port, const std::string &f, int &which) {
+    // which: 0 IN0, 1 IN1, 2 IN2
+    static const std::map<std::string, int> in0 = {
+        {"P1 Up", 0}, {"P1 Down", 1}, {"P1 Left", 2}, {"P1 Right", 3},
+        {"P1 Shoot / Block", 4}, {"P1 Pass / Steal", 5}, {"P1 Turbo", 6},
+        {"P2 Up", 8}, {"P2 Down", 9}, {"P2 Left", 10}, {"P2 Right", 11},
+        {"P2 Shoot / Block", 12}, {"P2 Pass / Steal", 13}, {"P2 Turbo", 14}};
+    static const std::map<std::string, int> in1 = {
+        {"Coin 1", 0}, {"Coin 2", 1}, {"1 Player Start", 2}, {"Tilt", 3},
+        {"Service Mode", 4}, {"2 Players Start", 5}, {"Service 1", 6},
+        {"Coin 3", 7}, {"Coin 4", 8}, {"3 Players Start", 9}, {"4 Players Start", 10}};
+    if (port == ":IN0" && in0.count(f)) { which = 0; return in0.at(f); }
+    if (port == ":IN1" && in1.count(f)) { which = 1; return in1.at(f); }
+    return -1;
+}
 
 int main(int argc, char **argv) {
     Verilated::commandArgs(argc, argv);
-    int frames = 10, gap = 8, hold = 4;
-    std::string rom, out = ".";
-    std::set<int> snaps;
+    std::string image, inputs, outdir = ".", wav;
+    long frames = 10;
+    int gap = 8;
+    std::set<long> snaps;
     for (int i = 1; i < argc; i++) {
         std::string a = argv[i];
-        auto next = [&] { return std::string(argv[++i]); };
-        if (a == "-frames") frames = atoi(next().c_str());
-        else if (a == "-gap") gap = atoi(next().c_str());
-        else if (a == "-o") out = next();
-        else if (a == "-snap") {
-            std::string s = next();
-            for (size_t p = 0; p < s.size();) {
-                size_t c = s.find(',', p); if (c == std::string::npos) c = s.size();
-                snaps.insert(atoi(s.substr(p, c - p).c_str())); p = c + 1;
-            }
-        } else if (a[0] != '+' && a[0] != '-') rom = a;
+        if (a == "-frames" && i + 1 < argc) frames = atol(argv[++i]);
+        else if (a == "-inputs" && i + 1 < argc) inputs = argv[++i];
+        else if (a == "-gap" && i + 1 < argc) gap = atoi(argv[++i]);
+        else if (a == "-out" && i + 1 < argc) outdir = argv[++i];
+        else if (a == "-wav" && i + 1 < argc) wav = argv[++i];
+        else if (a == "-snap" && i + 1 < argc) {
+            std::stringstream ss(argv[++i]); std::string t;
+            while (std::getline(ss, t, ',')) snaps.insert(atol(t.c_str()));
+        } else if (a[0] != '-' && a[0] != '+') image = a;
     }
-    if (hold >= gap) hold = gap - 1;
-    if (snaps.empty()) snaps.insert(frames);
-
-    std::vector<uint8_t> image(IMG);
-    if (!rom.empty()) {
-        FILE *f = fopen(rom.c_str(), "rb");
-        if (!f || fread(image.data(), 1, IMG, f) != IMG) {
-            fprintf(stderr, "cannot read %u bytes from %s\n", IMG, rom.c_str()); return 2;
+    std::vector<uint8_t> img(0xa20000);
+    { FILE *f = fopen(image.c_str(), "rb");
+      if (!f || fread(img.data(), 1, img.size(), f) != img.size()) { fprintf(stderr, "cannot read %s\n", image.c_str()); return 2; }
+      fclose(f); }
+    std::map<long, std::vector<Ev>> script;
+    if (!inputs.empty()) {
+        std::ifstream in(inputs); std::string line;
+        if (!in) { fprintf(stderr, "cannot read inputs %s\n", inputs.c_str()); return 2; }
+        while (std::getline(in, line)) {
+            if (line.empty() || line[0] == '#') continue;
+            std::istringstream is(line); long fr; std::string port; is >> fr >> port;
+            std::string rest; std::getline(is, rest);
+            size_t e = rest.find_last_not_of(" \t"); rest = rest.substr(0, e + 1);
+            size_t sp = rest.find_last_of(' ');
+            int v = atoi(rest.substr(sp + 1).c_str());
+            std::string field = rest.substr(0, sp); field = field.substr(field.find_first_not_of(' '));
+            script[fr].push_back({port, field, v});
+            int which; if (bit_of(port, field, which) < 0) fprintf(stderr, "input not known: %s %s\n", port.c_str(), field.c_str());
         }
-        fclose(f);
-    } else {
-        uint32_t x = 0x2545F491;
-        for (auto &b : image) { x ^= x << 13; x ^= x >> 17; x ^= x << 5; b = uint8_t(x >> 11); }
     }
 
     dut = new Vtb_system_top;
-    dut->reset = 1; dut->pause = 0; dut->dl_we = 0;
-    dut->dswa = dut->dswb = 0xff;
-    dut->in0 = dut->in1 = dut->in2 = 0xff;         // active low: nothing pressed
+    uint16_t in[3] = {0xffff, 0xffff, 0xffff};
+    dut->dsw = 0x7ffd;
+    dut->in0 = in[0]; dut->in1 = in[1]; dut->in2 = in[2];
+    auto tick = [&]() { dut->clk = 0; dut->eval(); dut->clk = 1; dut->eval(); clocks++; };
+    dut->mem_init = 1; dut->reset = 1; dut->dl_active = 1; dut->dl_we = 0;
     for (int i = 0; i < 16; i++) tick();
-    long t = 0; while (!dut->mem_ready && t++ < 200000) tick();
-    if (!dut->mem_ready) { printf("FAIL  the memory never came ready\n"); return 1; }
-
-    for (uint32_t a = 0; a < IMG; a++) {
-        dut->dl_addr = a; dut->dl_data = image[a]; dut->dl_we = 1;
-        for (int i = 0; i < hold; i++) tick();
+    dut->mem_init = 0;
+    while (!dut->mem_ready) tick();
+    printf("downloading %zu bytes, one per %d clocks...\n", img.size(), gap); fflush(stdout);
+    for (uint32_t a = 0; a < img.size(); a++) {
+        dut->dl_addr = a; dut->dl_data = img[a]; dut->dl_we = 1;
+        for (int i = 0; i < 4; i++) tick();
         dut->dl_we = 0;
-        for (int i = hold; i < gap; i++) tick();
+        for (int i = 4; i < gap; i++) tick();
     }
-    for (int i = 0; i < 400; i++) tick();
+    for (int i = 0; i < 2000; i++) tick();
+    dut->dl_active = 0;
+    for (int i = 0; i < 64; i++) tick();
     dut->reset = 0;
+    clocks = 0;
 
-    std::vector<uint8_t> frame(W * H * 3, 0);
-    int px = 0, frame_no = 0, watchdogs = 0;
-    bool in_vblank = true, cap = false;
-    while (frame_no <= frames) {
-        bool want = dut->pix_ce && dut->de;
+    long frame = 0;
+    bool vb_q = true;
+    std::vector<uint8_t> pic(400 * 254 * 3);
+    int px = 0; long line_px = 0; bool capturing = false;
+    std::vector<int16_t> samples;
+    uint32_t sdiv = 0;
+    auto t0 = std::chrono::steady_clock::now();
+    uint64_t busy = 0, busy_max = 0;
+    FILE *log = fopen((outdir + "/machine.log").c_str(), "w");
+
+    while (frame < frames) {
         tick();
-        if (dut->watchdog_reset) watchdogs++;
-        if (cap && px < W * H) {
-            frame[3 * px + 0] = (dut->rgb >> 16) & 0xff;
-            frame[3 * px + 1] = (dut->rgb >> 8) & 0xff;
-            frame[3 * px + 2] = dut->rgb & 0xff;
-            px++;
-        }
-        cap = want;
-        if (dut->vblank && !in_vblank) {
-            if (snaps.count(frame_no) && px > 0) {
-                char p[512]; snprintf(p, sizeof p, "%s/%04d.png", out.c_str(), frame_no);
-                write_png(p, frame);
-                printf("frame %d: %d pixels\n", frame_no, px);
+        if (dut->dbg_blit_busy) busy++;
+        // audio at 48 kHz
+        if (!wav.empty() && ++sdiv == 2000) { sdiv = 0; samples.push_back(dut->snd); }
+        // picture: the frame's visible pixels as they are emitted
+        if (dut->pix_ce) {
+            // de is registered on the dot enable: sample the dot after
+            if (dut->de) {
+                if (capturing && px < 400 * 254) {
+                    pic[3 * px] = dut->rgb >> 16; pic[3 * px + 1] = dut->rgb >> 8; pic[3 * px + 2] = dut->rgb;
+                    px++;
+                }
             }
-            frame_no++; px = 0;
-            std::fill(frame.begin(), frame.end(), 0);
         }
-        in_vblank = dut->vblank;
+        bool vb = dut->vblank;
+        if (!vb && vb_q) { capturing = true; px = 0; }
+        if (vb && !vb_q) {
+            frame++;
+            if (busy > busy_max) busy_max = busy;
+            if (snaps.count(frame)) {
+                char name[512]; snprintf(name, sizeof name, "%s/frame_%05ld.rgb", outdir.c_str(), frame);
+                FILE *f = fopen(name, "wb"); fwrite(pic.data(), 1, pic.size(), f); fclose(f);
+            }
+            capturing = false;
+            fprintf(log, "in0 %04x in1 %04x  ", in[0], in[1]);
+            fprintf(log, "frame %ld pc %08x blit %llu late %u skip %u snd_stalls %u snd_pc %04x unimpl %d\n",
+                    frame, dut->dbg_pc, (unsigned long long)busy, dut->dbg_late, dut->dbg_skipmode,
+                    dut->dbg_snd_stalls, 0, dut->dbg_unimpl);
+            fflush(log);
+            busy = 0;
+            // inputs for the frame that starts now (MAME applies them in frame_done)
+            for (auto &e : script[frame]) {
+                int which; int b = bit_of(e.port, e.field, which);
+                if (b < 0) continue;
+                if (e.v) in[which] &= ~(1u << b); else in[which] |= (1u << b);
+            }
+            dut->in0 = in[0]; dut->in1 = in[1]; dut->in2 = in[2];
+            if (frame % 50 == 0) {
+                double s = std::chrono::duration<double>(std::chrono::steady_clock::now() - t0).count();
+                printf("frame %ld  %.2f s/frame  pc %08x  unimpl %d  late %u\n", frame, s / frame, dut->dbg_pc, dut->dbg_unimpl, dut->dbg_late);
+                fflush(stdout);
+            }
+        }
+        vb_q = vb;
     }
-    printf("%d frames, watchdog resets %d, halted %d\n", frames, watchdogs, (int)dut->dbg_halted);
+    fclose(log);
+    if (!wav.empty()) {
+        FILE *f = fopen(wav.c_str(), "wb");
+        uint32_t n = samples.size() * 2, sr = 48000, br = 96000;
+        fwrite("RIFF", 1, 4, f); uint32_t x = 36 + n; fwrite(&x, 4, 1, f); fwrite("WAVEfmt ", 1, 8, f);
+        x = 16; fwrite(&x, 4, 1, f); uint16_t h = 1; fwrite(&h, 2, 1, f); fwrite(&h, 2, 1, f);
+        fwrite(&sr, 4, 1, f); fwrite(&br, 4, 1, f); h = 2; fwrite(&h, 2, 1, f); h = 16; fwrite(&h, 2, 1, f);
+        fwrite("data", 1, 4, f); fwrite(&n, 4, 1, f); fwrite(samples.data(), 2, samples.size(), f); fclose(f);
+    }
+    printf("%ld frames, %llu clocks, worst blitter frame %llu clocks, unimpl %d, late lines %u, sound stalls %u\n",
+           frame, (unsigned long long)clocks, (unsigned long long)busy_max, dut->dbg_unimpl, dut->dbg_late, dut->dbg_snd_stalls);
     delete dut;
     return 0;
-}
-
-// --- a minimal PNG writer, so the bench needs nothing installed -------------
-static void be32(std::vector<uint8_t> &v, uint32_t x) {
-    v.push_back(x >> 24); v.push_back(x >> 16); v.push_back(x >> 8); v.push_back(x);
-}
-static uint32_t crc32_of(const uint8_t *d, size_t n) {
-    static uint32_t tbl[256]; static bool init = false;
-    if (!init) { for (uint32_t i = 0; i < 256; i++) { uint32_t c = i;
-        for (int k = 0; k < 8; k++) c = (c & 1) ? 0xEDB88320u ^ (c >> 1) : c >> 1; tbl[i] = c; } init = true; }
-    uint32_t c = 0xFFFFFFFFu;
-    for (size_t i = 0; i < n; i++) c = tbl[(c ^ d[i]) & 0xFF] ^ (c >> 8);
-    return c ^ 0xFFFFFFFFu;
-}
-static void chunk(std::vector<uint8_t> &o, const char *tag, const std::vector<uint8_t> &data) {
-    be32(o, (uint32_t)data.size());
-    std::vector<uint8_t> td(tag, tag + 4);
-    td.insert(td.end(), data.begin(), data.end());
-    o.insert(o.end(), td.begin(), td.end());
-    be32(o, crc32_of(td.data(), td.size()));
-}
-static void write_png(const std::string &path, const std::vector<uint8_t> &rgb) {
-    std::vector<uint8_t> raw;
-    for (int y = 0; y < H; y++) {
-        raw.push_back(0);
-        raw.insert(raw.end(), rgb.begin() + 3 * y * W, rgb.begin() + 3 * (y + 1) * W);
-    }
-    // stored (uncompressed) deflate blocks: no zlib dependency
-    std::vector<uint8_t> z{0x78, 0x01};
-    uint32_t a = 1, b = 0;
-    for (uint8_t c : raw) { a = (a + c) % 65521; b = (b + a) % 65521; }
-    for (size_t i = 0; i < raw.size(); i += 65535) {
-        uint16_t n = (uint16_t)std::min<size_t>(65535, raw.size() - i);
-        z.push_back(i + n >= raw.size() ? 1 : 0);
-        z.push_back(n & 0xff); z.push_back(n >> 8);
-        z.push_back(~n & 0xff); z.push_back((~n >> 8) & 0xff);
-        z.insert(z.end(), raw.begin() + i, raw.begin() + i + n);
-    }
-    be32(z, (b << 16) | a);
-    std::vector<uint8_t> o{0x89, 'P', 'N', 'G', '\r', '\n', 0x1a, '\n'}, ihdr;
-    be32(ihdr, W); be32(ihdr, H);
-    ihdr.push_back(8); ihdr.push_back(2); ihdr.push_back(0); ihdr.push_back(0); ihdr.push_back(0);
-    chunk(o, "IHDR", ihdr); chunk(o, "IDAT", z); chunk(o, "IEND", {});
-    FILE *f = fopen(path.c_str(), "wb");
-    if (f) { fwrite(o.data(), 1, o.size(), f); fclose(f); }
 }

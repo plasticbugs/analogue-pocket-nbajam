@@ -1,167 +1,793 @@
-frame 1 pc ff9c3990 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dc79 unimpl 0
-frame 2 pc ff9c3980 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dc76 unimpl 0
-frame 3 pc ff9c3990 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dc77 unimpl 0
-frame 4 pc ff9c3990 blit 0 late 0 skip 0 snd_stalls 1 snd_pc fc7f unimpl 0
-frame 5 pc ff9db2d0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dc1c unimpl 0
-frame 6 pc ff97c680 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dca3 unimpl 0
-frame 7 pc ff97be90 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dc9f unimpl 0
-frame 8 pc ff9daf30 blit 0 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
-frame 9 pc ff97a840 blit 0 late 0 skip 0 snd_stalls 1 snd_pc f51e unimpl 0
-frame 10 pc ff9daeb0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dc19 unimpl 0
-frame 11 pc ff97f030 blit 0 late 0 skip 0 snd_stalls 1 snd_pc f537 unimpl 0
-frame 12 pc ff9da270 blit 0 late 0 skip 0 snd_stalls 1 snd_pc 1ff9 unimpl 0
-frame 13 pc ff9c2f30 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dc91 unimpl 0
-frame 14 pc ff9abcf0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc ecc4 unimpl 0
-frame 15 pc ff9b3f60 blit 0 late 0 skip 0 snd_stalls 1 snd_pc ef36 unimpl 0
-frame 16 pc ff9b3ff0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc 0234 unimpl 0
-frame 17 pc ff9b3fd0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dc3c unimpl 0
-frame 18 pc ff9abf60 blit 0 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
-frame 19 pc ff9abf20 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd9e unimpl 0
-frame 20 pc ff9abe70 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dc08 unimpl 0
-frame 21 pc ff9abe20 blit 0 late 0 skip 0 snd_stalls 1 snd_pc 0508 unimpl 0
-frame 22 pc ff9abde0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dc22 unimpl 0
-frame 23 pc ff9abdc0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc 1ffd unimpl 0
-frame 24 pc ff9abd60 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd7d unimpl 0
-frame 25 pc ff9abd40 blit 0 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
-frame 26 pc ff9abd20 blit 0 late 0 skip 0 snd_stalls 1 snd_pc ddb2 unimpl 0
-frame 27 pc ff9b3f50 blit 0 late 0 skip 0 snd_stalls 1 snd_pc 1ff8 unimpl 0
-frame 28 pc ff9b3fd0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
-frame 29 pc ff9b3fb0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc f53a unimpl 0
-frame 30 pc ff9abf60 blit 0 late 0 skip 0 snd_stalls 1 snd_pc 1ffa unimpl 0
-frame 31 pc ff9abef0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dc1a unimpl 0
-frame 32 pc ff9abea0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
-frame 33 pc ff9abe20 blit 0 late 0 skip 0 snd_stalls 1 snd_pc 057a unimpl 0
-frame 34 pc ff9abdc0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
-frame 35 pc ff9abd60 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dda6 unimpl 0
-frame 36 pc ff9abd40 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dda5 unimpl 0
-frame 37 pc ff9abd20 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dc17 unimpl 0
-frame 38 pc ff9b3f50 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dda8 unimpl 0
-frame 39 pc ff9b3fd0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dc3e unimpl 0
-frame 40 pc ff9b3fb0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc f536 unimpl 0
-frame 41 pc ff9abf60 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd7d unimpl 0
-frame 42 pc ff9abef0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc 0238 unimpl 0
-frame 43 pc ff9abea0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
-frame 44 pc ff9abe20 blit 0 late 0 skip 0 snd_stalls 1 snd_pc 1ff4 unimpl 0
-frame 45 pc ff9abdc0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc f51d unimpl 0
-frame 46 pc ff9abd60 blit 0 late 0 skip 0 snd_stalls 1 snd_pc 1ffc unimpl 0
-frame 47 pc ff9abd40 blit 0 late 0 skip 0 snd_stalls 1 snd_pc 023b unimpl 0
-frame 48 pc ff9abd20 blit 0 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
-frame 49 pc ff9b3f50 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dc1f unimpl 0
-frame 50 pc ff9b3fd0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
-frame 51 pc ff9b3fb0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc f53c unimpl 0
-frame 52 pc ff9abf60 blit 0 late 0 skip 0 snd_stalls 1 snd_pc 0200 unimpl 0
-frame 53 pc ff9abef0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd93 unimpl 0
-frame 54 pc ff9abea0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dc1b unimpl 0
-frame 55 pc ff9abe20 blit 0 late 0 skip 0 snd_stalls 1 snd_pc f539 unimpl 0
-frame 56 pc ff9abdc0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc 0217 unimpl 0
-frame 57 pc ff9abd60 blit 0 late 0 skip 0 snd_stalls 1 snd_pc 1ffc unimpl 0
-frame 58 pc ff9abd40 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd8f unimpl 0
-frame 59 pc ff9abd20 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dc18 unimpl 0
-frame 60 pc ff9b3f50 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd86 unimpl 0
-frame 61 pc ff9b3fd0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc 1ffc unimpl 0
-frame 62 pc ff9b3fb0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd92 unimpl 0
-frame 63 pc ff9abf60 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd97 unimpl 0
-frame 64 pc ff9abef0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc f51d unimpl 0
-frame 65 pc ff9abea0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd87 unimpl 0
-frame 66 pc ff9abe20 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd9a unimpl 0
-frame 67 pc ff9abdc0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
-frame 68 pc ff9abd60 blit 0 late 0 skip 0 snd_stalls 1 snd_pc f537 unimpl 0
-frame 69 pc ff9abd40 blit 0 late 0 skip 0 snd_stalls 1 snd_pc 023c unimpl 0
-frame 70 pc ff9abd20 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd83 unimpl 0
-frame 71 pc ff9b3f50 blit 0 late 0 skip 0 snd_stalls 1 snd_pc 022a unimpl 0
-frame 72 pc ff9b3fd0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd8f unimpl 0
-frame 73 pc ff9b3fb0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd85 unimpl 0
-frame 74 pc ff9abf60 blit 0 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
-frame 75 pc ff9abef0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd7f unimpl 0
-frame 76 pc ff9abea0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
-frame 77 pc ff9abe20 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd8a unimpl 0
-frame 78 pc ff9abdc0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc f539 unimpl 0
-frame 79 pc ff9abd60 blit 0 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
-frame 80 pc ff9abd40 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd7b unimpl 0
-frame 81 pc ff9abd20 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dc1b unimpl 0
-frame 82 pc ff9b3f50 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd95 unimpl 0
-frame 83 pc ff9b3fd0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd7d unimpl 0
-frame 84 pc ff9b3fb0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc f51d unimpl 0
-frame 85 pc ff9abf60 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd9a unimpl 0
-frame 86 pc ff9abef0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dc15 unimpl 0
-frame 87 pc ff9abea0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd84 unimpl 0
-frame 88 pc ff9abe20 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dc3f unimpl 0
-frame 89 pc ff9abdc0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc 2401 unimpl 0
-frame 90 pc ff9abd60 blit 0 late 0 skip 0 snd_stalls 1 snd_pc f53c unimpl 0
-frame 91 pc ff9abd40 blit 0 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
-frame 92 pc ff9abd20 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd7a unimpl 0
-frame 93 pc ff9b3f50 blit 0 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
-frame 94 pc ff9b3fd0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc f51d unimpl 0
-frame 95 pc ff9b3fb0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc 1ffa unimpl 0
-frame 96 pc ff9abf60 blit 0 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
-frame 97 pc ff9abef0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd7d unimpl 0
-frame 98 pc ff9abea0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dc1f unimpl 0
-frame 99 pc ff9abe20 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd8b unimpl 0
-frame 100 pc ff9abdc0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc f53b unimpl 0
-frame 101 pc ff9abd60 blit 0 late 0 skip 0 snd_stalls 1 snd_pc fff7 unimpl 0
-frame 102 pc ff9abd40 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd98 unimpl 0
-frame 103 pc ff9abd20 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dc1d unimpl 0
-frame 104 pc ff9b3f50 blit 0 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
-frame 105 pc ff9b3fd0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc 0216 unimpl 0
-frame 106 pc ff9b3fb0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc f536 unimpl 0
-frame 107 pc ff9abf60 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd7f unimpl 0
-frame 108 pc ff9abef0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dc19 unimpl 0
-frame 109 pc ff9abea0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd80 unimpl 0
-frame 110 pc ff9abe20 blit 0 late 0 skip 0 snd_stalls 1 snd_pc 1ffb unimpl 0
-frame 111 pc ff9abdc0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd91 unimpl 0
-frame 112 pc ff9abd60 blit 0 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
-frame 113 pc ff9abd40 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dc09 unimpl 0
-frame 114 pc ff9abd20 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd87 unimpl 0
-frame 115 pc ff9b3f50 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dc3c unimpl 0
-frame 116 pc ff9b3fd0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc f51d unimpl 0
-frame 117 pc ff9b3fb0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc f536 unimpl 0
-frame 118 pc ff9abf60 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dc07 unimpl 0
-frame 119 pc ff9abef0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
-frame 120 pc ff9abea0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc 2401 unimpl 0
-frame 121 pc ff9abe20 blit 0 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
-frame 122 pc ff9abdc0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc f520 unimpl 0
-frame 123 pc ff9abd60 blit 0 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
-frame 124 pc ff9abd40 blit 0 late 0 skip 0 snd_stalls 1 snd_pc 2401 unimpl 0
-frame 125 pc ff9abd20 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dc1e unimpl 0
-frame 126 pc ff9b3f50 blit 0 late 0 skip 0 snd_stalls 1 snd_pc 2401 unimpl 0
-frame 127 pc ff9b3fd0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc f51e unimpl 0
-frame 128 pc ff9b3fb0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc 1ffc unimpl 0
-frame 129 pc ff9abf60 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd96 unimpl 0
-frame 130 pc ff9abef0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
-frame 131 pc ff9abea0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd8a unimpl 0
-frame 132 pc ff9abe20 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd95 unimpl 0
-frame 133 pc ff9abdc0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd7a unimpl 0
-frame 134 pc ff9abd60 blit 0 late 0 skip 0 snd_stalls 1 snd_pc 02ba unimpl 0
-frame 135 pc ff9abd40 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dc0a unimpl 0
-frame 136 pc ff9abd20 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd8b unimpl 0
-frame 137 pc ff9b3f50 blit 0 late 0 skip 0 snd_stalls 1 snd_pc 1ffa unimpl 0
-frame 138 pc ff9b3fd0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc 04cf unimpl 0
-frame 139 pc ff9b3fb0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc f53b unimpl 0
-frame 140 pc ff9abf60 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dc08 unimpl 0
-frame 141 pc ff9abef0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
-frame 142 pc ff9abea0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dc3d unimpl 0
-frame 143 pc ff9abe20 blit 0 late 0 skip 0 snd_stalls 1 snd_pc 1ffe unimpl 0
-frame 144 pc ff9abdc0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc 1ffe unimpl 0
-frame 145 pc ff9abd60 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dc07 unimpl 0
-frame 146 pc ff9abd40 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd7e unimpl 0
-frame 147 pc ff9abd20 blit 0 late 0 skip 0 snd_stalls 1 snd_pc 022a unimpl 0
-frame 148 pc ff9b3f50 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd8f unimpl 0
-frame 149 pc ff9b3fd0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc 1ffd unimpl 0
-frame 150 pc ff9b3fb0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd93 unimpl 0
-frame 151 pc ff9abf60 blit 0 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
-frame 152 pc ff9abef0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dc1c unimpl 0
-frame 153 pc ff9abea0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd8a unimpl 0
-frame 154 pc ff9abe20 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd95 unimpl 0
-frame 155 pc ff9abdc0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
-frame 156 pc ff9abd60 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd91 unimpl 0
-frame 157 pc ff9abd40 blit 0 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
-frame 158 pc ff9abd20 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd87 unimpl 0
-frame 159 pc ff9b3f50 blit 0 late 0 skip 0 snd_stalls 1 snd_pc 1ffd unimpl 0
-frame 160 pc ff9b3fd0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc f51d unimpl 0
-frame 161 pc ff9b3fb0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd9a unimpl 0
-frame 162 pc ff9abf60 blit 0 late 0 skip 0 snd_stalls 1 snd_pc 0238 unimpl 0
-frame 163 pc ff9abef0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd7f unimpl 0
-frame 164 pc ff9abea0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
-frame 165 pc ff9abe20 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd8f unimpl 0
-frame 166 pc ff9abdc0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
-frame 167 pc ff9abd60 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dc08 unimpl 0
+in0 ffff in1 ffff  frame 1 pc ff9c3990 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dc79 unimpl 0
+in0 ffff in1 ffff  frame 2 pc ff9c3980 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dc76 unimpl 0
+in0 ffff in1 ffff  frame 3 pc ff9c3990 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dc77 unimpl 0
+in0 ffff in1 ffff  frame 4 pc ff9c3990 blit 0 late 0 skip 0 snd_stalls 1 snd_pc fc7f unimpl 0
+in0 ffff in1 ffff  frame 5 pc ff9db2d0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dc1c unimpl 0
+in0 ffff in1 ffff  frame 6 pc ff97c680 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dca3 unimpl 0
+in0 ffff in1 ffff  frame 7 pc ff97be90 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dc9f unimpl 0
+in0 ffff in1 ffff  frame 8 pc ff9daf30 blit 0 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 9 pc ff97a840 blit 0 late 0 skip 0 snd_stalls 1 snd_pc f51e unimpl 0
+in0 ffff in1 ffff  frame 10 pc ff9daeb0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dc19 unimpl 0
+in0 ffff in1 ffff  frame 11 pc ff97f030 blit 0 late 0 skip 0 snd_stalls 1 snd_pc f537 unimpl 0
+in0 ffff in1 ffff  frame 12 pc ff9da270 blit 0 late 0 skip 0 snd_stalls 1 snd_pc 1ff9 unimpl 0
+in0 ffff in1 ffff  frame 13 pc ff9c2f30 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dc91 unimpl 0
+in0 ffff in1 ffff  frame 14 pc ff9abcf0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc ecc4 unimpl 0
+in0 ffff in1 ffff  frame 15 pc ff9b3f60 blit 0 late 0 skip 0 snd_stalls 1 snd_pc ef36 unimpl 0
+in0 ffff in1 ffff  frame 16 pc ff9b3ff0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc 0234 unimpl 0
+in0 ffff in1 ffff  frame 17 pc ff9b3fd0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dc3c unimpl 0
+in0 ffff in1 ffff  frame 18 pc ff9abf60 blit 0 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 19 pc ff9abf20 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd9e unimpl 0
+in0 ffff in1 ffff  frame 20 pc ff9abe70 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dc08 unimpl 0
+in0 ffff in1 ffff  frame 21 pc ff9abe20 blit 0 late 0 skip 0 snd_stalls 1 snd_pc 0508 unimpl 0
+in0 ffff in1 ffff  frame 22 pc ff9abde0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dc22 unimpl 0
+in0 ffff in1 ffff  frame 23 pc ff9abdc0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc 1ffd unimpl 0
+in0 ffff in1 ffff  frame 24 pc ff9abd60 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd7d unimpl 0
+in0 ffff in1 ffff  frame 25 pc ff9abd40 blit 0 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 26 pc ff9abd20 blit 0 late 0 skip 0 snd_stalls 1 snd_pc ddb2 unimpl 0
+in0 ffff in1 ffff  frame 27 pc ff9b3f50 blit 0 late 0 skip 0 snd_stalls 1 snd_pc 1ff8 unimpl 0
+in0 ffff in1 ffff  frame 28 pc ff9b3fd0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 29 pc ff9b3fb0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc f53a unimpl 0
+in0 ffff in1 ffff  frame 30 pc ff9abf60 blit 0 late 0 skip 0 snd_stalls 1 snd_pc 1ffa unimpl 0
+in0 ffff in1 ffff  frame 31 pc ff9abef0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dc1a unimpl 0
+in0 ffff in1 ffff  frame 32 pc ff9abea0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 33 pc ff9abe20 blit 0 late 0 skip 0 snd_stalls 1 snd_pc 057a unimpl 0
+in0 ffff in1 ffff  frame 34 pc ff9abdc0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 35 pc ff9abd60 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dda6 unimpl 0
+in0 ffff in1 ffff  frame 36 pc ff9abd40 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dda5 unimpl 0
+in0 ffff in1 ffff  frame 37 pc ff9abd20 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dc17 unimpl 0
+in0 ffff in1 ffff  frame 38 pc ff9b3f50 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dda8 unimpl 0
+in0 ffff in1 ffff  frame 39 pc ff9b3fd0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dc3e unimpl 0
+in0 ffff in1 ffff  frame 40 pc ff9b3fb0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc f536 unimpl 0
+in0 ffff in1 ffff  frame 41 pc ff9abf60 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd7d unimpl 0
+in0 ffff in1 ffff  frame 42 pc ff9abef0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc 0238 unimpl 0
+in0 ffff in1 ffff  frame 43 pc ff9abea0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 44 pc ff9abe20 blit 0 late 0 skip 0 snd_stalls 1 snd_pc 1ff4 unimpl 0
+in0 ffff in1 ffff  frame 45 pc ff9abdc0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc f51d unimpl 0
+in0 ffff in1 ffff  frame 46 pc ff9abd60 blit 0 late 0 skip 0 snd_stalls 1 snd_pc 1ffc unimpl 0
+in0 ffff in1 ffff  frame 47 pc ff9abd40 blit 0 late 0 skip 0 snd_stalls 1 snd_pc 023b unimpl 0
+in0 ffff in1 ffff  frame 48 pc ff9abd20 blit 0 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 49 pc ff9b3f50 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dc1f unimpl 0
+in0 ffff in1 ffff  frame 50 pc ff9b3fd0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 51 pc ff9b3fb0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc f53c unimpl 0
+in0 ffff in1 ffff  frame 52 pc ff9abf60 blit 0 late 0 skip 0 snd_stalls 1 snd_pc 0200 unimpl 0
+in0 ffff in1 ffff  frame 53 pc ff9abef0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd93 unimpl 0
+in0 ffff in1 ffff  frame 54 pc ff9abea0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dc1b unimpl 0
+in0 ffff in1 ffff  frame 55 pc ff9abe20 blit 0 late 0 skip 0 snd_stalls 1 snd_pc f539 unimpl 0
+in0 ffff in1 ffff  frame 56 pc ff9abdc0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc 0217 unimpl 0
+in0 ffff in1 ffff  frame 57 pc ff9abd60 blit 0 late 0 skip 0 snd_stalls 1 snd_pc 1ffc unimpl 0
+in0 ffff in1 ffff  frame 58 pc ff9abd40 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd8f unimpl 0
+in0 ffff in1 ffff  frame 59 pc ff9abd20 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dc18 unimpl 0
+in0 ffff in1 ffff  frame 60 pc ff9b3f50 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd86 unimpl 0
+in0 ffff in1 ffff  frame 61 pc ff9b3fd0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc 1ffc unimpl 0
+in0 ffff in1 ffff  frame 62 pc ff9b3fb0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd92 unimpl 0
+in0 ffff in1 ffff  frame 63 pc ff9abf60 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd97 unimpl 0
+in0 ffff in1 ffff  frame 64 pc ff9abef0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc f51d unimpl 0
+in0 ffff in1 ffff  frame 65 pc ff9abea0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd87 unimpl 0
+in0 ffff in1 ffff  frame 66 pc ff9abe20 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd9a unimpl 0
+in0 ffff in1 ffff  frame 67 pc ff9abdc0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 68 pc ff9abd60 blit 0 late 0 skip 0 snd_stalls 1 snd_pc f537 unimpl 0
+in0 ffff in1 ffff  frame 69 pc ff9abd40 blit 0 late 0 skip 0 snd_stalls 1 snd_pc 023c unimpl 0
+in0 ffff in1 ffff  frame 70 pc ff9abd20 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd83 unimpl 0
+in0 ffff in1 ffff  frame 71 pc ff9b3f50 blit 0 late 0 skip 0 snd_stalls 1 snd_pc 022a unimpl 0
+in0 ffff in1 ffff  frame 72 pc ff9b3fd0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd8f unimpl 0
+in0 ffff in1 ffff  frame 73 pc ff9b3fb0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd85 unimpl 0
+in0 ffff in1 ffff  frame 74 pc ff9abf60 blit 0 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 75 pc ff9abef0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd7f unimpl 0
+in0 ffff in1 ffff  frame 76 pc ff9abea0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 77 pc ff9abe20 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd8a unimpl 0
+in0 ffff in1 ffff  frame 78 pc ff9abdc0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc f539 unimpl 0
+in0 ffff in1 ffff  frame 79 pc ff9abd60 blit 0 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 80 pc ff9abd40 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd7b unimpl 0
+in0 ffff in1 ffff  frame 81 pc ff9abd20 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dc1b unimpl 0
+in0 ffff in1 ffff  frame 82 pc ff9b3f50 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd95 unimpl 0
+in0 ffff in1 ffff  frame 83 pc ff9b3fd0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd7d unimpl 0
+in0 ffff in1 ffff  frame 84 pc ff9b3fb0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc f51d unimpl 0
+in0 ffff in1 ffff  frame 85 pc ff9abf60 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd9a unimpl 0
+in0 ffff in1 ffff  frame 86 pc ff9abef0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dc15 unimpl 0
+in0 ffff in1 ffff  frame 87 pc ff9abea0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd84 unimpl 0
+in0 ffff in1 ffff  frame 88 pc ff9abe20 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dc3f unimpl 0
+in0 ffff in1 ffff  frame 89 pc ff9abdc0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc 2401 unimpl 0
+in0 ffff in1 ffff  frame 90 pc ff9abd60 blit 0 late 0 skip 0 snd_stalls 1 snd_pc f53c unimpl 0
+in0 ffff in1 ffff  frame 91 pc ff9abd40 blit 0 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 92 pc ff9abd20 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd7a unimpl 0
+in0 ffff in1 ffff  frame 93 pc ff9b3f50 blit 0 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 94 pc ff9b3fd0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc f51d unimpl 0
+in0 ffff in1 ffff  frame 95 pc ff9b3fb0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc 1ffa unimpl 0
+in0 ffff in1 ffff  frame 96 pc ff9abf60 blit 0 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 97 pc ff9abef0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd7d unimpl 0
+in0 ffff in1 ffff  frame 98 pc ff9abea0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dc1f unimpl 0
+in0 ffff in1 ffff  frame 99 pc ff9abe20 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd8b unimpl 0
+in0 ffff in1 ffff  frame 100 pc ff9abdc0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc f53b unimpl 0
+in0 ffff in1 ffff  frame 101 pc ff9abd60 blit 0 late 0 skip 0 snd_stalls 1 snd_pc fff7 unimpl 0
+in0 ffff in1 ffff  frame 102 pc ff9abd40 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd98 unimpl 0
+in0 ffff in1 ffff  frame 103 pc ff9abd20 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dc1d unimpl 0
+in0 ffff in1 ffff  frame 104 pc ff9b3f50 blit 0 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 105 pc ff9b3fd0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc 0216 unimpl 0
+in0 ffff in1 ffff  frame 106 pc ff9b3fb0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc f536 unimpl 0
+in0 ffff in1 ffff  frame 107 pc ff9abf60 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd7f unimpl 0
+in0 ffff in1 ffff  frame 108 pc ff9abef0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dc19 unimpl 0
+in0 ffff in1 ffff  frame 109 pc ff9abea0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd80 unimpl 0
+in0 ffff in1 ffff  frame 110 pc ff9abe20 blit 0 late 0 skip 0 snd_stalls 1 snd_pc 1ffb unimpl 0
+in0 ffff in1 ffff  frame 111 pc ff9abdc0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd91 unimpl 0
+in0 ffff in1 ffff  frame 112 pc ff9abd60 blit 0 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 113 pc ff9abd40 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dc09 unimpl 0
+in0 ffff in1 ffff  frame 114 pc ff9abd20 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd87 unimpl 0
+in0 ffff in1 ffff  frame 115 pc ff9b3f50 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dc3c unimpl 0
+in0 ffff in1 ffff  frame 116 pc ff9b3fd0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc f51d unimpl 0
+in0 ffff in1 ffff  frame 117 pc ff9b3fb0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc f536 unimpl 0
+in0 ffff in1 ffff  frame 118 pc ff9abf60 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dc07 unimpl 0
+in0 ffff in1 ffff  frame 119 pc ff9abef0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 120 pc ff9abea0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc 2401 unimpl 0
+in0 ffff in1 ffff  frame 121 pc ff9abe20 blit 0 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 122 pc ff9abdc0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc f520 unimpl 0
+in0 ffff in1 ffff  frame 123 pc ff9abd60 blit 0 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 124 pc ff9abd40 blit 0 late 0 skip 0 snd_stalls 1 snd_pc 2401 unimpl 0
+in0 ffff in1 ffff  frame 125 pc ff9abd20 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dc1e unimpl 0
+in0 ffff in1 ffff  frame 126 pc ff9b3f50 blit 0 late 0 skip 0 snd_stalls 1 snd_pc 2401 unimpl 0
+in0 ffff in1 ffff  frame 127 pc ff9b3fd0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc f51e unimpl 0
+in0 ffff in1 ffff  frame 128 pc ff9b3fb0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc 1ffc unimpl 0
+in0 ffff in1 ffff  frame 129 pc ff9abf60 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd96 unimpl 0
+in0 ffff in1 ffff  frame 130 pc ff9abef0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 131 pc ff9abea0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd8a unimpl 0
+in0 ffff in1 ffff  frame 132 pc ff9abe20 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd95 unimpl 0
+in0 ffff in1 ffff  frame 133 pc ff9abdc0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd7a unimpl 0
+in0 ffff in1 ffff  frame 134 pc ff9abd60 blit 0 late 0 skip 0 snd_stalls 1 snd_pc 02ba unimpl 0
+in0 ffff in1 ffff  frame 135 pc ff9abd40 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dc0a unimpl 0
+in0 ffff in1 ffff  frame 136 pc ff9abd20 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd8b unimpl 0
+in0 ffff in1 ffff  frame 137 pc ff9b3f50 blit 0 late 0 skip 0 snd_stalls 1 snd_pc 1ffa unimpl 0
+in0 ffff in1 ffff  frame 138 pc ff9b3fd0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc 04cf unimpl 0
+in0 ffff in1 ffff  frame 139 pc ff9b3fb0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc f53b unimpl 0
+in0 ffff in1 ffff  frame 140 pc ff9abf60 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dc08 unimpl 0
+in0 ffff in1 ffff  frame 141 pc ff9abef0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 142 pc ff9abea0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dc3d unimpl 0
+in0 ffff in1 ffff  frame 143 pc ff9abe20 blit 0 late 0 skip 0 snd_stalls 1 snd_pc 1ffe unimpl 0
+in0 ffff in1 ffff  frame 144 pc ff9abdc0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc 1ffe unimpl 0
+in0 ffff in1 ffff  frame 145 pc ff9abd60 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dc07 unimpl 0
+in0 ffff in1 ffff  frame 146 pc ff9abd40 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd7e unimpl 0
+in0 ffff in1 ffff  frame 147 pc ff9abd20 blit 0 late 0 skip 0 snd_stalls 1 snd_pc 022a unimpl 0
+in0 ffff in1 ffff  frame 148 pc ff9b3f50 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd8f unimpl 0
+in0 ffff in1 ffff  frame 149 pc ff9b3fd0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc 1ffd unimpl 0
+in0 ffff in1 ffff  frame 150 pc ff9b3fb0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd93 unimpl 0
+in0 ffbf in1 ffff  frame 151 pc ff825a70 blit 0 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffbf in1 ffff  frame 152 pc ff820c70 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dc78 unimpl 0
+in0 ffbf in1 ffff  frame 153 pc ff820c80 blit 0 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffbf in1 ffff  frame 154 pc ff820c80 blit 0 late 0 skip 0 snd_stalls 1 snd_pc 0933 unimpl 0
+in0 ffbf in1 ffff  frame 155 pc ff820c70 blit 0 late 0 skip 0 snd_stalls 1 snd_pc fc7c unimpl 0
+in0 ffbf in1 ffff  frame 156 pc ff8205b0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc fcb3 unimpl 0
+in0 ffbf in1 ffff  frame 157 pc ff82e440 blit 0 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffbf in1 ffff  frame 158 pc ff82e1a0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 159 pc ff820c80 blit 0 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 160 pc ff820c70 blit 0 late 0 skip 0 snd_stalls 1 snd_pc 1fff unimpl 0
+in0 ffff in1 ffff  frame 161 pc ff820c90 blit 0 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 162 pc ff82e1a0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc f53a unimpl 0
+in0 ffff in1 ffff  frame 163 pc ff820460 blit 0 late 0 skip 0 snd_stalls 1 snd_pc 022a unimpl 0
+in0 ffff in1 ffff  frame 164 pc ff833450 blit 0 late 0 skip 0 snd_stalls 1 snd_pc 1ffe unimpl 0
+in0 ffff in1 ffff  frame 165 pc ff824420 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dca2 unimpl 0
+in0 ffff in1 ffff  frame 166 pc ff820430 blit 0 late 0 skip 0 snd_stalls 1 snd_pc 1ff9 unimpl 0
+in0 ffff in1 ffff  frame 167 pc ff820440 blit 405874 late 0 skip 0 snd_stalls 1 snd_pc dc93 unimpl 0
+in0 ffff in1 ffff  frame 168 pc ff833420 blit 403570 late 0 skip 0 snd_stalls 1 snd_pc dc1e unimpl 0
+in0 ffff in1 ffff  frame 169 pc ff8205b0 blit 402778 late 0 skip 0 snd_stalls 1 snd_pc f53c unimpl 0
+in0 ffff in1 ffff  frame 170 pc ff833430 blit 401405 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 171 pc ff824be0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dc93 unimpl 0
+in0 ffff in1 ffff  frame 172 pc ff824be0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 173 pc ff824db0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dc0f unimpl 0
+in0 ffff in1 ffff  frame 174 pc ff824db0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dc95 unimpl 0
+in0 ffff in1 ffff  frame 175 pc ff820400 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dca3 unimpl 0
+in0 ffff in1 ffff  frame 176 pc ff833460 blit 0 late 0 skip 0 snd_stalls 1 snd_pc 1ffb unimpl 0
+in0 ffff in1 ffff  frame 177 pc ff833460 blit 0 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 178 pc ff833490 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dc16 unimpl 0
+in0 ffff in1 ffff  frame 179 pc ff833420 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dca4 unimpl 0
+in0 ffff in1 ffff  frame 180 pc ff820400 blit 0 late 0 skip 0 snd_stalls 1 snd_pc 023c unimpl 0
+in0 ffff in1 ffff  frame 181 pc ff820440 blit 0 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 182 pc ff820430 blit 0 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 183 pc ff8205b0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 184 pc ff8205d0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc f537 unimpl 0
+in0 ffff in1 ffff  frame 185 pc ff833480 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dc21 unimpl 0
+in0 ffff in1 ffff  frame 186 pc ff825910 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dca3 unimpl 0
+in0 ffff in1 ffff  frame 187 pc ff833430 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dc96 unimpl 0
+in0 ffff in1 ffff  frame 188 pc ff825930 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dc05 unimpl 0
+in0 ffff in1 ffff  frame 189 pc ff833460 blit 0 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 190 pc ff825920 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dc20 unimpl 0
+in0 ffff in1 ffff  frame 191 pc ff825880 blit 0 late 0 skip 0 snd_stalls 1 snd_pc f522 unimpl 0
+in0 ffff in1 ffff  frame 192 pc ff833480 blit 0 late 0 skip 0 snd_stalls 1 snd_pc 1ffb unimpl 0
+in0 ffff in1 ffff  frame 193 pc ff825880 blit 0 late 0 skip 0 snd_stalls 1 snd_pc 1ffc unimpl 0
+in0 ffff in1 ffff  frame 194 pc ff825900 blit 0 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 195 pc ff825900 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dc1a unimpl 0
+in0 ffff in1 ffff  frame 196 pc ff8258c0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc f51d unimpl 0
+in0 ffff in1 ffff  frame 197 pc ff8205c0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dca0 unimpl 0
+in0 ffff in1 ffff  frame 198 pc ff825420 blit 0 late 0 skip 0 snd_stalls 1 snd_pc f536 unimpl 0
+in0 ffff in1 ffff  frame 199 pc ff825410 blit 0 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 200 pc ff825410 blit 0 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 201 pc ff833430 blit 0 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 202 pc ff825080 blit 0 late 0 skip 0 snd_stalls 1 snd_pc 1ff9 unimpl 0
+in0 ffff in1 ffff  frame 203 pc ff825100 blit 0 late 0 skip 0 snd_stalls 1 snd_pc 0218 unimpl 0
+in0 ffff in1 ffff  frame 204 pc ff825070 blit 0 late 0 skip 0 snd_stalls 1 snd_pc 1ffe unimpl 0
+in0 ffff in1 ffff  frame 205 pc ff825100 blit 0 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 206 pc ff833430 blit 0 late 0 skip 0 snd_stalls 1 snd_pc 0219 unimpl 0
+in0 ffff in1 ffff  frame 207 pc ff833430 blit 416133 late 0 skip 0 snd_stalls 1 snd_pc 023b unimpl 0
+in0 ffff in1 ffff  frame 208 pc ff820480 blit 416574 late 0 skip 0 snd_stalls 1 snd_pc 1ffd unimpl 0
+in0 ffff in1 ffff  frame 209 pc ff820470 blit 417037 late 0 skip 0 snd_stalls 1 snd_pc f53c unimpl 0
+in0 ffff in1 ffff  frame 210 pc ff8205b0 blit 419516 late 0 skip 0 snd_stalls 1 snd_pc 023b unimpl 0
+in0 ffff in1 ffff  frame 211 pc ff833480 blit 418951 late 0 skip 0 snd_stalls 1 snd_pc dc94 unimpl 0
+in0 ffff in1 ffff  frame 212 pc ff8205b0 blit 419485 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 213 pc ff820480 blit 421467 late 0 skip 0 snd_stalls 1 snd_pc f51e unimpl 0
+in0 ffff in1 ffff  frame 214 pc ff833480 blit 422961 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 215 pc ff833430 blit 424185 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 216 pc ff820480 blit 425913 late 0 skip 0 snd_stalls 1 snd_pc 02ba unimpl 0
+in0 ffff in1 ffff  frame 217 pc ff820590 blit 427370 late 0 skip 0 snd_stalls 1 snd_pc dc1e unimpl 0
+in0 ffff in1 ffff  frame 218 pc ff8205b0 blit 429000 late 0 skip 0 snd_stalls 1 snd_pc 1fff unimpl 0
+in0 ffff in1 ffff  frame 219 pc ff833430 blit 430571 late 0 skip 0 snd_stalls 1 snd_pc dca1 unimpl 0
+in0 ffff in1 ffff  frame 220 pc ff820480 blit 434363 late 0 skip 0 snd_stalls 1 snd_pc 1ffa unimpl 0
+in0 ffff in1 ffff  frame 221 pc ff833430 blit 436938 late 0 skip 0 snd_stalls 1 snd_pc 1ffd unimpl 0
+in0 ffff in1 ffff  frame 222 pc ff820470 blit 441158 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 223 pc ff820480 blit 445131 late 0 skip 0 snd_stalls 1 snd_pc f53c unimpl 0
+in0 ffff in1 ffff  frame 224 pc ff820590 blit 451400 late 0 skip 0 snd_stalls 1 snd_pc 1ffa unimpl 0
+in0 ffff in1 ffff  frame 225 pc ff833430 blit 456110 late 0 skip 0 snd_stalls 1 snd_pc 0256 unimpl 0
+in0 ffff in1 ffff  frame 226 pc ff833430 blit 465607 late 0 skip 0 snd_stalls 1 snd_pc dcad unimpl 0
+in0 ffff in1 ffff  frame 227 pc ff8205b0 blit 474103 late 0 skip 0 snd_stalls 1 snd_pc dcbe unimpl 0
+in0 ffff in1 ffff  frame 228 pc ff833430 blit 484477 late 0 skip 0 snd_stalls 1 snd_pc dcaf unimpl 0
+in0 ffff in1 ffff  frame 229 pc ff820470 blit 498647 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 230 pc ff833430 blit 517996 late 0 skip 0 snd_stalls 1 snd_pc 16bd unimpl 0
+in0 ffff in1 ffff  frame 231 pc ff833430 blit 540911 late 0 skip 0 snd_stalls 1 snd_pc 1ad1 unimpl 0
+in0 ffff in1 ffff  frame 232 pc ff833430 blit 577608 late 0 skip 0 snd_stalls 1 snd_pc dcb1 unimpl 0
+in0 ffff in1 ffff  frame 233 pc ff833430 blit 625815 late 0 skip 0 snd_stalls 1 snd_pc dcfa unimpl 0
+in0 ffff in1 ffff  frame 234 pc ff8205b0 blit 672895 late 0 skip 0 snd_stalls 1 snd_pc dcfb unimpl 0
+in0 ffff in1 ffff  frame 235 pc ff8205b0 blit 650523 late 0 skip 0 snd_stalls 1 snd_pc dcf9 unimpl 0
+in0 ffff in1 ffff  frame 236 pc ff820480 blit 627354 late 0 skip 0 snd_stalls 1 snd_pc 746b unimpl 0
+in0 ffff in1 ffff  frame 237 pc ff820480 blit 604832 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 238 pc ff8205b0 blit 575610 late 0 skip 0 snd_stalls 1 snd_pc dcfc unimpl 0
+in0 ffff in1 ffff  frame 239 pc ff820590 blit 559229 late 0 skip 0 snd_stalls 1 snd_pc dcfb unimpl 0
+in0 ffff in1 ffff  frame 240 pc ff833430 blit 542797 late 0 skip 0 snd_stalls 1 snd_pc dcfc unimpl 0
+in0 ffff in1 ffff  frame 241 pc ff8205a0 blit 541523 late 0 skip 0 snd_stalls 1 snd_pc dcfa unimpl 0
+in0 ffff in1 ffff  frame 242 pc ff8205b0 blit 541511 late 0 skip 0 snd_stalls 1 snd_pc dcfb unimpl 0
+in0 ffff in1 ffff  frame 243 pc ff8205b0 blit 541568 late 0 skip 0 snd_stalls 1 snd_pc dcfc unimpl 0
+in0 ffff in1 ffff  frame 244 pc ff820590 blit 542382 late 0 skip 0 snd_stalls 1 snd_pc dcfa unimpl 0
+in0 ffff in1 ffff  frame 245 pc ff8205b0 blit 541514 late 0 skip 0 snd_stalls 1 snd_pc dcfc unimpl 0
+in0 ffff in1 ffff  frame 246 pc ff8205b0 blit 541559 late 0 skip 0 snd_stalls 1 snd_pc dcf9 unimpl 0
+in0 ffff in1 ffff  frame 247 pc ff8205b0 blit 542074 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 248 pc ff8205b0 blit 541559 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 249 pc ff8205b0 blit 541568 late 0 skip 0 snd_stalls 1 snd_pc dcfd unimpl 0
+in0 ffff in1 ffff  frame 250 pc ff820590 blit 542382 late 0 skip 0 snd_stalls 1 snd_pc dcfb unimpl 0
+in0 ffff in1 ffff  frame 251 pc ff8205a0 blit 541338 late 0 skip 0 snd_stalls 1 snd_pc dcf9 unimpl 0
+in0 ffff in1 ffff  frame 252 pc ff8205b0 blit 541511 late 0 skip 0 snd_stalls 1 snd_pc 5776 unimpl 0
+in0 ffff in1 ffff  frame 253 pc ff8205b0 blit 541575 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 254 pc ff8205b0 blit 541559 late 0 skip 0 snd_stalls 1 snd_pc dcfc unimpl 0
+in0 ffff in1 ffff  frame 255 pc ff8205b0 blit 541568 late 0 skip 0 snd_stalls 1 snd_pc dcfb unimpl 0
+in0 ffff in1 ffff  frame 256 pc ff820590 blit 542382 late 0 skip 0 snd_stalls 1 snd_pc dcfc unimpl 0
+in0 ffff in1 ffff  frame 257 pc ff820480 blit 543383 late 0 skip 0 snd_stalls 1 snd_pc dcfa unimpl 0
+in0 ffff in1 ffff  frame 258 pc ff833480 blit 541776 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 259 pc ff820590 blit 541741 late 0 skip 0 snd_stalls 1 snd_pc bbcd unimpl 0
+in0 ffff in1 ffff  frame 260 pc ff8205b0 blit 541488 late 0 skip 0 snd_stalls 1 snd_pc dcfa unimpl 0
+in0 ffff in1 ffff  frame 261 pc ff820590 blit 541701 late 0 skip 0 snd_stalls 1 snd_pc dcfc unimpl 0
+in0 ffff in1 ffff  frame 262 pc ff8205b0 blit 541488 late 0 skip 0 snd_stalls 1 snd_pc dcf9 unimpl 0
+in0 ffff in1 ffff  frame 263 pc ff833430 blit 541625 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 264 pc ff8205b0 blit 541561 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 265 pc ff8205b0 blit 541568 late 0 skip 0 snd_stalls 1 snd_pc dcfd unimpl 0
+in0 ffff in1 ffff  frame 266 pc ff820590 blit 542382 late 0 skip 0 snd_stalls 1 snd_pc dcfb unimpl 0
+in0 ffff in1 ffff  frame 267 pc ff820480 blit 543383 late 0 skip 0 snd_stalls 1 snd_pc dcfc unimpl 0
+in0 ffff in1 ffff  frame 268 pc ff833480 blit 541776 late 0 skip 0 snd_stalls 1 snd_pc dcfb unimpl 0
+in0 ffff in1 ffff  frame 269 pc ff8205b0 blit 541797 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 270 pc ff820590 blit 542382 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 271 pc ff820480 blit 543383 late 0 skip 0 snd_stalls 1 snd_pc fe34 unimpl 0
+in0 ffff in1 ffff  frame 272 pc ff833480 blit 541776 late 0 skip 0 snd_stalls 1 snd_pc fe18 unimpl 0
+in0 ffff in1 ffff  frame 273 pc ff820590 blit 541741 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 274 pc ff8205b0 blit 541488 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 275 pc ff820590 blit 541721 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 276 pc ff8205b0 blit 541488 late 0 skip 0 snd_stalls 1 snd_pc fe34 unimpl 0
+in0 ffff in1 ffff  frame 277 pc ff8205b0 blit 541575 late 0 skip 0 snd_stalls 1 snd_pc fe19 unimpl 0
+in0 ffff in1 ffff  frame 278 pc ff8205b0 blit 541559 late 0 skip 0 snd_stalls 1 snd_pc fe36 unimpl 0
+in0 ffff in1 ffff  frame 279 pc ff8205b0 blit 541568 late 0 skip 0 snd_stalls 1 snd_pc fe35 unimpl 0
+in0 ffff in1 ffff  frame 280 pc ff820590 blit 542382 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 281 pc ff820480 blit 543383 late 0 skip 0 snd_stalls 1 snd_pc fe35 unimpl 0
+in0 ffff in1 ffff  frame 282 pc ff833480 blit 541776 late 0 skip 0 snd_stalls 1 snd_pc fe19 unimpl 0
+in0 ffff in1 ffff  frame 283 pc ff820590 blit 541741 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 284 pc ff8205b0 blit 541488 late 0 skip 0 snd_stalls 1 snd_pc fe1b unimpl 0
+in0 ffff in1 ffff  frame 285 pc ff8205b0 blit 541575 late 0 skip 0 snd_stalls 1 snd_pc fe1a unimpl 0
+in0 ffff in1 ffff  frame 286 pc ff8205b0 blit 541559 late 0 skip 0 snd_stalls 1 snd_pc fe35 unimpl 0
+in0 ffff in1 ffff  frame 287 pc ff833430 blit 541625 late 0 skip 0 snd_stalls 1 snd_pc fe1a unimpl 0
+in0 ffff in1 ffff  frame 288 pc ff8205b0 blit 541561 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 289 pc ff8205b0 blit 542074 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 290 pc ff8205b0 blit 541559 late 0 skip 0 snd_stalls 1 snd_pc fe1a unimpl 0
+in0 ffff in1 ffff  frame 291 pc ff8205b0 blit 541568 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 292 pc ff820590 blit 542382 late 0 skip 0 snd_stalls 1 snd_pc fe1a unimpl 0
+in0 ffff in1 ffff  frame 293 pc ff8205b0 blit 541514 late 0 skip 0 snd_stalls 1 snd_pc fe33 unimpl 0
+in0 ffff in1 ffff  frame 294 pc ff8205b0 blit 541559 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 295 pc ff8205b0 blit 541568 late 0 skip 0 snd_stalls 1 snd_pc fe35 unimpl 0
+in0 ffff in1 ffff  frame 296 pc ff820590 blit 542382 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 297 pc ff820480 blit 543383 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 298 pc ff833480 blit 541776 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 299 pc ff8205b0 blit 543456 late 0 skip 0 snd_stalls 1 snd_pc fe56 unimpl 0
+in0 ffff in1 ffff  frame 300 pc ff8205b0 blit 541559 late 0 skip 0 snd_stalls 1 snd_pc fe56 unimpl 0
+in0 ffff in1 ffff  frame 301 pc ff8205b0 blit 541575 late 0 skip 0 snd_stalls 1 snd_pc fe57 unimpl 0
+in0 ffff in1 ffff  frame 302 pc ff8205b0 blit 541559 late 0 skip 0 snd_stalls 1 snd_pc fe57 unimpl 0
+in0 ffff in1 ffff  frame 303 pc ff8205b0 blit 542074 late 0 skip 0 snd_stalls 1 snd_pc fe58 unimpl 0
+in0 ffff in1 ffff  frame 304 pc ff8205b0 blit 541559 late 0 skip 0 snd_stalls 1 snd_pc fe58 unimpl 0
+in0 ffff in1 ffff  frame 305 pc ff8205b0 blit 541568 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 306 pc ff820590 blit 542382 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 307 pc ff820480 blit 543383 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 308 pc ff833480 blit 541776 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 309 pc ff8205b0 blit 541797 late 0 skip 0 snd_stalls 1 snd_pc fe58 unimpl 0
+in0 ffff in1 ffff  frame 310 pc ff820590 blit 542382 late 0 skip 0 snd_stalls 1 snd_pc fe58 unimpl 0
+in0 ffff in1 ffff  frame 311 pc ff8205a0 blit 541338 late 0 skip 0 snd_stalls 1 snd_pc fe59 unimpl 0
+in0 ffff in1 ffff  frame 312 pc ff8205b0 blit 541511 late 0 skip 0 snd_stalls 1 snd_pc fe59 unimpl 0
+in0 ffff in1 ffff  frame 313 pc ff8205b0 blit 541568 late 0 skip 0 snd_stalls 1 snd_pc fe5a unimpl 0
+in0 ffff in1 ffff  frame 314 pc ff820590 blit 542382 late 0 skip 0 snd_stalls 1 snd_pc fe5a unimpl 0
+in0 ffff in1 ffff  frame 315 pc ff820480 blit 543383 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 316 pc ff833480 blit 541776 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 317 pc ff8205b0 blit 541797 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 318 pc ff820590 blit 542382 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 319 pc ff820480 blit 543383 late 0 skip 0 snd_stalls 1 snd_pc fe5a unimpl 0
+in0 ffff in1 ffff  frame 320 pc ff833480 blit 541776 late 0 skip 0 snd_stalls 1 snd_pc fe5a unimpl 0
+in0 ffff in1 ffff  frame 321 pc ff820590 blit 541741 late 0 skip 0 snd_stalls 1 snd_pc fe5b unimpl 0
+in0 ffff in1 ffff  frame 322 pc ff8205b0 blit 541488 late 0 skip 0 snd_stalls 1 snd_pc fe5b unimpl 0
+in0 ffff in1 ffff  frame 323 pc ff833430 blit 541625 late 0 skip 0 snd_stalls 1 snd_pc fe5c unimpl 0
+in0 ffff in1 ffff  frame 324 pc ff8205b0 blit 541561 late 0 skip 0 snd_stalls 1 snd_pc fe5c unimpl 0
+in0 ffff in1 ffff  frame 325 pc ff8205b0 blit 541575 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 326 pc ff8205b0 blit 541559 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 327 pc ff8205b0 blit 541568 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 328 pc ff820590 blit 542382 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 329 pc ff820480 blit 543383 late 0 skip 0 snd_stalls 1 snd_pc fe5c unimpl 0
+in0 ffff in1 ffff  frame 330 pc ff833480 blit 541776 late 0 skip 0 snd_stalls 1 snd_pc 0238 unimpl 0
+in0 ffff in1 ffff  frame 331 pc ff8205b0 blit 543363 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 332 pc ff8205b0 blit 541559 late 0 skip 0 snd_stalls 1 snd_pc dc05 unimpl 0
+in0 ffff in1 ffff  frame 333 pc ff8205b0 blit 541575 late 0 skip 0 snd_stalls 1 snd_pc dd97 unimpl 0
+in0 ffff in1 ffff  frame 334 pc ff8205b0 blit 541559 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 335 pc ff833430 blit 541625 late 0 skip 0 snd_stalls 1 snd_pc f53b unimpl 0
+in0 ffff in1 ffff  frame 336 pc ff8205b0 blit 541561 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 337 pc ff8205b0 blit 541568 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 338 pc ff820590 blit 542382 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 339 pc ff820480 blit 543383 late 0 skip 0 snd_stalls 1 snd_pc dc1a unimpl 0
+in0 ffff in1 ffff  frame 340 pc ff833480 blit 541776 late 0 skip 0 snd_stalls 1 snd_pc dd88 unimpl 0
+in0 ffff in1 ffff  frame 341 pc ff8205b0 blit 541797 late 0 skip 0 snd_stalls 1 snd_pc dd93 unimpl 0
+in0 ffff in1 ffff  frame 342 pc ff820590 blit 542382 late 0 skip 0 snd_stalls 1 snd_pc dd93 unimpl 0
+in0 ffff in1 ffff  frame 343 pc ff820480 blit 543383 late 0 skip 0 snd_stalls 1 snd_pc dd9a unimpl 0
+in0 ffff in1 ffff  frame 344 pc ff833480 blit 541776 late 0 skip 0 snd_stalls 1 snd_pc dc17 unimpl 0
+in0 ffff in1 ffff  frame 345 pc ff8205b0 blit 543363 late 0 skip 0 snd_stalls 1 snd_pc dd85 unimpl 0
+in0 ffff in1 ffff  frame 346 pc ff8205b0 blit 541559 late 0 skip 0 snd_stalls 1 snd_pc dc3e unimpl 0
+in0 ffff in1 ffff  frame 347 pc ff833430 blit 541625 late 0 skip 0 snd_stalls 1 snd_pc 04ce unimpl 0
+in0 ffff in1 ffff  frame 348 pc ff8205b0 blit 541561 late 0 skip 0 snd_stalls 1 snd_pc 02ba unimpl 0
+in0 ffff in1 ffff  frame 349 pc ff8205b0 blit 541575 late 0 skip 0 snd_stalls 1 snd_pc dc08 unimpl 0
+in0 ffff in1 ffff  frame 350 pc ff8205b0 blit 541559 late 0 skip 0 snd_stalls 1 snd_pc dd8b unimpl 0
+in0 ffff in1 ffff  frame 351 pc ff8205b0 blit 541568 late 0 skip 0 snd_stalls 1 snd_pc 2400 unimpl 0
+in0 ffff in1 ffff  frame 352 pc ff820590 blit 542382 late 0 skip 0 snd_stalls 1 snd_pc dd8d unimpl 0
+in0 ffff in1 ffff  frame 353 pc ff820480 blit 543383 late 0 skip 0 snd_stalls 1 snd_pc f536 unimpl 0
+in0 ffff in1 ffff  frame 354 pc ff833480 blit 541776 late 0 skip 0 snd_stalls 1 snd_pc dc05 unimpl 0
+in0 ffff in1 ffff  frame 355 pc ff820590 blit 541741 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 356 pc ff8205b0 blit 541488 late 0 skip 0 snd_stalls 1 snd_pc dc1e unimpl 0
+in0 ffff in1 ffff  frame 357 pc ff8205b0 blit 541575 late 0 skip 0 snd_stalls 1 snd_pc 1ffe unimpl 0
+in0 ffff in1 ffff  frame 358 pc ff8205b0 blit 541559 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 359 pc ff820590 blit 541721 late 0 skip 0 snd_stalls 1 snd_pc fff7 unimpl 0
+in0 ffff in1 ffff  frame 360 pc ff8205b0 blit 541488 late 0 skip 0 snd_stalls 1 snd_pc dd93 unimpl 0
+in0 ffff in1 ffff  frame 361 pc ff8205b0 blit 541568 late 0 skip 0 snd_stalls 1 snd_pc dc1c unimpl 0
+in0 ffff in1 ffff  frame 362 pc ff820590 blit 542382 late 0 skip 0 snd_stalls 1 snd_pc dd8f unimpl 0
+in0 ffff in1 ffff  frame 363 pc ff820480 blit 543383 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 364 pc ff833480 blit 541776 late 0 skip 0 snd_stalls 1 snd_pc dd96 unimpl 0
+in0 ffff in1 ffff  frame 365 pc ff8205b0 blit 541797 late 0 skip 0 snd_stalls 1 snd_pc f53c unimpl 0
+in0 ffff in1 ffff  frame 366 pc ff820590 blit 542382 late 0 skip 0 snd_stalls 1 snd_pc dc16 unimpl 0
+in0 ffff in1 ffff  frame 367 pc ff820480 blit 543383 late 0 skip 0 snd_stalls 1 snd_pc dd7e unimpl 0
+in0 ffff in1 ffff  frame 368 pc ff833480 blit 541776 late 0 skip 0 snd_stalls 1 snd_pc 1ffd unimpl 0
+in0 ffff in1 ffff  frame 369 pc ff820590 blit 541741 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 370 pc ff8205b0 blit 541488 late 0 skip 0 snd_stalls 1 snd_pc 2401 unimpl 0
+in0 ffff in1 ffff  frame 371 pc ff833430 blit 541625 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 372 pc ff8205b0 blit 541561 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 373 pc ff820590 blit 541701 late 0 skip 0 snd_stalls 1 snd_pc 023b unimpl 0
+in0 ffff in1 ffff  frame 374 pc ff8205b0 blit 541488 late 0 skip 0 snd_stalls 1 snd_pc dd99 unimpl 0
+in0 ffff in1 ffff  frame 375 pc ff8205b0 blit 541568 late 0 skip 0 snd_stalls 1 snd_pc f539 unimpl 0
+in0 ffff in1 ffff  frame 376 pc ff820590 blit 542382 late 0 skip 0 snd_stalls 1 snd_pc 023b unimpl 0
+in0 ffff in1 ffff  frame 377 pc ff820480 blit 543383 late 0 skip 0 snd_stalls 1 snd_pc 04ce unimpl 0
+in0 ffff in1 ffff  frame 378 pc ff833480 blit 541776 late 0 skip 0 snd_stalls 1 snd_pc dc21 unimpl 0
+in0 ffff in1 ffff  frame 379 pc ff820590 blit 541741 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 380 pc ff8205b0 blit 541488 late 0 skip 0 snd_stalls 1 snd_pc f521 unimpl 0
+in0 ffff in1 ffff  frame 381 pc ff8205b0 blit 541575 late 0 skip 0 snd_stalls 1 snd_pc dc06 unimpl 0
+in0 ffff in1 ffff  frame 382 pc ff8205b0 blit 541559 late 0 skip 0 snd_stalls 1 snd_pc dd81 unimpl 0
+in0 ffff in1 ffff  frame 383 pc ff833430 blit 541625 late 0 skip 0 snd_stalls 1 snd_pc 2401 unimpl 0
+in0 ffff in1 ffff  frame 384 pc ff8205b0 blit 541561 late 0 skip 0 snd_stalls 1 snd_pc dd8d unimpl 0
+in0 ffff in1 ffff  frame 385 pc ff8205b0 blit 541568 late 0 skip 0 snd_stalls 1 snd_pc 1ffe unimpl 0
+in0 ffff in1 ffff  frame 386 pc ff820590 blit 542382 late 0 skip 0 snd_stalls 1 snd_pc 1ffa unimpl 0
+in0 ffff in1 ffff  frame 387 pc ff833430 blit 543152 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 388 pc ff8205b0 blit 541561 late 0 skip 0 snd_stalls 1 snd_pc dc1b unimpl 0
+in0 ffff in1 ffff  frame 389 pc ff8205b0 blit 541575 late 0 skip 0 snd_stalls 1 snd_pc dd89 unimpl 0
+in0 ffff in1 ffff  frame 390 pc ff8205b0 blit 541559 late 0 skip 0 snd_stalls 1 snd_pc dd93 unimpl 0
+in0 ffff in1 ffff  frame 391 pc ff8205b0 blit 541568 late 0 skip 0 snd_stalls 1 snd_pc f51d unimpl 0
+in0 ffff in1 ffff  frame 392 pc ff820590 blit 542382 late 0 skip 0 snd_stalls 1 snd_pc f539 unimpl 0
+in0 ffff in1 ffff  frame 393 pc ff820480 blit 543383 late 0 skip 0 snd_stalls 1 snd_pc dc0a unimpl 0
+in0 ffff in1 ffff  frame 394 pc ff833480 blit 541776 late 0 skip 0 snd_stalls 1 snd_pc dd8f unimpl 0
+in0 ffff in1 ffff  frame 395 pc ff8205b0 blit 543456 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 396 pc ff8205b0 blit 541559 late 0 skip 0 snd_stalls 1 snd_pc dd92 unimpl 0
+in0 ffff in1 ffff  frame 397 pc ff8205b0 blit 541575 late 0 skip 0 snd_stalls 1 snd_pc dd96 unimpl 0
+in0 ffff in1 ffff  frame 398 pc ff8205b0 blit 541559 late 0 skip 0 snd_stalls 1 snd_pc 0238 unimpl 0
+in0 ffff in1 ffff  frame 399 pc ff8205b0 blit 541568 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 400 pc ff820590 blit 542382 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 401 pc ff833430 blit 543152 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 402 pc ff8205b0 blit 541561 late 0 skip 0 snd_stalls 1 snd_pc f520 unimpl 0
+in0 ffff in1 ffff  frame 403 pc ff8205b0 blit 541568 late 0 skip 0 snd_stalls 1 snd_pc 023c unimpl 0
+in0 ffff in1 ffff  frame 404 pc ff820590 blit 542382 late 0 skip 0 snd_stalls 1 snd_pc 1ffe unimpl 0
+in0 ffff in1 ffff  frame 405 pc ff8205b0 blit 541514 late 0 skip 0 snd_stalls 1 snd_pc dc20 unimpl 0
+in0 ffff in1 ffff  frame 406 pc ff8205b0 blit 541559 late 0 skip 0 snd_stalls 1 snd_pc dd8e unimpl 0
+in0 ffff in1 ffff  frame 407 pc ff833430 blit 541625 late 0 skip 0 snd_stalls 1 snd_pc dd84 unimpl 0
+in0 ffff in1 ffff  frame 408 pc ff8205b0 blit 541561 late 0 skip 0 snd_stalls 1 snd_pc fff7 unimpl 0
+in0 ffff in1 ffff  frame 409 pc ff8205b0 blit 541568 late 0 skip 0 snd_stalls 1 snd_pc dd7a unimpl 0
+in0 ffff in1 ffff  frame 410 pc ff820590 blit 542382 late 0 skip 0 snd_stalls 1 snd_pc dc1c unimpl 0
+in0 ffff in1 ffff  frame 411 pc ff820480 blit 543383 late 0 skip 0 snd_stalls 1 snd_pc dd8a unimpl 0
+in0 ffff in1 ffff  frame 412 pc ff833480 blit 541776 late 0 skip 0 snd_stalls 1 snd_pc f538 unimpl 0
+in0 ffff in1 ffff  frame 413 pc ff8205b0 blit 541797 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 414 pc ff820590 blit 542382 late 0 skip 0 snd_stalls 1 snd_pc dd9a unimpl 0
+in0 ffff in1 ffff  frame 415 pc ff833430 blit 543152 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 416 pc ff8205b0 blit 541561 late 0 skip 0 snd_stalls 1 snd_pc dd85 unimpl 0
+in0 ffff in1 ffff  frame 417 pc ff8205b0 blit 541568 late 0 skip 0 snd_stalls 1 snd_pc dd7b unimpl 0
+in0 ffff in1 ffff  frame 418 pc ff820590 blit 542382 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 419 pc ff8205a0 blit 541338 late 0 skip 0 snd_stalls 1 snd_pc dd8b unimpl 0
+in0 ffff in1 ffff  frame 420 pc ff8205b0 blit 541511 late 0 skip 0 snd_stalls 1 snd_pc 0238 unimpl 0
+in0 ffff in1 ffff  frame 421 pc ff8205b0 blit 541575 late 0 skip 0 snd_stalls 1 snd_pc dd82 unimpl 0
+in0 ffff in1 ffff  frame 422 pc ff8205b0 blit 541559 late 0 skip 0 snd_stalls 1 snd_pc dd9a unimpl 0
+in0 ffff in1 ffff  frame 423 pc ff8205b0 blit 541568 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 424 pc ff820590 blit 542382 late 0 skip 0 snd_stalls 1 snd_pc f53c unimpl 0
+in0 ffff in1 ffff  frame 425 pc ff820480 blit 543383 late 0 skip 0 snd_stalls 1 snd_pc dc08 unimpl 0
+in0 ffff in1 ffff  frame 426 pc ff833480 blit 541776 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 427 pc ff820590 blit 541741 late 0 skip 0 snd_stalls 1 snd_pc dc21 unimpl 0
+in0 ffff in1 ffff  frame 428 pc ff8205b0 blit 541488 late 0 skip 0 snd_stalls 1 snd_pc 2401 unimpl 0
+in0 ffff in1 ffff  frame 429 pc ff820590 blit 540450 late 0 skip 0 snd_stalls 1 snd_pc f539 unimpl 0
+in0 ffff in1 ffff  frame 430 pc ff8205b0 blit 541488 late 0 skip 0 snd_stalls 1 snd_pc dc05 unimpl 0
+in0 ffff in1 ffff  frame 431 pc ff833430 blit 541625 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 432 pc ff8205b0 blit 541561 late 0 skip 0 snd_stalls 1 snd_pc 2401 unimpl 0
+in0 ffff in1 ffff  frame 433 pc ff8205b0 blit 541568 late 0 skip 0 snd_stalls 1 snd_pc dd8f unimpl 0
+in0 ffff in1 ffff  frame 434 pc ff820590 blit 542382 late 0 skip 0 snd_stalls 1 snd_pc f539 unimpl 0
+in0 ffff in1 ffff  frame 435 pc ff820480 blit 543383 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 436 pc ff833480 blit 541776 late 0 skip 0 snd_stalls 1 snd_pc dd7b unimpl 0
+in0 ffff in1 ffff  frame 437 pc ff8205b0 blit 541797 late 0 skip 0 snd_stalls 1 snd_pc 2400 unimpl 0
+in0 ffff in1 ffff  frame 438 pc ff820590 blit 542382 late 0 skip 0 snd_stalls 1 snd_pc dd86 unimpl 0
+in0 ffff in1 ffff  frame 439 pc ff820480 blit 543383 late 0 skip 0 snd_stalls 1 snd_pc f521 unimpl 0
+in0 ffff in1 ffff  frame 440 pc ff833480 blit 541776 late 0 skip 0 snd_stalls 1 snd_pc dd92 unimpl 0
+in0 ffff in1 ffff  frame 441 pc ff820590 blit 541741 late 0 skip 0 snd_stalls 1 snd_pc dd97 unimpl 0
+in0 ffff in1 ffff  frame 442 pc ff8205b0 blit 541488 late 0 skip 0 snd_stalls 1 snd_pc dc16 unimpl 0
+in0 ffff in1 ffff  frame 443 pc ff820590 blit 541721 late 0 skip 0 snd_stalls 1 snd_pc dd92 unimpl 0
+in0 ffff in1 ffff  frame 444 pc ff8205b0 blit 541488 late 0 skip 0 snd_stalls 1 snd_pc f51f unimpl 0
+in0 ffff in1 ffff  frame 445 pc ff8205b0 blit 541575 late 0 skip 0 snd_stalls 1 snd_pc 0200 unimpl 0
+in0 ffff in1 ffff  frame 446 pc ff8205b0 blit 541559 late 0 skip 0 snd_stalls 1 snd_pc f53b unimpl 0
+in0 ffff in1 ffff  frame 447 pc ff8205b0 blit 541568 late 0 skip 0 snd_stalls 1 snd_pc 2401 unimpl 0
+in0 ffff in1 ffff  frame 448 pc ff820590 blit 542382 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 449 pc ff820480 blit 543383 late 0 skip 0 snd_stalls 1 snd_pc dc22 unimpl 0
+in0 ffff in1 ffff  frame 450 pc ff833480 blit 541776 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 451 pc ff820590 blit 541741 late 0 skip 0 snd_stalls 1 snd_pc f539 unimpl 0
+in0 ffff in1 ffff  frame 452 pc ff8205b0 blit 541488 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 453 pc ff8205b0 blit 541575 late 0 skip 0 snd_stalls 1 snd_pc dd7a unimpl 0
+in0 ffff in1 ffff  frame 454 pc ff8205b0 blit 541559 late 0 skip 0 snd_stalls 1 snd_pc 2401 unimpl 0
+in0 ffff in1 ffff  frame 455 pc ff833430 blit 541625 late 0 skip 0 snd_stalls 1 snd_pc f51d unimpl 0
+in0 ffff in1 ffff  frame 456 pc ff8205b0 blit 541561 late 0 skip 0 snd_stalls 1 snd_pc 0217 unimpl 0
+in0 ffff in1 ffff  frame 457 pc ff8205b0 blit 542074 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 458 pc ff8205b0 blit 541559 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 459 pc ff8205b0 blit 541568 late 0 skip 0 snd_stalls 1 snd_pc dc1e unimpl 0
+in0 ffff in1 ffff  frame 460 pc ff820590 blit 542382 late 0 skip 0 snd_stalls 1 snd_pc dd91 unimpl 0
+in0 ffff in1 ffff  frame 461 pc ff8205b0 blit 541514 late 0 skip 0 snd_stalls 1 snd_pc f520 unimpl 0
+in0 ffff in1 ffff  frame 462 pc ff8205b0 blit 541559 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 463 pc ff8205b0 blit 541568 late 0 skip 0 snd_stalls 1 snd_pc 1ffd unimpl 0
+in0 ffff in1 ffff  frame 464 pc ff820590 blit 542382 late 0 skip 0 snd_stalls 1 snd_pc dc18 unimpl 0
+in0 ffff in1 ffff  frame 465 pc ff820480 blit 543383 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 466 pc ff833480 blit 541776 late 0 skip 0 snd_stalls 1 snd_pc 1ffa unimpl 0
+in0 ffff in1 ffff  frame 467 pc ff8205b0 blit 543456 late 0 skip 0 snd_stalls 1 snd_pc 0217 unimpl 0
+in0 ffff in1 ffff  frame 468 pc ff8205b0 blit 541559 late 0 skip 0 snd_stalls 1 snd_pc dd7b unimpl 0
+in0 ffff in1 ffff  frame 469 pc ff8205b0 blit 541575 late 0 skip 0 snd_stalls 1 snd_pc dc0a unimpl 0
+in0 ffff in1 ffff  frame 470 pc ff8205b0 blit 541559 late 0 skip 0 snd_stalls 1 snd_pc dd7c unimpl 0
+in0 ffff in1 ffff  frame 471 pc ff8205b0 blit 542074 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 472 pc ff8205b0 blit 541559 late 0 skip 0 snd_stalls 1 snd_pc dd8d unimpl 0
+in0 ffff in1 ffff  frame 473 pc ff8205b0 blit 541568 late 0 skip 0 snd_stalls 1 snd_pc f53b unimpl 0
+in0 ffff in1 ffff  frame 474 pc ff820590 blit 542382 late 0 skip 0 snd_stalls 1 snd_pc dc08 unimpl 0
+in0 ffff in1 ffff  frame 475 pc ff820480 blit 543383 late 0 skip 0 snd_stalls 1 snd_pc dd83 unimpl 0
+in0 ffff in1 ffff  frame 476 pc ff833480 blit 541776 late 0 skip 0 snd_stalls 1 snd_pc dc1f unimpl 0
+in0 ffff in1 ffff  frame 477 pc ff8205b0 blit 541797 late 0 skip 0 snd_stalls 1 snd_pc 0200 unimpl 0
+in0 ffff in1 ffff  frame 478 pc ff820590 blit 542382 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 479 pc ff8205a0 blit 541338 late 0 skip 0 snd_stalls 1 snd_pc dc05 unimpl 0
+in0 ffff in1 ffff  frame 480 pc ff8205b0 blit 541511 late 0 skip 0 snd_stalls 1 snd_pc dd7e unimpl 0
+in0 ffff in1 ffff  frame 481 pc ff8205b0 blit 541568 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 482 pc ff820590 blit 542382 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 483 pc ff820480 blit 543383 late 0 skip 0 snd_stalls 1 snd_pc f539 unimpl 0
+in0 ffff in1 ffff  frame 484 pc ff833480 blit 541776 late 0 skip 0 snd_stalls 1 snd_pc f51d unimpl 0
+in0 ffff in1 ffff  frame 485 pc ff8205b0 blit 541797 late 0 skip 0 snd_stalls 1 snd_pc dd7b unimpl 0
+in0 ffff in1 ffff  frame 486 pc ff820590 blit 542382 late 0 skip 0 snd_stalls 1 snd_pc dc1a unimpl 0
+in0 ffff in1 ffff  frame 487 pc ff820480 blit 543383 late 0 skip 0 snd_stalls 1 snd_pc dd95 unimpl 0
+in0 ffff in1 ffff  frame 488 pc ff833480 blit 541776 late 0 skip 0 snd_stalls 1 snd_pc f521 unimpl 0
+in0 ffff in1 ffff  frame 489 pc ff820590 blit 541741 late 0 skip 0 snd_stalls 1 snd_pc f51d unimpl 0
+in0 ffff in1 ffff  frame 490 pc ff8205b0 blit 541488 late 0 skip 0 snd_stalls 1 snd_pc 04cf unimpl 0
+in0 ffff in1 ffff  frame 491 pc ff833430 blit 541625 late 0 skip 0 snd_stalls 1 snd_pc dc09 unimpl 0
+in0 ffff in1 ffff  frame 492 pc ff8205b0 blit 541561 late 0 skip 0 snd_stalls 1 snd_pc dd81 unimpl 0
+in0 ffff in1 ffff  frame 493 pc ff8205b0 blit 541575 late 0 skip 0 snd_stalls 1 snd_pc 023c unimpl 0
+in0 ffff in1 ffff  frame 494 pc ff8205b0 blit 541559 late 0 skip 0 snd_stalls 1 snd_pc f51d unimpl 0
+in0 ffff in1 ffff  frame 495 pc ff8205b0 blit 541568 late 0 skip 0 snd_stalls 1 snd_pc dd98 unimpl 0
+in0 ffff in1 ffff  frame 496 pc ff820590 blit 542382 late 0 skip 0 snd_stalls 1 snd_pc dc07 unimpl 0
+in0 ffff in1 ffff  frame 497 pc ff820480 blit 543383 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 498 pc ff833480 blit 541776 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 499 pc ff8205b0 blit 543363 late 0 skip 0 snd_stalls 1 snd_pc dd93 unimpl 0
+in0 ffff in1 ffff  frame 500 pc ff8205b0 blit 541559 late 0 skip 0 snd_stalls 1 snd_pc 1ffe unimpl 0
+in0 ffff in1 ffff  frame 501 pc ff8205b0 blit 541575 late 0 skip 0 snd_stalls 1 snd_pc dc05 unimpl 0
+in0 ffff in1 ffff  frame 502 pc ff8205b0 blit 541559 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 503 pc ff833430 blit 541625 late 0 skip 0 snd_stalls 1 snd_pc dc1e unimpl 0
+in0 ffff in1 ffff  frame 504 pc ff8205b0 blit 541561 late 0 skip 0 snd_stalls 1 snd_pc dd91 unimpl 0
+in0 ffff in1 ffff  frame 505 pc ff8205b0 blit 541568 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 506 pc ff820590 blit 542382 late 0 skip 0 snd_stalls 1 snd_pc 1ffc unimpl 0
+in0 ffff in1 ffff  frame 507 pc ff820480 blit 543383 late 0 skip 0 snd_stalls 1 snd_pc dd9a unimpl 0
+in0 ffff in1 ffff  frame 508 pc ff833480 blit 541776 late 0 skip 0 snd_stalls 1 snd_pc dd92 unimpl 0
+in0 ffff in1 ffff  frame 509 pc ff8205b0 blit 541797 late 0 skip 0 snd_stalls 1 snd_pc 2401 unimpl 0
+in0 ffff in1 ffff  frame 510 pc ff820590 blit 542382 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 511 pc ff820480 blit 543383 late 0 skip 0 snd_stalls 1 snd_pc f53a unimpl 0
+in0 ffff in1 ffff  frame 512 pc ff833480 blit 541776 late 0 skip 0 snd_stalls 1 snd_pc 2401 unimpl 0
+in0 ffff in1 ffff  frame 513 pc ff8205b0 blit 543363 late 0 skip 0 snd_stalls 1 snd_pc 2401 unimpl 0
+in0 ffff in1 ffff  frame 514 pc ff8205b0 blit 541559 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 515 pc ff833430 blit 541625 late 0 skip 0 snd_stalls 1 snd_pc 0216 unimpl 0
+in0 ffff in1 ffff  frame 516 pc ff8205b0 blit 541561 late 0 skip 0 snd_stalls 1 snd_pc dd93 unimpl 0
+in0 ffff in1 ffff  frame 517 pc ff8205b0 blit 541575 late 0 skip 0 snd_stalls 1 snd_pc dd9a unimpl 0
+in0 ffff in1 ffff  frame 518 pc ff8205b0 blit 541559 late 0 skip 0 snd_stalls 1 snd_pc dc15 unimpl 0
+in0 ffff in1 ffff  frame 519 pc ff8205b0 blit 541568 late 0 skip 0 snd_stalls 1 snd_pc dd7b unimpl 0
+in0 ffff in1 ffff  frame 520 pc ff820590 blit 542382 late 0 skip 0 snd_stalls 1 snd_pc dc3e unimpl 0
+in0 ffff in1 ffff  frame 521 pc ff820480 blit 543383 late 0 skip 0 snd_stalls 1 snd_pc dd8c unimpl 0
+in0 ffff in1 ffff  frame 522 pc ff833480 blit 541776 late 0 skip 0 snd_stalls 1 snd_pc 02ba unimpl 0
+in0 ffff in1 ffff  frame 523 pc ff820590 blit 541741 late 0 skip 0 snd_stalls 1 snd_pc dc08 unimpl 0
+in0 ffff in1 ffff  frame 524 pc ff8205b0 blit 541488 late 0 skip 0 snd_stalls 1 snd_pc dd87 unimpl 0
+in0 ffff in1 ffff  frame 525 pc ff8205b0 blit 541575 late 0 skip 0 snd_stalls 1 snd_pc dc3c unimpl 0
+in0 ffff in1 ffff  frame 526 pc ff8205b0 blit 541559 late 0 skip 0 snd_stalls 1 snd_pc 2401 unimpl 0
+in0 ffff in1 ffff  frame 527 pc ff820590 blit 541721 late 0 skip 0 snd_stalls 1 snd_pc f53a unimpl 0
+in0 ffff in1 ffff  frame 528 pc ff8205b0 blit 541488 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 529 pc ff8205b0 blit 541568 late 0 skip 0 snd_stalls 1 snd_pc dd95 unimpl 0
+in0 ffff in1 ffff  frame 530 pc ff820590 blit 542382 late 0 skip 0 snd_stalls 1 snd_pc dc1f unimpl 0
+in0 ffff in1 ffff  frame 531 pc ff820480 blit 543383 late 0 skip 0 snd_stalls 1 snd_pc 2400 unimpl 0
+in0 ffff in1 ffff  frame 532 pc ff833480 blit 541776 late 0 skip 0 snd_stalls 1 snd_pc 0216 unimpl 0
+in0 ffff in1 ffff  frame 533 pc ff8205b0 blit 541797 late 0 skip 0 snd_stalls 1 snd_pc dd7f unimpl 0
+in0 ffff in1 ffff  frame 534 pc ff820590 blit 542382 late 0 skip 0 snd_stalls 1 snd_pc dd9a unimpl 0
+in0 ffff in1 ffff  frame 535 pc ff820480 blit 543383 late 0 skip 0 snd_stalls 1 snd_pc 2400 unimpl 0
+in0 ffff in1 ffff  frame 536 pc ff833480 blit 541776 late 0 skip 0 snd_stalls 1 snd_pc dd93 unimpl 0
+in0 ffff in1 ffff  frame 537 pc ff820590 blit 541741 late 0 skip 0 snd_stalls 1 snd_pc f51e unimpl 0
+in0 ffff in1 ffff  frame 538 pc ff8205b0 blit 541488 late 0 skip 0 snd_stalls 1 snd_pc 0216 unimpl 0
+in0 ffff in1 ffff  frame 539 pc ff833430 blit 541625 late 0 skip 0 snd_stalls 1 snd_pc 1ffe unimpl 0
+in0 ffff in1 ffff  frame 540 pc ff8205b0 blit 541561 late 0 skip 0 snd_stalls 1 snd_pc dc0a unimpl 0
+in0 ffff in1 ffff  frame 541 pc ff820590 blit 541701 late 0 skip 0 snd_stalls 1 snd_pc dd80 unimpl 0
+in0 ffff in1 ffff  frame 542 pc ff8205b0 blit 541488 late 0 skip 0 snd_stalls 1 snd_pc 1ffb unimpl 0
+in0 ffff in1 ffff  frame 543 pc ff8205b0 blit 541568 late 0 skip 0 snd_stalls 1 snd_pc 04cf unimpl 0
+in0 ffff in1 ffff  frame 544 pc ff820590 blit 542382 late 0 skip 0 snd_stalls 1 snd_pc f53a unimpl 0
+in0 ffff in1 ffff  frame 545 pc ff820480 blit 543383 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 546 pc ff833480 blit 541776 late 0 skip 0 snd_stalls 1 snd_pc dd7d unimpl 0
+in0 ffff in1 ffff  frame 547 pc ff820590 blit 541741 late 0 skip 0 snd_stalls 1 snd_pc 023b unimpl 0
+in0 ffff in1 ffff  frame 548 pc ff8205b0 blit 541488 late 0 skip 0 snd_stalls 1 snd_pc f522 unimpl 0
+in0 ffff in1 ffff  frame 549 pc ff8205b0 blit 541575 late 0 skip 0 snd_stalls 1 snd_pc 1ffe unimpl 0
+in0 ffff in1 ffff  frame 550 pc ff8205b0 blit 541559 late 0 skip 0 snd_stalls 1 snd_pc 023c unimpl 0
+in0 ffff in1 ffff  frame 551 pc ff833430 blit 541625 late 0 skip 0 snd_stalls 1 snd_pc 1ffd unimpl 0
+in0 ffff in1 ffff  frame 552 pc ff8205b0 blit 541561 late 0 skip 0 snd_stalls 1 snd_pc dc20 unimpl 0
+in0 ffff in1 ffff  frame 553 pc ff8205b0 blit 541568 late 0 skip 0 snd_stalls 1 snd_pc dd8f unimpl 0
+in0 ffff in1 ffff  frame 554 pc ff820590 blit 542382 late 0 skip 0 snd_stalls 1 snd_pc f53d unimpl 0
+in0 ffff in1 ffff  frame 555 pc ff833430 blit 543152 late 0 skip 0 snd_stalls 1 snd_pc dd93 unimpl 0
+in0 ffff in1 ffff  frame 556 pc ff8205b0 blit 541561 late 0 skip 0 snd_stalls 1 snd_pc dd94 unimpl 0
+in0 ffff in1 ffff  frame 557 pc ff8205b0 blit 541575 late 0 skip 0 snd_stalls 1 snd_pc dc1d unimpl 0
+in0 ffff in1 ffff  frame 558 pc ff833480 blit 542416 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 559 pc ff824be0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc 1ffd unimpl 0
+in0 ffff in1 ffff  frame 560 pc ff824be0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 561 pc ff824da0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd7a unimpl 0
+in0 ffff in1 ffff  frame 562 pc ff824da0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dc19 unimpl 0
+in0 ffff in1 ffff  frame 563 pc ff825110 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd8a unimpl 0
+in0 ffff in1 ffff  frame 564 pc ff825130 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dc3e unimpl 0
+in0 ffff in1 ffff  frame 565 pc ff825100 blit 0 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 566 pc ff825110 blit 0 late 0 skip 0 snd_stalls 1 snd_pc 02ba unimpl 0
+in0 ffff in1 ffff  frame 567 pc ff820590 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dc15 unimpl 0
+in0 ffff in1 ffff  frame 568 pc ff8253e0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd91 unimpl 0
+in0 ffff in1 ffff  frame 569 pc ff8253c0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc 0219 unimpl 0
+in0 ffff in1 ffff  frame 570 pc ff8253f0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd92 unimpl 0
+in0 ffff in1 ffff  frame 571 pc ff820590 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd97 unimpl 0
+in0 ffff in1 ffff  frame 572 pc ff825900 blit 0 late 0 skip 0 snd_stalls 1 snd_pc 023b unimpl 0
+in0 ffff in1 ffff  frame 573 pc ff825950 blit 0 late 0 skip 0 snd_stalls 1 snd_pc 2401 unimpl 0
+in0 ffff in1 ffff  frame 574 pc ff825940 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dc22 unimpl 0
+in0 ffff in1 ffff  frame 575 pc ff825880 blit 0 late 0 skip 0 snd_stalls 1 snd_pc 2401 unimpl 0
+in0 ffff in1 ffff  frame 576 pc ff825900 blit 0 late 0 skip 0 snd_stalls 1 snd_pc f537 unimpl 0
+in0 ffff in1 ffff  frame 577 pc ff820480 blit 0 late 0 skip 0 snd_stalls 1 snd_pc f51d unimpl 0
+in0 ffff in1 ffff  frame 578 pc ff8258f0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd79 unimpl 0
+in0 ffff in1 ffff  frame 579 pc ff8258c0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 580 pc ff825880 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd93 unimpl 0
+in0 ffff in1 ffff  frame 581 pc ff8258c0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd7f unimpl 0
+in0 ffff in1 ffff  frame 582 pc ff820480 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd95 unimpl 0
+in0 ffff in1 ffff  frame 583 pc ff8258f0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc 04ce unimpl 0
+in0 ffff in1 ffff  frame 584 pc ff8258c0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd91 unimpl 0
+in0 ffff in1 ffff  frame 585 pc ff8258c0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd80 unimpl 0
+in0 ffff in1 ffff  frame 586 pc ff820480 blit 0 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 587 pc ff825900 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd7b unimpl 0
+in0 ffff in1 ffff  frame 588 pc ff825910 blit 0 late 0 skip 0 snd_stalls 1 snd_pc f53b unimpl 0
+in0 ffff in1 ffff  frame 589 pc ff825890 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dc15 unimpl 0
+in0 ffff in1 ffff  frame 590 pc ff820590 blit 0 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 591 pc ff825960 blit 0 late 0 skip 0 snd_stalls 1 snd_pc 1ffb unimpl 0
+in0 ffff in1 ffff  frame 592 pc ff825920 blit 0 late 0 skip 0 snd_stalls 1 snd_pc 04ce unimpl 0
+in0 ffff in1 ffff  frame 593 pc ff833430 blit 0 late 0 skip 0 snd_stalls 1 snd_pc 1ffe unimpl 0
+in0 ffff in1 ffff  frame 594 pc ff825910 blit 0 late 0 skip 0 snd_stalls 1 snd_pc 0216 unimpl 0
+in0 ffff in1 ffff  frame 595 pc ff825920 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd7f unimpl 0
+in0 ffff in1 ffff  frame 596 pc ff8205b0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc f51d unimpl 0
+in0 ffff in1 ffff  frame 597 pc ff825890 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd90 unimpl 0
+in0 ffff in1 ffff  frame 598 pc ff833430 blit 0 late 0 skip 0 snd_stalls 1 snd_pc 1ffd unimpl 0
+in0 ffff in1 ffff  frame 599 pc ff8258e0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc 023b unimpl 0
+in0 ffff in1 ffff  frame 600 pc ff820480 blit 0 late 0 skip 0 snd_stalls 1 snd_pc 04ce unimpl 0
+in0 ffff in1 ffff  frame 601 pc ff825910 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dc1f unimpl 0
+in0 ffff in1 ffff  frame 602 pc ff8205b0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd87 unimpl 0
+in0 ffff in1 ffff  frame 603 pc ff825940 blit 0 late 0 skip 0 snd_stalls 1 snd_pc f522 unimpl 0
+in0 ffff in1 ffff  frame 604 pc ff8205b0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc fff7 unimpl 0
+in0 ffff in1 ffff  frame 605 pc ff9995e0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd82 unimpl 0
+in0 ffff in1 ffff  frame 606 pc ff833480 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dc0f unimpl 0
+in0 ffff in1 ffff  frame 607 pc ff8205b0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd84 unimpl 0
+in0 ffff in1 ffff  frame 608 pc ff820480 blit 0 late 0 skip 0 snd_stalls 1 snd_pc f520 unimpl 0
+in0 ffff in1 ffff  frame 609 pc ff820590 blit 0 late 0 skip 0 snd_stalls 1 snd_pc 0201 unimpl 0
+in0 ffff in1 ffff  frame 610 pc ff833430 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd98 unimpl 0
+in0 ffff in1 ffff  frame 611 pc ff820480 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dc1a unimpl 0
+in0 ffff in1 ffff  frame 612 pc ff833430 blit 0 late 0 skip 0 snd_stalls 1 snd_pc 2401 unimpl 0
+in0 ffff in1 ffff  frame 613 pc ff8205b0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd94 unimpl 0
+in0 ffff in1 ffff  frame 614 pc ff833480 blit 0 late 0 skip 0 snd_stalls 1 snd_pc f51d unimpl 0
+in0 ffff in1 ffff  frame 615 pc ff8205b0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 616 pc ff833430 blit 0 late 0 skip 0 snd_stalls 1 snd_pc 0238 unimpl 0
+in0 ffff in1 ffff  frame 617 pc ff820480 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd86 unimpl 0
+in0 ffff in1 ffff  frame 618 pc ff820480 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dc3e unimpl 0
+in0 ffff in1 ffff  frame 619 pc ff8205b0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd91 unimpl 0
+in0 ffff in1 ffff  frame 620 pc ff820480 blit 0 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 621 pc ff833430 blit 0 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 622 pc ff833480 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd81 unimpl 0
+in0 ffff in1 ffff  frame 623 pc ff820480 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dc21 unimpl 0
+in0 ffff in1 ffff  frame 624 pc ff8205b0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd97 unimpl 0
+in0 ffff in1 ffff  frame 625 pc ff833480 blit 0 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 626 pc ff833430 blit 0 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 627 pc ff8205b0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd98 unimpl 0
+in0 ffff in1 ffff  frame 628 pc ff820480 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dc1f unimpl 0
+in0 ffff in1 ffff  frame 629 pc ff820590 blit 0 late 0 skip 0 snd_stalls 1 snd_pc 0201 unimpl 0
+in0 ffff in1 ffff  frame 630 pc ff833480 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd9b unimpl 0
+in0 ffff in1 ffff  frame 631 pc ff82e1a0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc fff6 unimpl 0
+in0 ffff in1 ffff  frame 632 pc ff820c80 blit 0 late 0 skip 0 snd_stalls 1 snd_pc 0201 unimpl 0
+in0 ffff in1 ffff  frame 633 pc ff820c70 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dc1b unimpl 0
+in0 ffff in1 ffff  frame 634 pc ff820c90 blit 0 late 0 skip 0 snd_stalls 1 snd_pc f538 unimpl 0
+in0 ffff in1 ffff  frame 635 pc ff82e1a0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc f51e unimpl 0
+in0 ffff in1 ffff  frame 636 pc ff82e1a0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd79 unimpl 0
+in0 ffff in1 ffff  frame 637 pc ff820c60 blit 0 late 0 skip 0 snd_stalls 1 snd_pc 02ba unimpl 0
+in0 ffff in1 ffff  frame 638 pc ff820c80 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dc17 unimpl 0
+in0 ffff in1 ffff  frame 639 pc ff820c70 blit 0 late 0 skip 0 snd_stalls 1 snd_pc f521 unimpl 0
+in0 ffff in1 ffff  frame 640 pc ff82e1a0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dc3f unimpl 0
+in0 ffff in1 ffff  frame 641 pc ff833430 blit 0 late 0 skip 0 snd_stalls 1 snd_pc f521 unimpl 0
+in0 ffff in1 ffff  frame 642 pc ff8205b0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc 04cf unimpl 0
+in0 ffff in1 ffff  frame 643 pc ff821410 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dc09 unimpl 0
+in0 ffff in1 ffff  frame 644 pc ff82d6a0 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd82 unimpl 0
+in0 ffff in1 ffff  frame 645 pc ff821410 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dc3d unimpl 0
+in0 ffff in1 ffff  frame 646 pc ff821460 blit 0 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 647 pc ff821410 blit 0 late 0 skip 0 snd_stalls 1 snd_pc f53c unimpl 0
+in0 ffff in1 ffff  frame 648 pc ff820480 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dc08 unimpl 0
+in0 ffff in1 ffff  frame 649 pc ff820580 blit 110725 late 0 skip 0 snd_stalls 1 snd_pc dd7e unimpl 0
+in0 ffff in1 ffff  frame 650 pc ff82e560 blit 111334 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 651 pc ff820480 blit 0 late 0 skip 0 snd_stalls 1 snd_pc dd8f unimpl 0
+in0 ffff in1 ffff  frame 652 pc ff8205a0 blit 112107 late 0 skip 0 snd_stalls 1 snd_pc 0217 unimpl 0
+in0 ffff in1 ffff  frame 653 pc ff8205b0 blit 111993 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 654 pc ff820580 blit 111720 late 0 skip 0 snd_stalls 1 snd_pc 2400 unimpl 0
+in0 ffff in1 ffff  frame 655 pc ff8205a0 blit 110693 late 0 skip 0 snd_stalls 1 snd_pc 0235 unimpl 0
+in0 ffff in1 ffff  frame 656 pc ff8204a0 blit 111346 late 0 skip 0 snd_stalls 1 snd_pc dd86 unimpl 0
+in0 ffff in1 ffff  frame 657 pc ff8205b0 blit 111810 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 658 pc ff820560 blit 112657 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 659 pc ff820460 blit 109908 late 0 skip 0 snd_stalls 1 snd_pc dd9a unimpl 0
+in0 ffff in1 ffff  frame 660 pc ff8204d0 blit 111365 late 0 skip 0 snd_stalls 1 snd_pc 2400 unimpl 0
+in0 ffff in1 ffff  frame 661 pc ff820570 blit 112133 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 662 pc ff8204b0 blit 110538 late 0 skip 0 snd_stalls 1 snd_pc 1ffa unimpl 0
+in0 ffff in1 ffff  frame 663 pc ff8204c0 blit 112052 late 0 skip 0 snd_stalls 1 snd_pc dd93 unimpl 0
+in0 ffff in1 ffff  frame 664 pc ff8205b0 blit 110632 late 0 skip 0 snd_stalls 1 snd_pc dd99 unimpl 0
+in0 ffff in1 ffff  frame 665 pc ff8205b0 blit 111821 late 0 skip 0 snd_stalls 1 snd_pc dc16 unimpl 0
+in0 ffff in1 ffff  frame 666 pc ff8205b0 blit 111197 late 0 skip 0 snd_stalls 1 snd_pc 2400 unimpl 0
+in0 ffff in1 ffff  frame 667 pc ff8204e0 blit 111334 late 0 skip 0 snd_stalls 1 snd_pc dc3f unimpl 0
+in0 ffff in1 ffff  frame 668 pc ff820480 blit 111357 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 669 pc ff8205b0 blit 111639 late 0 skip 0 snd_stalls 1 snd_pc 02ba unimpl 0
+in0 ffff in1 ffff  frame 670 pc ff8204c0 blit 111212 late 0 skip 0 snd_stalls 1 snd_pc dc07 unimpl 0
+in0 ffff in1 ffff  frame 671 pc ff8204e0 blit 112549 late 0 skip 0 snd_stalls 1 snd_pc dd7c unimpl 0
+in0 ffff in1 ffff  frame 672 pc ff8205a0 blit 111197 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 673 pc ff8205a0 blit 111993 late 0 skip 0 snd_stalls 1 snd_pc 0218 unimpl 0
+in0 ffff in1 ffff  frame 674 pc ff820470 blit 112679 late 0 skip 0 snd_stalls 1 snd_pc f521 unimpl 0
+in0 ffff in1 ffff  frame 675 pc ff8205b0 blit 111761 late 0 skip 0 snd_stalls 1 snd_pc 023c unimpl 0
+in0 ffff in1 ffff  frame 676 pc ff820590 blit 110588 late 0 skip 0 snd_stalls 1 snd_pc 04cf unimpl 0
+in0 ffff in1 ffff  frame 677 pc ff8204a0 blit 111093 late 0 skip 0 snd_stalls 1 snd_pc dc20 unimpl 0
+in0 ffff in1 ffff  frame 678 pc ff820460 blit 111411 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 679 pc ff820490 blit 112672 late 0 skip 0 snd_stalls 1 snd_pc dd97 unimpl 0
+in0 ffff in1 ffff  frame 680 pc ff820480 blit 111359 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 681 pc ff8204d0 blit 111639 late 0 skip 0 snd_stalls 1 snd_pc dd98 unimpl 0
+in0 ffff in1 ffff  frame 682 pc ff8205a0 blit 109812 late 0 skip 0 snd_stalls 1 snd_pc dc1c unimpl 0
+in0 ffff in1 ffff  frame 683 pc ff833430 blit 111279 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 684 pc ff8204d0 blit 111342 late 0 skip 0 snd_stalls 1 snd_pc f537 unimpl 0
+in0 ffff in1 ffff  frame 685 pc ff820460 blit 112348 late 0 skip 0 snd_stalls 1 snd_pc 0216 unimpl 0
+in0 ffff in1 ffff  frame 686 pc ff820560 blit 112689 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 687 pc ff820560 blit 112047 late 0 skip 0 snd_stalls 1 snd_pc dc16 unimpl 0
+in0 ffff in1 ffff  frame 688 pc ff8205b0 blit 112107 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 689 pc ff820570 blit 112773 late 0 skip 0 snd_stalls 1 snd_pc dc3e unimpl 0
+in0 ffff in1 ffff  frame 690 pc ff820560 blit 113414 late 0 skip 0 snd_stalls 1 snd_pc f51d unimpl 0
+in0 ffff in1 ffff  frame 691 pc ff820480 blit 113183 late 0 skip 0 snd_stalls 1 snd_pc dd7b unimpl 0
+in0 ffff in1 ffff  frame 692 pc ff8204a0 blit 111923 late 0 skip 0 snd_stalls 1 snd_pc 0238 unimpl 0
+in0 ffff in1 ffff  frame 693 pc ff8205b0 blit 112443 late 0 skip 0 snd_stalls 1 snd_pc dd7b unimpl 0
+in0 ffff in1 ffff  frame 694 pc ff820480 blit 111510 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 695 pc ff8204a0 blit 112148 late 0 skip 0 snd_stalls 1 snd_pc dd8d unimpl 0
+in0 ffff in1 ffff  frame 696 pc ff820460 blit 112728 late 0 skip 0 snd_stalls 1 snd_pc f53a unimpl 0
+in0 ffff in1 ffff  frame 697 pc ff8205b0 blit 112111 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 698 pc ff820570 blit 113833 late 0 skip 0 snd_stalls 1 snd_pc dd9a unimpl 0
+in0 ffff in1 ffff  frame 699 pc ff820560 blit 112443 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 700 pc ff8204c0 blit 112138 late 0 skip 0 snd_stalls 1 snd_pc 2401 unimpl 0
+in0 ffff in1 ffff  frame 701 pc ff820490 blit 112196 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 702 pc ff820480 blit 111903 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 703 pc ff8205a0 blit 112966 late 0 skip 0 snd_stalls 1 snd_pc dd84 unimpl 0
+in0 ffff in1 ffff  frame 704 pc ff8204a0 blit 111418 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 705 pc ff8204a0 blit 112454 late 0 skip 0 snd_stalls 1 snd_pc 2400 unimpl 0
+in0 ffff in1 ffff  frame 706 pc ff820480 blit 112043 late 0 skip 0 snd_stalls 1 snd_pc 0216 unimpl 0
+in0 ffff in1 ffff  frame 707 pc ff820460 blit 112447 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 708 pc ff8205b0 blit 112689 late 0 skip 0 snd_stalls 1 snd_pc f53d unimpl 0
+in0 ffff in1 ffff  frame 709 pc ff8205a0 blit 112148 late 0 skip 0 snd_stalls 1 snd_pc dc18 unimpl 0
+in0 ffff in1 ffff  frame 710 pc ff8204a0 blit 111342 late 0 skip 0 snd_stalls 1 snd_pc dd7f unimpl 0
+in0 ffff in1 ffff  frame 711 pc ff820590 blit 110971 late 0 skip 0 snd_stalls 1 snd_pc dc3f unimpl 0
+in0 ffff in1 ffff  frame 712 pc ff820560 blit 111802 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 713 pc ff8204b0 blit 112047 late 0 skip 0 snd_stalls 1 snd_pc 02ba unimpl 0
+in0 ffff in1 ffff  frame 714 pc ff820570 blit 113545 late 0 skip 0 snd_stalls 1 snd_pc dc09 unimpl 0
+in0 ffff in1 ffff  frame 715 pc ff8205a0 blit 112674 late 0 skip 0 snd_stalls 1 snd_pc dd8b unimpl 0
+in0 ffff in1 ffff  frame 716 pc ff8205b0 blit 111905 late 0 skip 0 snd_stalls 1 snd_pc dc1d unimpl 0
+in0 ffff in1 ffff  frame 717 pc ff8205b0 blit 111297 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 718 pc ff820560 blit 113829 late 0 skip 0 snd_stalls 1 snd_pc f522 unimpl 0
+in0 ffff in1 ffff  frame 719 pc ff820570 blit 111297 late 0 skip 0 snd_stalls 1 snd_pc 023b unimpl 0
+in0 ffff in1 ffff  frame 720 pc ff8205a0 blit 113414 late 0 skip 0 snd_stalls 1 snd_pc dd82 unimpl 0
+in0 ffff in1 ffff  frame 721 pc ff820580 blit 112441 late 0 skip 0 snd_stalls 1 snd_pc dc3c unimpl 0
+in0 ffff in1 ffff  frame 722 pc ff8204e0 blit 111278 late 0 skip 0 snd_stalls 1 snd_pc 0216 unimpl 0
+in0 ffff in1 ffff  frame 723 pc ff8204b0 blit 110971 late 0 skip 0 snd_stalls 1 snd_pc dd86 unimpl 0
+in0 ffff in1 ffff  frame 724 pc ff8204b0 blit 112688 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 725 pc ff8204b0 blit 112755 late 0 skip 0 snd_stalls 1 snd_pc dd9a unimpl 0
+in0 ffff in1 ffff  frame 726 pc ff8204c0 blit 111919 late 0 skip 0 snd_stalls 1 snd_pc dc20 unimpl 0
+in0 ffff in1 ffff  frame 727 pc ff8204e0 blit 111987 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 728 pc ff8204e0 blit 112728 late 0 skip 0 snd_stalls 1 snd_pc f520 unimpl 0
+in0 ffff in1 ffff  frame 729 pc ff820460 blit 111322 late 0 skip 0 snd_stalls 1 snd_pc fff7 unimpl 0
+in0 ffff in1 ffff  frame 730 pc ff8204a0 blit 112832 late 0 skip 0 snd_stalls 1 snd_pc 04cf unimpl 0
+in0 ffff in1 ffff  frame 731 pc ff820480 blit 112716 late 0 skip 0 snd_stalls 1 snd_pc dc1b unimpl 0
+in0 ffff in1 ffff  frame 732 pc ff820460 blit 112045 late 0 skip 0 snd_stalls 1 snd_pc 04ce unimpl 0
+in0 ffff in1 ffff  frame 733 pc ff820480 blit 113574 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 734 pc ff8205b0 blit 111954 late 0 skip 0 snd_stalls 1 snd_pc dd7c unimpl 0
+in0 ffff in1 ffff  frame 735 pc ff820570 blit 112148 late 0 skip 0 snd_stalls 1 snd_pc dd97 unimpl 0
+in0 ffff in1 ffff  frame 736 pc ff8204a0 blit 112728 late 0 skip 0 snd_stalls 1 snd_pc dd8d unimpl 0
+in0 ffff in1 ffff  frame 737 pc ff8204b0 blit 111957 late 0 skip 0 snd_stalls 1 snd_pc dd83 unimpl 0
+in0 ffff in1 ffff  frame 738 pc ff820490 blit 113773 late 0 skip 0 snd_stalls 1 snd_pc dc3e unimpl 0
+in0 ffff in1 ffff  frame 739 pc ff820490 blit 110683 late 0 skip 0 snd_stalls 1 snd_pc dd8f unimpl 0
+in0 ffff in1 ffff  frame 740 pc ff820570 blit 111905 late 0 skip 0 snd_stalls 1 snd_pc f53c unimpl 0
+in0 ffff in1 ffff  frame 741 pc ff820460 blit 113314 late 0 skip 0 snd_stalls 1 snd_pc dd89 unimpl 0
+in0 ffff in1 ffff  frame 742 pc ff820480 blit 112832 late 0 skip 0 snd_stalls 1 snd_pc dd7e unimpl 0
+in0 ffff in1 ffff  frame 743 pc ff8205a0 blit 112677 late 0 skip 0 snd_stalls 1 snd_pc dc3c unimpl 0
+in0 ffff in1 ffff  frame 744 pc ff8204d0 blit 111905 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 745 pc ff820560 blit 112530 late 0 skip 0 snd_stalls 1 snd_pc f539 unimpl 0
+in0 ffff in1 ffff  frame 746 pc ff8204a0 blit 112124 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 747 pc ff820580 blit 112443 late 0 skip 0 snd_stalls 1 snd_pc 04ce unimpl 0
+in0 ffff in1 ffff  frame 748 pc ff820480 blit 112124 late 0 skip 0 snd_stalls 1 snd_pc dc21 unimpl 0
+in0 ffff in1 ffff  frame 749 pc ff820590 blit 111297 late 0 skip 0 snd_stalls 1 snd_pc dd95 unimpl 0
+in0 ffff in1 ffff  frame 750 pc ff8204d0 blit 113415 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 751 pc ff820490 blit 112917 late 0 skip 0 snd_stalls 1 snd_pc 1ffb unimpl 0
+in0 ffff in1 ffff  frame 752 pc ff820480 blit 112647 late 0 skip 0 snd_stalls 1 snd_pc dd97 unimpl 0
+in0 ffff in1 ffff  frame 753 pc ff8205b0 blit 111903 late 0 skip 0 snd_stalls 1 snd_pc 2401 unimpl 0
+in0 ffff in1 ffff  frame 754 pc ff820590 blit 111923 late 0 skip 0 snd_stalls 1 snd_pc dd83 unimpl 0
+in0 ffff in1 ffff  frame 755 pc ff8204c0 blit 113505 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 756 pc ff820570 blit 110677 late 0 skip 0 snd_stalls 1 snd_pc 1ffb unimpl 0
+in0 ffff in1 ffff  frame 757 pc ff8204b0 blit 112674 late 0 skip 0 snd_stalls 1 snd_pc f53d unimpl 0
+in0 ffff in1 ffff  frame 758 pc ff820470 blit 112688 late 0 skip 0 snd_stalls 1 snd_pc dc1a unimpl 0
+in0 ffff in1 ffff  frame 759 pc ff8204c0 blit 112043 late 0 skip 0 snd_stalls 1 snd_pc f537 unimpl 0
+in0 ffff in1 ffff  frame 760 pc ff820480 blit 112124 late 0 skip 0 snd_stalls 1 snd_pc f51f unimpl 0
+in0 ffff in1 ffff  frame 761 pc ff8205a0 blit 112966 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 762 pc ff8204a0 blit 112123 late 0 skip 0 snd_stalls 1 snd_pc 2401 unimpl 0
+in0 ffff in1 ffff  frame 763 pc ff8205b0 blit 112443 late 0 skip 0 snd_stalls 1 snd_pc dc09 unimpl 0
+in0 ffff in1 ffff  frame 764 pc ff8204c0 blit 111902 late 0 skip 0 snd_stalls 1 snd_pc dd7f unimpl 0
+in0 ffff in1 ffff  frame 765 pc ff820470 blit 112196 late 0 skip 0 snd_stalls 1 snd_pc 1ffa unimpl 0
+in0 ffff in1 ffff  frame 766 pc ff8204d0 blit 113779 late 0 skip 0 snd_stalls 1 snd_pc dd90 unimpl 0
+in0 ffff in1 ffff  frame 767 pc ff820490 blit 112348 late 0 skip 0 snd_stalls 1 snd_pc 1ffe unimpl 0
+in0 ffff in1 ffff  frame 768 pc ff8204a0 blit 111923 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 769 pc ff820460 blit 111312 late 0 skip 0 snd_stalls 1 snd_pc 0218 unimpl 0
+in0 ffff in1 ffff  frame 770 pc ff820560 blit 111353 late 0 skip 0 snd_stalls 1 snd_pc dc22 unimpl 0
+in0 ffff in1 ffff  frame 771 pc ff8204a0 blit 112297 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 772 pc ff820460 blit 111946 late 0 skip 0 snd_stalls 1 snd_pc f522 unimpl 0
+in0 ffff in1 ffff  frame 773 pc ff820490 blit 113545 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 774 pc ff8204a0 blit 111459 late 0 skip 0 snd_stalls 1 snd_pc dd86 unimpl 0
+in0 ffff in1 ffff  frame 775 pc ff820570 blit 111312 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 776 pc ff820480 blit 113170 late 0 skip 0 snd_stalls 1 snd_pc dd91 unimpl 0
+in0 ffff in1 ffff  frame 777 pc ff820560 blit 112728 late 0 skip 0 snd_stalls 1 snd_pc f51f unimpl 0
+in0 ffff in1 ffff  frame 778 pc ff820560 blit 112849 late 0 skip 0 snd_stalls 1 snd_pc fff6 unimpl 0
+in0 ffff in1 ffff  frame 779 pc ff8204a0 blit 112045 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 780 pc ff820470 blit 113426 late 0 skip 0 snd_stalls 1 snd_pc dc1c unimpl 0
+in0 ffff in1 ffff  frame 781 pc ff8205b0 blit 112788 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 782 pc ff820480 blit 112707 late 0 skip 0 snd_stalls 1 snd_pc 1ffd unimpl 0
+in0 ffff in1 ffff  frame 783 pc ff820480 blit 113331 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 784 pc ff8204a0 blit 111445 late 0 skip 0 snd_stalls 1 snd_pc f53d unimpl 0
+in0 ffff in1 ffff  frame 785 pc ff820470 blit 112047 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 786 pc ff820580 blit 113779 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 787 pc ff820590 blit 113365 late 0 skip 0 snd_stalls 1 snd_pc 1ffd unimpl 0
+in0 ffff in1 ffff  frame 788 pc ff820480 blit 111955 late 0 skip 0 snd_stalls 1 snd_pc f51e unimpl 0
+in0 ffff in1 ffff  frame 789 pc ff8205a0 blit 112755 late 0 skip 0 snd_stalls 1 snd_pc dd8c unimpl 0
+in0 ffff in1 ffff  frame 790 pc ff8204b0 blit 111802 late 0 skip 0 snd_stalls 1 snd_pc 0238 unimpl 0
+in0 ffff in1 ffff  frame 791 pc ff820470 blit 112046 late 0 skip 0 snd_stalls 1 snd_pc dd81 unimpl 0
+in0 ffff in1 ffff  frame 792 pc ff820560 blit 111342 late 0 skip 0 snd_stalls 1 snd_pc ffff unimpl 0
+in0 ffff in1 ffff  frame 793 pc ff8205b0 blit 111986 late 0 skip 0 snd_stalls 1 snd_pc f51d unimpl 0

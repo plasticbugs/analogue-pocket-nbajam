@@ -1,0 +1,23 @@
+handlers: display ff826220, external-1 ff800000, external-2 ff8277c0
+FAIL  bus transaction 162017604, during instruction 69587009
+    rtl  W 010ffef0 37e0
+    MAME W 010ffef0 37d0
+  the last instructions MAME executed:
+    69586998  FF9C3830: RL     10h,A5
+    69586999  FF9C3840: CLR    A6
+    69587000  FF9C3850: SUBXY  A5,A6
+    69587001  FF9C3860: MOVE   A6,A5
+    69587002  FF9C3870: MOVE   A3,B10
+    69587003  FF9C3880: SLL    1h,B10
+    69587004  FF9C3890: MOVX   B10,B7
+    69587005  FF9C38A0: DSJS   A8,FF9C37A0h
+    69587006  FF9C37A0: MOVE   A1,A0
+    69587007  FF9C37B0: SUBXY  A5,A0
+    69587008  FF9C37C0: MOVE   A0,B2
+    69587009  FF9C37D0: FILL   XY
+69587010 instructions and 162017604 transactions matched MAME; 2077 interrupts replayed, 142 graphics re-executions stepped over, 1603 shift-register transfers
+
+cycles charged: MAME 200614733, RTL 200614733 (+0.000%)
+form                                   count        MAME         RTL    differ   first mismatch
+every instruction was charged what MAME charges
+exit 1

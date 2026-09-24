@@ -69,6 +69,7 @@ int main(int argc, char **argv) {
     std::map<long, std::vector<Ev>> script;
     if (!inputs.empty()) {
         std::ifstream in(inputs); std::string line;
+        if (!in) { fprintf(stderr, "cannot read inputs %s\n", inputs.c_str()); return 2; }
         while (std::getline(in, line)) {
             if (line.empty() || line[0] == '#') continue;
             std::istringstream is(line); long fr; std::string port; is >> fr >> port;
@@ -78,6 +79,7 @@ int main(int argc, char **argv) {
             int v = atoi(rest.substr(sp + 1).c_str());
             std::string field = rest.substr(0, sp); field = field.substr(field.find_first_not_of(' '));
             script[fr].push_back({port, field, v});
+            int which; if (bit_of(port, field, which) < 0) fprintf(stderr, "input not known: %s %s\n", port.c_str(), field.c_str());
         }
     }
 
@@ -134,6 +136,7 @@ int main(int argc, char **argv) {
                 FILE *f = fopen(name, "wb"); fwrite(pic.data(), 1, pic.size(), f); fclose(f);
             }
             capturing = false;
+            fprintf(log, "in0 %04x in1 %04x  ", in[0], in[1]);
             fprintf(log, "frame %ld pc %08x blit %llu late %u skip %u snd_stalls %u snd_pc %04x unimpl %d\n",
                     frame, dut->dbg_pc, (unsigned long long)busy, dut->dbg_late, dut->dbg_skipmode,
                     dut->dbg_snd_stalls, dut->dbg_snd_pc, dut->dbg_unimpl);
