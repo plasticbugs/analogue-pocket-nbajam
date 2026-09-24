@@ -37,7 +37,6 @@ A shoot, B pass, X / Y / R turbo, Select coin, Start start.
   numbers from the video beam's position, as the arcade did.
 - Saving of settings and high scores to the SD card is in, not yet confirmed
   on hardware.
-- No platform image yet.
 
 ## How it was checked
 
