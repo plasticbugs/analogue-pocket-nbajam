@@ -1,16 +1,21 @@
 NBA Jam
-MANUFACTURER, YEAR
+Midway, 1993 (rev 3.01 4/07/93)
 
-One paragraph on what the game is and
-what is in the gateware. Plain
-characters only, 32 lines at most,
-* for bullets.
+Midway's T-unit board in gateware: the
+TMS34010 graphics CPU, the DMA blitter,
+two 16-bit frame buffers, and the
+Williams ADPCM sound board (6809,
+YM2151, OKI6295, DAC).
 
 ROMs are not included. Build the image
 from your own MAME nbajam romset with
 mra_build.py and nbajam.mra, and copy
 it to Assets/nbajam/common/nbajam.rom
 
-* A / Y  button 1
-* B / X  button 2
+* A  shoot / block
+* B  pass / steal
+* X, Y or R  turbo
 * Select coin, Start start
+
+Two credits start a game. A new board
+shows CMOS INVALID: press any button.

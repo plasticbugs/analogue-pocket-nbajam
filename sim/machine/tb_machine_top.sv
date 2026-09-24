@@ -39,7 +39,7 @@ module tb_machine_top (
         .oki_req(oki_req), .oki_addr(oki_addr), .oki_ack(oki_ack), .oki_q(oki_q),
         .srom_req(srom_req), .srom_addr(srom_addr), .srom_ack(srom_ack), .srom_q(srom_q),
         .in0(in0), .in1(in1), .in2(in2), .dsw(dsw),
-        .nv_addr(13'd0), .nv_we(1'b0), .nv_wdata(16'd0), .nv_rdata(),
+        .nv_addr(13'd0), .nv_we(1'b0), .nv_wdata(16'd0), .nv_rdata(), .nv_dirty(),
         .rgb(rgb), .hsync(hsync), .vsync(vsync), .hblank(hblank), .vblank(vblank),
         .pix_ce(pix_ce), .de(de), .snd(snd),
         .dbg_pc(dbg_pc), .dbg_unimpl(dbg_unimpl), .dbg_late(dbg_late), .dbg_skipmode(dbg_skipmode),

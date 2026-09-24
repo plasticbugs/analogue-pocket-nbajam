@@ -87,6 +87,57 @@
                 ]
             },
             {
+                "name": "Free Play",
+                "id": 20,
+                "type": "check",
+                "enabled": true,
+                "persist": true,
+                "address": "0xF1000000",
+                "defaultval": 0,
+                "value": "0x0000F000",
+                "mask": "0xFFFF0FFF"
+            },
+            {
+                "name": "Cabinet",
+                "id": 21,
+                "type": "list",
+                "enabled": true,
+                "persist": true,
+                "address": "0xF1000000",
+                "defaultval": 0,
+                "mask": "0xFFFFFF7F",
+                "options": [
+                    {
+                        "name": "4 players",
+                        "value": "0x00000000"
+                    },
+                    {
+                        "name": "2 players",
+                        "value": "0x00000080"
+                    }
+                ]
+            },
+            {
+                "name": "Attract Video Clips",
+                "id": 22,
+                "type": "list",
+                "enabled": true,
+                "persist": true,
+                "address": "0xF1000000",
+                "defaultval": 0,
+                "mask": "0xFFFFFFDF",
+                "options": [
+                    {
+                        "name": "On",
+                        "value": "0x00000000"
+                    },
+                    {
+                        "name": "Off",
+                        "value": "0x00000020"
+                    }
+                ]
+            },
+            {
                 "name": "Service Switch",
                 "id": 40,
                 "type": "check",

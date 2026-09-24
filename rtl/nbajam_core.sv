@@ -61,6 +61,7 @@ module nbajam_core (
     input  logic        nv_we,
     input  logic [15:0] nv_wdata,
     output logic [15:0] nv_rdata,
+    output logic        nv_dirty,       // toggles on every CMOS write (the save's trigger)
 
     // ---------------- video, one pixel per pix_ce in the clk domain
     output logic [23:0] rgb,
@@ -98,7 +99,7 @@ module nbajam_core (
         .in0(in0), .in1(in1), .in2(in2), .dsw(dsw),
         .snd_cmd(snd_cmd), .snd_strobe(snd_strobe), .snd_reset(snd_reset),
         .rgb(rgb), .hsync(hsync), .vsync(vsync), .hblank(hblank), .vblank(vblank), .de(de),
-        .nv_addr(nv_addr), .nv_we(nv_we), .nv_wdata(nv_wdata), .nv_rdata(nv_rdata),
+        .nv_addr(nv_addr), .nv_we(nv_we), .nv_wdata(nv_wdata), .nv_rdata(nv_rdata), .nv_dirty(nv_dirty),
         .dbg_pc(dbg_pc), .dbg_unimpl(dbg_unimpl), .dbg_late(dbg_late),
         .dbg_skipmode(dbg_skipmode), .dbg_blit_busy(dbg_blit_busy)
     );

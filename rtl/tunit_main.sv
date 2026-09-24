@@ -72,6 +72,7 @@ module tunit_main #(
     input  logic        nv_we,
     input  logic [15:0] nv_wdata,
     output logic [15:0] nv_rdata,
+    output logic        nv_dirty,       // toggles on every CMOS write
 
     // ---------------- bring-up
     output logic [31:0] dbg_pc,
@@ -176,6 +177,8 @@ module tunit_main #(
         .a_addr(A[16:4]), .a_we(cmos_we), .a_be(2'b11), .a_wdata(c_wd), .a_rdata(cmos_q),
         .b_addr(nv_addr), .b_we(nv_we), .b_be(2'b11), .b_wdata(nv_wdata), .b_rdata(nv_rdata)
     );
+
+    always_ff @(posedge clk) if (rst) nv_dirty <= 1'b0; else if (cmos_we) nv_dirty <= ~nv_dirty;
 
     // ---------------------------------------------- the shift register
     // MAME's to_shiftreg / from_shiftreg (midtunit_v.cpp): 1024 pixels at

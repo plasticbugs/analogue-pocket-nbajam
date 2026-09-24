@@ -431,8 +431,8 @@ module core_top
     wire  [31:0] datatable_q;
 
     // the save slot's size for the APF, written continuously as the NES core
-    // does (slot index 1 -> size entry 1*2+1): the 128-byte EEPROM
-    localparam [31:0] NV_BYTES = 32'h80;
+    // does (slot index 1 -> size entry 1*2+1): the 16 KB CMOS
+    localparam [31:0] NV_BYTES = 32'h4000;
     always_ff @(posedge clk_74a) begin
         datatable_wren <= 1'b1;
         datatable_addr <= 10'd3;
@@ -529,8 +529,10 @@ module core_top
     //! APF Bridge Read Data
     //! ------------------------------------------------------------------------
     wire [31:0] int_bridge_rd_data;
+    wire [31:0] nvm_bridge_rd_data_s;
     always_comb begin
         casex(bridge_addr)
+            32'h2xxxxxxx: begin bridge_rd_data <= nvm_bridge_rd_data_s; end // the save slot
             32'hF0000000: begin bridge_rd_data <= int_bridge_rd_data;   end // Reset
             32'hF0000010: begin bridge_rd_data <= int_bridge_rd_data;   end // Service Mode Switch
             32'hF1000000: begin bridge_rd_data <= int_bridge_rd_data;   end // DIP Switches
@@ -606,6 +608,106 @@ module core_top
         .reset_sw         ( reset_sw           ),
         .nvclear_sw       ( nvclear_sw         )
     );
+
+    //! ------------------------------------------------------------------------
+    //! The CMOS save (data.json slot 1: 16 KB at bridge address 0x20000000).
+    //! STUN Runner's, which it took hardware bisection to get right:
+    //!  * not 0x10000000 -- a slot there hung the Pocket at the end of loading;
+    //!  * the slot's size comes from the core's data table (entry 3, above);
+    //!  * the Pocket only writes back a nonvolatile slot it loaded, so a first
+    //!    save would never be made: the core itself commands the write, two
+    //!    seconds after the game last wrote its CMOS, at once when the menu
+    //!    opens, and once five seconds after loading.
+    //! The file is the CMOS as MAME keeps it, 8K little-endian words, so a
+    //! MAME nbajam.nv and this file are the same thing.
+    //! ------------------------------------------------------------------------
+    wire        nv_dl_download, nv_dl_wr;
+    wire [13:0] nv_dl_addr;
+    wire  [7:0] nv_dl_data;
+    wire [15:0] nv_dl_index;
+    data_io #(.MASK(4'h2), .AW(14), .DW(8), .DELAY(DIO_DELAY), .HOLD(DIO_HOLD)) pocket_nv_io
+    (
+        .clk_74a(clk_74a), .clk_memory(clk_sys),
+        .dataslot_requestwrite(dataslot_requestwrite), .dataslot_requestwrite_id(dataslot_requestwrite_id),
+        .dataslot_allcomplete(dataslot_allcomplete),
+        .bridge_endian_little(bridge_endian_little), .bridge_addr(bridge_addr),
+        .bridge_wr(bridge_wr), .bridge_wr_data(bridge_wr_data),
+        .ioctl_download(nv_dl_download), .ioctl_index(nv_dl_index), .ioctl_wr(nv_dl_wr),
+        .ioctl_addr(nv_dl_addr), .ioctl_data(nv_dl_data)
+    );
+    wire        nv_rd_en;
+    wire [13:0] nv_rd_addr;
+    wire  [7:0] nv_rd_data;
+    data_unloader #(.ADDRESS_MASK_UPPER_4(4'h2), .ADDRESS_SIZE(14), .READ_MEM_CLOCK_DELAY(4), .INPUT_WORD_SIZE(1)) pocket_nv_unload
+    (
+        .clk_74a(clk_74a), .clk_memory(clk_sys),
+        .bridge_rd(bridge_rd), .bridge_endian_little(bridge_endian_little), .bridge_addr(bridge_addr),
+        .bridge_rd_data(nvm_bridge_rd_data_s),
+        .read_en(nv_rd_en), .read_addr(nv_rd_addr), .read_data(nv_rd_data)
+    );
+    wire        po_nv_dirty;                // toggles on every CMOS write the game makes
+    wire        nv_dirty_s;
+    synch_3 sync_nvd(po_nv_dirty, nv_dirty_s, clk_74a);
+    wire        inmenu_s;
+    synch_3 sync_inmenu(osnotify_inmenu, inmenu_s, clk_74a);
+    reg         nv_dirty_d = 1'b0, inmenu_d = 1'b0;
+    reg         nv_pending = 1'b0;
+    reg  [27:0] nv_timer   = 28'd0;
+    reg  [1:0]  nv_state   = 2'd0;
+    reg  [28:0] boot_timer = 29'd0;
+    // dataslot_allcomplete cannot gate the saves (the bridge clears it when the
+    // APF reads the slot for OUR write): latch its first rising edge instead
+    reg         nv_loaded  = 1'b0;
+    localparam  NV_SETTLE  = 28'd148_500_000;   // 2 s at 74.25 MHz
+    localparam  NV_BOOT    = 29'd371_250_000;   // 5 s: one save after loading regardless
+    always_ff @(posedge clk_74a) begin
+        nv_dirty_d <= nv_dirty_s; inmenu_d <= inmenu_s;
+        target_dataslot_read     <= 1'b0;
+        target_dataslot_getfile  <= 1'b0;
+        target_dataslot_openfile <= 1'b0;
+        target_dataslot_id         <= 16'd1;
+        target_dataslot_slotoffset <= 32'd0;
+        target_dataslot_bridgeaddr <= 32'h2000_0000;
+        target_dataslot_length     <= NV_BYTES;
+        if (dataslot_allcomplete) nv_loaded <= 1'b1;
+        if (nv_loaded && boot_timer != NV_BOOT) boot_timer <= boot_timer + 29'd1;
+        if (nv_dirty_s != nv_dirty_d) begin nv_pending <= 1'b1; nv_timer <= 28'd0; end
+        else if (nv_timer != NV_SETTLE) nv_timer <= nv_timer + 28'd1;
+        case (nv_state)
+            2'd0: begin
+                target_dataslot_write <= 1'b0;
+                if ((nv_pending && nv_loaded && (nv_timer == NV_SETTLE || (inmenu_s && !inmenu_d)))
+                    || (boot_timer == NV_BOOT - 29'd1)) begin
+                    target_dataslot_write <= 1'b1;      // rising edge starts the command
+                    nv_pending <= 1'b0;
+                    nv_state   <= 2'd1;
+                end
+            end
+            2'd1: if (target_dataslot_ack) begin target_dataslot_write <= 1'b0; nv_state <= 2'd2; end
+            2'd2: if (target_dataslot_done) nv_state <= 2'd0;
+            default: nv_state <= 2'd0;
+        endcase
+    end
+    // The CMOS's second port, in words: a loaded byte pair is written as one
+    // little-endian word (even byte low), and the unloader's byte is picked
+    // out of the word it addresses.
+    logic  [7:0] nv_lo;
+    logic        po_nv_we;
+    logic [12:0] po_nv_waddr;
+    logic [15:0] po_nv_wdata;
+    wire  [15:0] po_nv_rdata;
+    logic        nv_rd_hi;
+    always_ff @(posedge clk_sys) begin
+        po_nv_we <= 1'b0;
+        if (nv_dl_download && nv_dl_index == 16'h1 && nv_dl_wr) begin
+            if (!nv_dl_addr[0]) nv_lo <= nv_dl_data;
+            else begin po_nv_we <= 1'b1; po_nv_waddr <= nv_dl_addr[13:1]; po_nv_wdata <= {nv_dl_data, nv_lo}; end
+        end
+        nv_rd_hi <= nv_rd_addr[0];
+    end
+    wire [12:0] po_nv_addr = po_nv_we ? po_nv_waddr : nv_rd_addr[13:1];
+    assign nv_rd_data = nv_rd_hi ? po_nv_rdata[15:8] : po_nv_rdata[7:0];
+    wire _nv_unused = &{1'b0, nv_rd_en};
 
     //! ------------------------------------------------------------------------
     //! Audio
@@ -980,7 +1082,8 @@ module core_top
         .oki_req(oki_req), .oki_addr(oki_addr), .oki_ack(oki_ack), .oki_q(oki_q),
         .srom_req(srom_req), .srom_addr(srom_addr), .srom_ack(srom_ack), .srom_q(srom_q),
         .in0(g_in0), .in1(g_in1), .in2(g_in2), .dsw(g_dsw),
-        .nv_addr(13'd0), .nv_we(1'b0), .nv_wdata(16'd0), .nv_rdata(),
+        .nv_addr(po_nv_addr), .nv_we(po_nv_we), .nv_wdata(po_nv_wdata), .nv_rdata(po_nv_rdata),
+        .nv_dirty(po_nv_dirty),
         .rgb(g_rgb), .hsync(g_hs), .vsync(g_vs),
         .hblank(g_hb), .vblank(g_vb), .pix_ce(g_pix_ce), .de(g_de),
         .snd(g_snd),
