@@ -9,8 +9,8 @@
       "description": "NBA Jam (Midway, 1993) arcade core",
       "author": "plasticbugs",
       "url": "https://github.com/plasticbugs/analogue-pocket-nbajam",
-      "version": "0.0.1",
-      "date_release": "1970-01-01"
+      "version": "0.1.0",
+      "date_release": "2026-09-24"
     },
     "framework": {
       "target_product": "Analogue Pocket",

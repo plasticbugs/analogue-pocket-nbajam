@@ -23,7 +23,8 @@ emulated in software.
 
 ## Status
 
-**Not yet run on a Pocket.**
+**0.1.0 runs on a Pocket: picture and sound reported perfect** (2026-09-24,
+bitstream md5 `05629f94f775fc5f4a3e03e8254fe5d3`, SDRAM bursts on Normal).
 
 Proven in simulation, against MAME 0.288:
 * the reference models (`tools/render_model.py`, `tools/dma_model.py`) are
@@ -32,17 +33,19 @@ Proven in simulation, against MAME 0.288:
 * the CPU matches MAME instruction for instruction for 69.6 M instructions;
 * the whole machine, through the real Pocket memory glue with the image
   downloaded at the loader's rate, boots to a MAME-identical frame, and on the
-  faster bench keeps MAME's timeline to frame 999 (the copyright screen).
-
+  faster bench keeps MAME's timeline to frame 999 (the copyright screen);
 * the sound board, fed MAME's own commands at MAME's times, is as loud as
   MAME's to within 6% in every second of a 66-second sweep of every command;
-* timing closes at 96 MHz (+0.38 ns worst setup, every corner, every SDC
-  constraint applied), 68% of the FPGA's logic.
+* timing closes at 96 MHz (+0.05 ns worst setup in the released build, every
+  corner, every SDC constraint applied), about 68% of the FPGA's logic;
+* scaled skip-mode blits, the one case not drawn exactly, never occur: 0 in
+  4.8 M blits over five minutes each of attract and play in MAME.
 
 Not yet proven: the per-chip balance of the mix (the waveforms drift apart,
 so only the total loudness was compared); a played game matching MAME (the
 game's random numbers come from the beam position, so it cannot match
-exactly); the CMOS save on hardware; anything on hardware at all.
+exactly); the CMOS save on hardware; the Fast SDRAM burst setting (it
+scrambles the palette on hardware; Normal is the default).
 
 Not implemented: scaled skip-mode blits (never seen; counted on the panel);
 players 3 and 4.
