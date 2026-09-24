@@ -1,31 +1,44 @@
 # NBA Jam — Analogue Pocket core (openFPGA)
 
-> **Replace this block** with two or three sentences: the game, who made it,
-> the year, the board, and what of it is in the gateware. Everything below is
-> a prompt — fill it in as the core grows, and delete what never applies.
-> `CLAUDE.md` has the order of work.
+**NBA Jam** (Midway, 1993, rev 3.01) on the Analogue Pocket: Midway's
+T-unit board in gateware — the TMS34010 graphics CPU at 50 MHz, the DMA
+blitter, two 512×512 16-bit frame buffers, a 32K-colour palette, and the
+Williams ADPCM sound board (MC6809E, YM2151, OKI MSM6295, DAC). Nothing is
+emulated in software.
 
 > **ROMs are not included and never will be.** You supply your own MAME
 > `nbajam` romset; the core reads one image built from it.
 
 | board part | implementation | verified by |
 |---|---|---|
-| *main CPU @ MHz* | *vendored core* | *which bench* |
-| *sound CPU* | | |
-| *sound chip* | | *band energy against MAME's recording, over what window* |
-| *video chip* | `rtl/…` | *pixel-identical to MAME on N frozen states* |
-| *ROM* | Pocket SDRAM (`target/pocket/nbajam_mem.sv`) | `sim/run_mem.sh`; image byte-identical to MAME's regions |
-| *tilemap RAM* | Pocket SRAM | self-test at reset |
-
-One row per part of the board. The right-hand column is the point of the
-table: write **"—"** where nothing verifies it, not nothing.
+| TMS34010 @ 50 MHz | `rtl/tms34010.sv`, Smash TV's, cycle-paced, plus shift-register writes | `sim/run_cpu.sh`: 69.6 M instructions from reset identical to MAME's trace, registers, bus and cycle counts |
+| DMA blitter | `rtl/tunit_dma.sv` | `sim/run_blit.sh`: VRAM identical to MAME on 14 frozen frames (2,080 blits) through the real SDRAM controller |
+| scan-out, palette | `rtl/tunit_video.sv`, from Smash TV's | `sim/run_video.sh`: every pixel identical to MAME on 16 frozen frames |
+| main board glue, protection, CMOS | `rtl/tunit_main.sv` | the machine benches: frames 99 and 999 from power-on identical to MAME |
+| MC6809E @ 2 MHz | `modules/cpu-mc6809` (Greg Miller) | — |
+| YM2151 | `modules/sound-jt51` (Jose Tejada) | — (not yet compared with a MAME recording) |
+| OKI MSM6295 | `modules/sound-jt6295` (Jose Tejada) | — (not yet compared with a MAME recording) |
+| ROM, VRAM, work RAM | Pocket SDRAM (`target/pocket/nbajam_mem.sv`) | `sim/run_mem.sh` at the loader's rate; `sim/run_system.sh` |
+| 6809 program | Pocket SRAM | `sim/run_mem.sh` |
 
 ## Status
 
-State plainly whether it has run on a Pocket. Then, as a list: what is proven
-and by what; what the hardware found that no bench had; what is not
-implemented. Keep the three apart. A reader deciding whether to trust the core
-needs the second and third more than the first.
+**Not yet run on a Pocket.**
+
+Proven in simulation, against MAME 0.288:
+* the reference models (`tools/render_model.py`, `tools/dma_model.py`) are
+  pixel-exact against MAME on 16 captured frames;
+* the video RTL matches them (above);
+* the CPU matches MAME instruction for instruction for 69.6 M instructions;
+* the whole machine, through the real Pocket memory glue with the image
+  downloaded at the loader's rate, boots to a MAME-identical frame, and on the
+  faster bench keeps MAME's timeline to frame 999 (the copyright screen).
+
+Not yet proven: the sound levels and mix against a MAME recording; a played
+game in the machine bench; the CMOS save on hardware; timing closure.
+
+Not implemented: scaled skip-mode blits (never seen; counted on the panel);
+players 3 and 4.
 
 ## Building the ROM image
 
@@ -46,12 +59,16 @@ only — a couple of minutes, and it catches what Verilator cannot.
 ## Checking it
 
 ```sh
-sim/lint.sh          # every module on its own
-sim/run_mem.sh       # the Pocket's memory path, at the loader's real rate
+sim/lint.sh                    # every module on its own
+sim/run_mem.sh                 # the Pocket's memory path, at the loader's real rate
+tools/capture_states.sh        # frozen states from MAME (then:)
+python3 tools/check_states.py .build/nbajam.rom artifacts/states   # models vs MAME
+sim/run_blit.sh .build/nbajam.rom                                  # blitter RTL vs MAME
+sim/run_video.sh                                                   # scan-out RTL vs MAME
+tools/cpu_trace.sh; sim/run_cpu.sh     # the CPU vs MAME's traces (or -live <seconds>)
+sim/run_machine.sh -frames N -inputs tools/inputs/play1.txt -snap ...   # the machine
+sim/run_system.sh  -frames N ...       # the machine through the real memory glue
 ```
-
-Add the core's own gates here as they come to exist: the reference renderer
-against MAME, the RTL against the renderer, the whole machine, the sound.
 
 ## Credits
 
