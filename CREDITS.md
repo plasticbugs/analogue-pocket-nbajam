@@ -57,3 +57,19 @@ authors in the core's README: fx68k is Jorge Cwik's, tv80 Guy Hutchison's, the
 jt-series sound chips Jose Tejada's, and they are the reason a core can exist
 at all. Never strip a licence header from a file you copy — the SPDX headers
 in `platform/` and `modules/` are the licence, not decoration.
+
+---
+
+# This core: NBA Jam
+
+* **MAME's T-unit driver** — `midtunit.cpp`, `midtunit_m.cpp`,
+  `midtunit_v.cpp`: Alex Pasadyn, Zsolt Vasvari, Ernesto Corvi and Aaron
+  Giles, with thanks to Kurt Mahan. The Williams ADPCM board
+  (`williamssound.cpp`) and the TMS34010 device (Alex Pasadyn, Zsolt Vasvari,
+  Aaron Giles). The whole core is checked against their work.
+* **Greg Miller** — the MC6809E (`modules/cpu-mc6809`).
+* **Jose Tejada (jotego)** — JT51 (YM2151) and JT6295 (OKI MSM6295).
+* **Sibling cores by the same author**, whose proven pieces this one reuses:
+  Smash TV (the TMS34010, the video timing, the Williams sound-board plumbing,
+  the CPU trace bench and its tools, the 8 MHz PLL) and S.T.U.N. Runner (the
+  SDRAM controller's lineage and the JT6295 hookup).

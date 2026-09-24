@@ -98,7 +98,10 @@ module tunit_video #(
 
     always_ff @(posedge clk) begin
         if (rst) begin
-            hdot <= '0; vline <= '0;
+            // MAME's screen starts with the beam at the start of vblank, line
+            // 274 (frame_done fires at exact multiples of the frame period,
+            // measured), so start there too and frame N ends where MAME's does
+            hdot <= '0; vline <= 9'd274;
         end else if (cen_dot) begin
             if (hdot == hlast) begin
                 hdot  <= '0;

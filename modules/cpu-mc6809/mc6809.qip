@@ -1,0 +1,3 @@
+# MC6809/MC6809E - Greg Miller, BSD-3-Clause. See README.md.
+set_global_assignment -name VERILOG_FILE [file join $::quartus(qip_path) "mc6809i.v"]
+set_global_assignment -name VERILOG_FILE [file join $::quartus(qip_path) "mc6809e.v"]

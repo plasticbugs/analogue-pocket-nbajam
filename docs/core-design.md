@@ -70,8 +70,11 @@ The same constants are in `target/pocket/nbajam_mem.sv` and `sim/tb_mem.cpp`.
 | 0x0000000 | graphics ROM (8 MB) |
 | 0x0800000 | 34010 program (1 MB) |
 | 0x0900000 | OKI (1 MB) |
-| 0x1000000 | VRAM (1 MB: pixel *p* at word 0x0800000 + *p*) — bank 1 |
-| 0x2000000 | work RAM (512 KB) — bank 2 |
+| 0x1000000 | VRAM (1 MB: pixel *p* at word 0x800000 + *p*) — bank 2 |
+| 0x1800000 | work RAM (512 KB, word 0xC00000) — bank 3 |
+
+`sdram_ctrl` addresses 16M words (32 MB) as four 8 MB banks, `a[24:23]`: the
+graphics fill bank 0, program and OKI share bank 1.
 
 Random-access clients (`sdram_ctrl` c-ports, round robin):
 

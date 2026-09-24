@@ -27,7 +27,7 @@ for w in UNUSEDPARAM PINCONNECTEMPTY; do
 done
 
 # vendored modules, if there are any yet
-MODS=$(ls "$root"/modules/*/*.v "$root"/modules/*/*.sv 2>/dev/null || true)
+MODS=$(ls "$root"/modules/*/*.v "$root"/modules/*/*.sv "$root"/modules/*/hdl/*.v 2>/dev/null || true)
 
 fail=0
 for f in "$root"/rtl/*.sv; do
@@ -35,7 +35,8 @@ for f in "$root"/rtl/*.sv; do
     printf '%-20s ' "$m"
     out=$(verilator --lint-only $OPTS "$WAIVE" --top-module "$m" \
           "$root"/rtl/*.sv $MODS 2>&1 \
-          | grep -E '^%(Error|Warning)' | grep -v 'Exiting due to' || true)
+          | grep -E '^%(Error|Warning)' | grep -v 'Exiting due to' \
+          | grep -v '/modules/' || true)
     if [ -z "$out" ]; then echo ok
     else echo; echo "$out" | sed 's/^/    /'; fail=1
     fi
@@ -47,6 +48,30 @@ out=$(verilator --lint-only $OPTS "$WAIVE" --top-module nbajam_mem \
       "$root"/target/pocket/sram_port.sv 2>&1 \
       | grep -E '^%(Error|Warning)' | grep -v 'Exiting due to' \
       | grep -v 'sdram_ctrl.sv' || true)
+if [ -z "$out" ]; then echo ok
+else echo; echo "$out" | sed 's/^/    /'; fail=1
+fi
+
+# The one clock relationship no bench can see: the core makes a dot every
+# DOT_DIV system clocks and the Pocket samples them with the PLL's video clock.
+printf '%-20s ' "video clock"
+out=$(python3 - "$root" <<'PY'
+import re, sys
+root = sys.argv[1]
+pll = open(root + '/target/pocket/core_pll/core_pll/core_pll_0002.v').read()
+f = [float(x) for x in re.findall(r'output_clock_frequency[012]\("([0-9.]+) MHz"\)', pll)]
+div = int(re.search(r'localparam int DOT_DIV = (\d+);', open(root + '/rtl/clk_enables.sv').read()).group(1))
+ph = [int(x) for x in re.findall(r'phase_shift[12]\("(\d+) ps"\)', pll)]
+bad = []
+for i in (1, 2):
+    if abs(f[0] / f[i] - div) > 1e-3:
+        bad.append(f'PLL outclk_{i} is {f[i]} MHz but the core makes a dot every {div} clocks of {f[0]} MHz ({f[0]/div:.6f} MHz)')
+want90 = ph[0] + round(1e6 / f[1] / 4)
+if abs(ph[1] - want90) > 2:
+    bad.append(f'PLL outclk_2 is shifted {ph[1]} ps; 90 degrees after outclk_1 is {want90} ps')
+print('\n'.join(bad))
+PY
+)
 if [ -z "$out" ]; then echo ok
 else echo; echo "$out" | sed 's/^/    /'; fail=1
 fi

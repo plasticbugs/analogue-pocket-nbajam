@@ -1,0 +1,21 @@
+`verilator_config
+// What the benches may read and write inside rtl/tms34010.sv: the register
+// file and status for sim/tb_cpu.cpp's comparison and warm start, the machine
+// state, and the running cycle count.  Here rather than as pragmas in the RTL
+// because Verilator 5.020 (CI's) treats a public_flat_rw pragma as a blocking
+// assignment and rejects the module with BLKANDNBLK.
+public_flat_rw -module "tms34010" -var "ra" @(posedge clk)
+public_flat_rw -module "tms34010" -var "rb" @(posedge clk)
+public_flat_rw -module "tms34010" -var "sp" @(posedge clk)
+public_flat_rw -module "tms34010" -var "pc" @(posedge clk)
+public_flat_rw -module "tms34010" -var "st" @(posedge clk)
+public_flat_rw -module "tms34010" -var "io_control" @(posedge clk)
+public_flat_rw -module "tms34010" -var "io_convsp" @(posedge clk)
+public_flat_rw -module "tms34010" -var "io_convdp" @(posedge clk)
+public_flat_rw -module "tms34010" -var "io_psize" @(posedge clk)
+public_flat_rw -module "tms34010" -var "io_pmask" @(posedge clk)
+public_flat_rw -module "tms34010" -var "io_intenb" @(posedge clk)
+public_flat_rw -module "tms34010" -var "io_srt" @(posedge clk)
+public_flat_rw -module "tms34010" -var "io_intpend" @(posedge clk)
+public_flat_rw -module "tms34010" -var "state" @(posedge clk)
+public_flat_rd -module "tms34010" -var "cyc_total"
