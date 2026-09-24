@@ -312,6 +312,47 @@ sound board's DAC sitting at zero came out at −3280 in ours and −3276 in
 MAME's: the DAC's scaling and polarity match. A played game is being
 recorded in both now, to compare music and speech.
 
+## Step 13 — The last 8%, and a wrong guess dropped
+
+The remaining slowdown on busy screens looked like the CPU's data waiting
+behind the blitter. So: a second cache, for the CPU's working memory, and
+"posted" writes (the CPU hands over a write and carries on without waiting
+for it to land). Measured: 105,260 → 105,390 cycles a frame. **Almost no
+change — so that theory was wrong**, and the log says so.
+
+The real cause was the page eraser again. Each frame it wipes the hidden
+page with 127 shift-register writes, and our CPU was waiting for each
+1,024-pixel copy to finish — about 9,000 cycles a frame, exactly the missing
+amount. In MAME they're instantaneous. The fix is a queue: the CPU drops each
+erase request in it and moves on, the memory works through the queue in the
+background, and the blitter isn't allowed to start drawing on the page until
+the erasing is done. Result: **114,115 of 114,251 cycles — 99.9%.**
+
+We also made the blitter report "done" on MAME's schedule (MAME assumes 41
+nanoseconds per pixel; ours is usually faster and now waits), as Smash TV
+does, so the game's own timing loops see what the arcade's saw.
+
+## Step 14 — Why some frames can never match exactly
+
+The title screen's "TV static" still didn't match MAME, even with everything
+at the right speed. Tracing the game's random-number routine explained it:
+**NBA Jam seeds its random numbers from the video beam's exact position** —
+which dot of which line is being drawn at that instant. That depends on
+timing finer than one instruction, which MAME itself only approximates. So
+any screen with something random on it (the static, every decision the
+computer players make) will be correct but not identical, and is judged by
+eye; the deterministic screens (boot, CMOS message, copyright, credits)
+still match to the pixel. **[deep dive: where arcade games get their
+randomness]**
+
+## Step 15 — Timing, round two
+
+With Smash TV's timing rules added, the worst path improved from −7.35 ns to
+−4.0 ns. Every remaining failure was one piece of blitter arithmetic (working
+out where the next row of a picture starts in the ROM) crammed into a single
+clock tick. It only changes once per row, so it's now computed in advance
+while the row is being drawn. Third compile running.
+
 ---
 
 *(continues as the work goes on)*
