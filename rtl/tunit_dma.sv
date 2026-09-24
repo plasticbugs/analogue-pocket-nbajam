@@ -145,6 +145,14 @@ module tunit_dma #(
     logic [13:0] row_adv;            // skip mode: bits to the next row
     logic  [6:0] pre_u, post_u;      // skip mode: this row's header, in pixels
     logic [12:0] pp_r, pq_r;         // bpp * pre_u, bpp * post_u
+    logic        ssgt;               // the start skip reaches past pre
+    // per-blit products, so no row or pixel does a multiply (96 MHz)
+    logic [15:0] dv_qf;              // the start-skip quotient, registered
+    logic [11:0] bs_first;           // bpp * s_first
+    logic [11:0] bss;                // bpp * start skip
+    logic [10:0] stepA, stepB;       // gp's step: bpp * (xs >> 8), and one pixel more
+    logic  [9:0] pix_diff;           // source pixels a row spans
+    logic [31:0] bit_lo_r, bit_end_r;
     logic  [7:0] hdr;
     logic  [9:0] nwords;
 
@@ -170,7 +178,8 @@ module tunit_dma #(
     // ------------------------------------------------------------ state
     typedef enum logic [4:0] {
         S_IDLE, S_START, S_DIV, S_PREP, S_ROW, S_RD, S_RDGAP, S_GEN, S_DRAIN,
-        S_WR, S_WRGAP, S_ADV, S_DONE, S_HDR1, S_HDR2, S_HDR3, S_HDR4, S_TDIV, S_TSET, S_RWAIT
+        S_WR, S_WRGAP, S_ADV, S_DONE, S_HDR1, S_HDR2, S_HDR3, S_HDR4, S_TDIV, S_TSET, S_RWAIT,
+        S_DIVM, S_PREP2, S_ROW2, S_ROW3, S_HDR5
     } state_t;
     state_t      state;
     logic        cancel;             // the command register was written while busy
@@ -222,7 +231,7 @@ module tunit_dma #(
 
     // next-step arithmetic
     wire  [19:0] gix_n = gix + {4'd0, xs};
-    wire   [8:0] gdx   = 9'(gix_n[19:8] - gix[19:8]);
+    wire   [8:0] gfrac = {1'b0, gix[7:0]} + {1'b0, xs[7:0]};
     wire  [19:0] iy_n  = iy + {4'd0, ys};
     wire   [8:0] gdy   = 9'(iy_n[19:8] - iy[19:8]);
     // The next row's source step, gdy x width x bpp, is computed in registers
@@ -234,8 +243,6 @@ module tunit_dma #(
     logic [31:0] row_step;
 
     // row geometry
-    wire  [31:0] bit_lo  = row_off + 32'(bpp * s_first);
-    wire  [31:0] bit_end = bit_lo + {19'd0, rowbits} - 32'd1;
     wire  [18:0] vrow    = {sy, 10'd0} >> 1;                 // sy * 512
     wire  [10:0] wcount  = {1'b0, whi} - {1'b0, wlo} + 11'd1; // pixels in the written span
     wire  [10:0] rd_left = {1'b0, nwords} - done_w;
@@ -358,41 +365,60 @@ module tunit_dma #(
                 dv_q   <= {dv_q[14:0], dv_ge};
                 dv_n   <= dv_n - 5'd1;
                 if (dv_n == 5'd1) begin
-                    ix0   <= 20'({dv_q[14:0], dv_ge} * xs);
-                    state <= S_PREP;
+                    dv_qf <= {dv_q[14:0], dv_ge};
+                    state <= S_DIVM;
                 end
+            end
+            S_DIVM: begin
+                ix0   <= 20'(dv_qf * xs);
+                state <= S_PREP;
             end
 
             S_PREP: begin
-                // the source window every row shares
-                s_first <= ix0[15:8];
-                rowbits <= 13'(bpp * 10'(lim[19:8] - {4'd0, ix0[15:8]}));
-                wb      <= 13'(bpp * bw);
-                state   <= (!skipm && ix0 >= lim) ? S_DONE : S_ROW;
+                // the source window every row shares, and the per-blit products
+                s_first  <= ix0[15:8];
+                pix_diff <= 10'(lim[19:8] - {4'd0, ix0[15:8]});
+                wb       <= 13'(bpp * bw);
+                bs_first <= 12'(bpp * ix0[15:8]);
+                bss      <= 12'(bpp * ss_l);
+                stepA    <= 11'(bpp * xs[15:8]);
+                state    <= (!skipm && ix0 >= lim) ? S_DONE : S_PREP2;
+            end
+            S_PREP2: begin
+                rowbits <= 13'(bpp * pix_diff);
+                stepB   <= stepA + {7'd0, bpp};
+                state   <= S_ROW;
             end
 
             S_ROW: begin
                 done_w <= '0;
                 any_wr <= 1'b0;
                 wlo <= 10'h3ff; whi <= 10'h000;
+                // one 32-bit add a state from here on (96 MHz)
+                bit_lo_r <= skipm ? row_off : row_off + {20'd0, bs_first};
                 if (cancel) state <= S_DONE;
-                else if (skipm) begin
+                else if (!skipm && (sy < topc || sy > botc)) state <= S_ADV;     // clipped row
+                else state <= S_ROW2;
+            end
+            S_ROW2: begin
+                bit_end_r <= skipm ? bit_lo_r + 32'd7 + {19'd0, wb}
+                                   : bit_lo_r + {19'd0, rowbits} - 32'd1;
+                state <= S_ROW3;
+            end
+            S_ROW3: begin
+                word_lo <= bit_lo_r[31:4];
+                gp      <= {10'd0, bit_lo_r[3:0]};
+                if (skipm) begin
                     // the header and the whole row; only the header if the row is clipped
-                    word_lo <= row_off[31:4];
-                    nwords  <= (sy < topc || sy > botc) ? 10'd2
-                             : 10'(((row_off + 32'd7 + 32'(bpp * bw)) >> 4) - {4'd0, row_off[31:4]} + 32'd1);
-                    gp      <= {10'd0, row_off[3:0]};
-                    state   <= S_RD;
-                end
-                else if (sy < topc || sy > botc) state <= S_ADV;     // clipped row
-                else begin
-                    word_lo <= bit_lo[31:4];
-                    nwords  <= 10'(bit_end[31:4] - bit_lo[31:4] + 28'd1);
-                    state   <= need_data ? S_RD : S_GEN;
-                    gix   <= ix0;
-                    gp    <= {10'd0, bit_lo[3:0]};
-                    gsx   <= xpos;
-                    lim_r <= lim;
+                    nwords <= (sy < topc || sy > botc) ? 10'd2
+                            : 10'(bit_end_r[31:4] - bit_lo_r[31:4] + 28'd1);
+                    state  <= S_RD;
+                end else begin
+                    nwords <= 10'(bit_end_r[31:4] - bit_lo_r[31:4] + 28'd1);
+                    state  <= need_data ? S_RD : S_GEN;
+                    gix    <= ix0;
+                    gsx    <= xpos;
+                    lim_r  <= lim;
                 end
             end
 
@@ -407,36 +433,38 @@ module tunit_dma #(
                 state  <= S_HDR3;
             end
             S_HDR3: begin : hdr3
-                // dma_draw's Skip block, unscaled (xstep = 0x100): pre and post
-                // in pixels; the start skip applies past pre; the end skip clamps
-                // the width that post has already shortened
-                logic [6:0]  pre, post;
-                logic signed [17:0] wrow, wes, wl;
+                // dma_draw's Skip block, unscaled (xstep = 0x100): pre and post in
+                // pixels, and the products the rest needs, all registered here
+                logic [6:0] pre, post;
                 pre  = 7'({3'd0, hdr[3:0]} << preskip);
                 post = 7'({3'd0, hdr[7:4]} << postskip);
                 pre_u  <= pre;
                 post_u <= post;
-                // the products the next row's step needs, a state ahead of it
                 pp_r   <= 13'(bpp * pre);
                 pq_r   <= 13'(bpp * post);
-                wrow = 18'($signed({8'd0, bw}) - $signed({11'd0, post}));
+                ssgt   <= ({1'b0, ss_l} > {2'd0, pre});
+                state  <= S_HDR4;
+            end
+            S_HDR4: begin : hdr4
+                // the start skip applies past pre; the end skip clamps the width
+                // that post has already shortened
+                logic signed [17:0] wrow, wes, wl;
+                wrow = 18'($signed({8'd0, bw}) - $signed({11'd0, post_u}));
                 wes  = 18'($signed({8'd0, bw}) - $signed({2'd0, es_l}));
                 wl   = (es_l != 16'd0 && wrow > wes) ? wes : wrow;
                 lim_r <= (wl > 0) ? {2'd0, wl[9:0], 8'd0} : 20'd0;
-                if ({3'd0, ss_l} > {4'd0, pre}) begin
+                if (ssgt) begin
                     gix <= {4'd0, ss_l, 8'd0};
-                    gp  <= gp + 14'd8 + 14'(bpp * 8'(ss_l - {1'b0, pre}));
+                    gp  <= gp + 14'd8 + 14'(bss) - 14'(pp_r);
                 end else begin
-                    gix <= {5'd0, pre, 8'd0};
+                    gix <= {5'd0, pre_u, 8'd0};
                     gp  <= gp + 14'd8;
                 end
-                gsx <= xflip ? xpos - {3'd0, pre} : xpos + {3'd0, pre};
-                state <= S_HDR4;
+                gsx <= xflip ? xpos - {3'd0, pre_u} : xpos + {3'd0, pre_u};
+                state <= S_HDR5;
             end
-            S_HDR4: begin
+            S_HDR5: begin
                 // 8 + bpp * (width - pre - post), as 8 + wb - bpp*pre - bpp*post
-                // from products registered in S_HDR3: with the multiply after the
-                // subtract this missed 96 MHz by 2.4, then 2.7 ns
                 row_adv <= 14'd8 + ((wb > pp_r + pq_r) ? 14'(wb - pp_r - pq_r) : 14'd0);
                 state <= (sy < topc || sy > botc || gix >= lim_r) ? S_ADV : S_GEN;
             end
@@ -472,7 +500,9 @@ module tunit_dma #(
                 s1_odd <= gp[4];
                 s1_sx  <= gsx;
                 gix <= gix_n;
-                gp  <= gp + 14'(bpp * gdx);
+                // (gix + xs) >> 8 - gix >> 8 is xs >> 8, plus one when the fraction
+                // carries: two precomputed steps, no multiply in the loop
+                gp  <= gp + {3'd0, gfrac[8] ? stepB : stepA};
                 gsx <= xflip ? gsx - 10'd1 : gsx + 10'd1;
                 if (gix_n >= lim_r || cancel) state <= S_DRAIN;
             end
