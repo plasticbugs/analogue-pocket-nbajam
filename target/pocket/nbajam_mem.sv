@@ -238,7 +238,7 @@ module nbajam_mem (
         .b_addr(b_addr_m), .b_len(b_len_m),
         .b_req(b_req_m), .b_abort(1'b0),
         .b_wr(b_wr), .b_idx(b_idx), .b_data(b_data), .b_done(b_done),
-        .b_we(1'b0), .b_wdata(16'd0), .b_be(2'b00), .b_widx()
+        .b_we(1'b0), .b_wdata(16'd0), .b_be(2'b00), .b_widx(), .b_wpre()
     );
 
     // -------------------------------------------------------------- SRAM

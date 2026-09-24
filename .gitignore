@@ -41,3 +41,7 @@ artifacts/states*/state_*.bin
 artifacts/probe*/nbajam/
 # MAME's default snapshot directory, when a probe forgets -snapshot_directory
 /snap/
+
+# Verilator build directories of the benches
+sim/*/obj/
+sim/*/obj.log

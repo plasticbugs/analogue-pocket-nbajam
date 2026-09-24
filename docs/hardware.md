@@ -305,7 +305,10 @@ the reference renderer (`tools/dma_model.py`). Points that matter:
 blits): commands 8002, 8012, 9002, a002, b000, b002, c002, d002, e000, e002,
 e012, f000, f002, f008, f012. So: op 2 (non-zero copy) nearly always, op 0
 (no draw: pure delay) and op 8 (non-zero as colour) rarely; **X flip
-yes, Y flip never, skip mode never, bit 6 never**; every bpp 1–8. Scaling:
+yes, Y flip never, bit 6 never**; every bpp 1–8. **Skip mode is used**
+(0x8588 / 0x8582, unscaled, pre/post skip 1) by the match-up screen's player
+portraits — the first probe never reached that screen, and this line said
+"never" until the RTL bench counted two a frame there. Scaling:
 not yet measured (§10). Load: mean 144K pixels per frame, **max 326,270**, max
 223 blits in a frame.
 

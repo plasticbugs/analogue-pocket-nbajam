@@ -24,7 +24,12 @@
 
 module sdram_ctrl #(
     parameter [13:0] CYCLES_PER_REFRESH = 14'd750,   // 64 ms / 8192 rows at 96 MHz
-    parameter        NCLI = 6
+    parameter        NCLI = 6,
+    // 1: burst READs/WRITEs back to back, one a clock (BL=1 allows it; the
+    // client must then feed write data from b_wpre, below).  0: one every 2
+    // clocks, the spacing proven on hardware in Punch-Out!!, STUN Runner and
+    // Smash TV.  NBA Jam's blitter needs the full rate (docs/core-design.md 5).
+    parameter bit    FAST_BURST = 1'b0
 ) (
     input  logic        clk,          // 96 MHz
     input  logic        clk_pin,      // same frequency, phase-shifted, drives SDRAM_CLK
@@ -67,7 +72,9 @@ module sdram_ctrl #(
     input  logic        b_we,
     input  logic [15:0] b_wdata,
     input  logic  [1:0] b_be,         // byte enables for word b_widx (writes)
-    output logic  [9:0] b_widx
+    output logic  [9:0] b_widx,
+    output logic  [9:0] b_wpre        // the index whose data b_wdata must carry next clock:
+                                      // address a registered RAM with it
 );
     localparam BURST_CHUNK = 10'd32;
 
@@ -134,6 +141,7 @@ module sdram_ctrl #(
     logic        b_is_we;        // this burst is a write
     logic  [2:0] b_gap;
     assign b_widx = b_issued;
+    wire   b_issue_now;
 
     // any random client pending? Round-robin: the first pending client after
     // the one served last, so a saturating client cannot starve the others.
@@ -324,9 +332,16 @@ module sdram_ctrl #(
                     b_issued <= b_issued + 10'd1;
                     b_remain <= b_remain - 10'd1;
                     b_chunk  <= b_chunk + 6'd1;
-                    b_gap    <= burst_slow ? 3'd4 : 3'd1;
-                    // stop at: end of burst, end of chunk, end of SDRAM row
-                    if (b_remain == 10'd1 || b_chunk == 6'(BURST_CHUNK - 10'd1) || b_next[9:1] == 9'h1ff) begin
+                    b_gap    <= burst_slow ? 3'd4 : FAST_BURST ? 3'd0 : 3'd1;
+                    // stop at: end of burst, end of chunk, end of SDRAM row.  In
+                    // FAST_BURST mode a chunk only ends if someone is waiting for
+                    // the chip -- a random client or the refresh -- otherwise the
+                    // burst runs on in the open row (the chunk count restarts), so
+                    // the other clients' worst-case wait is unchanged.
+                    if (FAST_BURST && b_chunk == 6'(BURST_CHUNK - 10'd1) && !any_req_q && !refresh_due)
+                        b_chunk <= '0;
+                    if (b_remain == 10'd1 || b_next[9:1] == 9'h1ff ||
+                        (b_chunk == 6'(BURST_CHUNK - 10'd1) && !(FAST_BURST && !any_req_q && !refresh_due))) begin
                         state  <= S_BEND;
                         wait_n <= 3'd1;
                     end
@@ -381,6 +396,10 @@ module sdram_ctrl #(
     end
 
     assign {SDRAM_DQMH, SDRAM_DQML} = SDRAM_A[12:11];
+
+    // a word is issued this clock exactly when S_BREAD finds no gap and no abort
+    assign b_issue_now = (state == S_BREAD) && (b_gap == 3'd0) && !b_abort;
+    assign b_wpre      = b_issue_now ? b_issued + 10'd1 : b_issued;
 
 `ifdef VERILATOR
     assign SDRAM_CLK = clk_pin;
