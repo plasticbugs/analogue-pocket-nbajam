@@ -169,7 +169,7 @@ module tunit_dma #(
     // ------------------------------------------------------------ state
     typedef enum logic [4:0] {
         S_IDLE, S_START, S_DIV, S_PREP, S_ROW, S_RD, S_RDGAP, S_GEN, S_DRAIN,
-        S_WR, S_WRGAP, S_ADV, S_DONE, S_HDR1, S_HDR2, S_HDR3, S_HDR4, S_TDIV, S_TSET
+        S_WR, S_WRGAP, S_ADV, S_DONE, S_HDR1, S_HDR2, S_HDR3, S_HDR4, S_TDIV, S_TSET, S_RWAIT
     } state_t;
     state_t      state;
     logic        cancel;             // the command register was written while busy
@@ -224,6 +224,13 @@ module tunit_dma #(
     wire   [8:0] gdx   = 9'(gix_n[19:8] - gix[19:8]);
     wire  [19:0] iy_n  = iy + {4'd0, ys};
     wire   [8:0] gdy   = 9'(iy_n[19:8] - iy[19:8]);
+    // The next row's source step, gdy x width x bpp, is computed in registers
+    // during the row (iy only changes in S_ADV) rather than in S_ADV itself:
+    // add, subtract, multiply and a 32-bit add in one clock missed 96 MHz by
+    // 4 ns (the second compile's every worst path).  S_RWAIT gives it the
+    // two clocks it needs after iy moves.
+    logic  [8:0] gdy_q;
+    logic [31:0] row_step;
 
     // row geometry
     wire  [31:0] bit_lo  = row_off + 32'(bpp * s_first);
@@ -241,6 +248,8 @@ module tunit_dma #(
     always_ff @(posedge clk) begin
         sb_we <= 1'b0;
         db_we <= 1'b0;
+        gdy_q    <= gdy;
+        row_step <= 32'(gdy_q * wb);
         // before the state machine, so S_START's reset of it wins
         if (pace_cnt != 32'hffff_ffff) pace_cnt <= pace_cnt + 32'd1;
 
@@ -487,10 +496,13 @@ module tunit_dma #(
 
             S_ADV: begin
                 iy      <= iy_n;
-                row_off <= row_off + (skipm ? {18'd0, row_adv} : 32'(gdy * wb));
+                row_off <= row_off + (skipm ? {18'd0, row_adv} : row_step);
                 sy      <= yflip ? sy - 9'd1 : sy + 9'd1;
                 done_w  <= '0;
-                state   <= (iy_n >= {2'd0, hlim} || cancel) ? S_DONE : S_ROW;
+                state   <= (iy_n >= {2'd0, hlim} || cancel) ? S_DONE : S_RWAIT;
+            end
+            S_RWAIT: begin
+                state   <= S_ROW;
             end
 
             S_DONE: begin

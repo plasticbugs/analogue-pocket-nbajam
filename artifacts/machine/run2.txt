@@ -34,3 +34,5 @@ frame 1650  0.70 s/frame  pc ff820480  unimpl 0  late 0
 frame 1700  0.69 s/frame  pc ff820580  unimpl 0  late 0
 frame 1750  0.69 s/frame  pc ff8204a0  unimpl 0  late 0
 frame 1800  0.69 s/frame  pc ff8205b0  unimpl 0  late 0
+frame 1850  0.68 s/frame  pc ff8204a0  unimpl 0  late 0
+frame 1900  0.68 s/frame  pc ff820570  unimpl 0  late 0
