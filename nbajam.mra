@@ -31,35 +31,37 @@
     <manufacturer>Midway</manufacturer>
     <switches default="fd,7f"/>
     <rom index="0" zip="nbajam.zip" md5="b6a0b85732103ba8ec4fa6a65ddd2c32">
-        <!-- graphics: MAME LOAD32_BYTE, ug = bytes 0 and 2, uj = bytes 1 and 3 -->
+        <!-- graphics: MAME LOAD32_BYTE, ug = bytes 0 and 2, uj = bytes 1 and 3.
+             map digits are read right to left (the MRA standard): the
+             rightmost is the first byte of the output word -->
         <interleave output="32">
-            <part name="l1_nba_jam_game_rom_uj14.uj14" crc="b34b7af3" map="1000"/>
-            <part name="l1_nba_jam_game_rom_ug14.ug14" crc="04bb9f64" map="0100"/>
-            <part name="l1_nba_jam_game_rom_uj19.uj19" crc="8130a8a2" map="0010"/>
-            <part name="l1_nba_jam_game_rom_ug19.ug19" crc="a8f22fbb" map="0001"/>
+            <part name="l1_nba_jam_game_rom_uj14.uj14" crc="b34b7af3" map="0001"/>
+            <part name="l1_nba_jam_game_rom_ug14.ug14" crc="04bb9f64" map="0010"/>
+            <part name="l1_nba_jam_game_rom_uj19.uj19" crc="8130a8a2" map="0100"/>
+            <part name="l1_nba_jam_game_rom_ug19.ug19" crc="a8f22fbb" map="1000"/>
         </interleave>
         <interleave output="32">
-            <part name="l1_nba_jam_game_rom_uj16.uj16" crc="d2e554f1" map="1000"/>
-            <part name="l1_nba_jam_game_rom_ug16.ug16" crc="8591c572" map="0100"/>
-            <part name="l1_nba_jam_game_rom_uj20.uj20" crc="f9cebbb6" map="0010"/>
-            <part name="l1_nba_jam_game_rom_ug20.ug20" crc="44fd6221" map="0001"/>
+            <part name="l1_nba_jam_game_rom_uj16.uj16" crc="d2e554f1" map="0001"/>
+            <part name="l1_nba_jam_game_rom_ug16.ug16" crc="8591c572" map="0010"/>
+            <part name="l1_nba_jam_game_rom_uj20.uj20" crc="f9cebbb6" map="0100"/>
+            <part name="l1_nba_jam_game_rom_ug20.ug20" crc="44fd6221" map="1000"/>
         </interleave>
         <interleave output="32">
-            <part name="l1_nba_jam_game_rom_uj17.uj17" crc="b2e14981" map="1000"/>
-            <part name="l1_nba_jam_game_rom_ug17.ug17" crc="6f921886" map="0100"/>
-            <part name="l1_nba_jam_game_rom_uj22.uj22" crc="59a95878" map="0010"/>
-            <part name="l1_nba_jam_game_rom_ug22.ug22" crc="ab05ed89" map="0001"/>
+            <part name="l1_nba_jam_game_rom_uj17.uj17" crc="b2e14981" map="0001"/>
+            <part name="l1_nba_jam_game_rom_ug17.ug17" crc="6f921886" map="0010"/>
+            <part name="l1_nba_jam_game_rom_uj22.uj22" crc="59a95878" map="0100"/>
+            <part name="l1_nba_jam_game_rom_ug22.ug22" crc="ab05ed89" map="1000"/>
         </interleave>
         <interleave output="32">
-            <part name="l1_nba_jam_game_rom_uj18.uj18" crc="fdee0037" map="1000"/>
-            <part name="l1_nba_jam_game_rom_ug18.ug18" crc="5162d3d6" map="0100"/>
-            <part name="l1_nba_jam_game_rom_uj23.uj23" crc="427d2eee" map="0010"/>
-            <part name="l1_nba_jam_game_rom_ug23.ug23" crc="7b934c7a" map="0001"/>
+            <part name="l1_nba_jam_game_rom_uj18.uj18" crc="fdee0037" map="0001"/>
+            <part name="l1_nba_jam_game_rom_ug18.ug18" crc="5162d3d6" map="0010"/>
+            <part name="l1_nba_jam_game_rom_uj23.uj23" crc="427d2eee" map="0100"/>
+            <part name="l1_nba_jam_game_rom_ug23.ug23" crc="7b934c7a" map="1000"/>
         </interleave>
         <!-- TMS34010 program: MAME LOAD16_BYTE, uj12 = low byte, ug12 = high -->
         <interleave output="16">
-            <part name="l3_nba_jam_game_rom_ug12.ug12" crc="407d3390" map="10"/>
-            <part name="l3_nba_jam_game_rom_uj12.uj12" crc="b93e271c" map="01"/>
+            <part name="l3_nba_jam_game_rom_ug12.ug12" crc="407d3390" map="01"/>
+            <part name="l3_nba_jam_game_rom_uj12.uj12" crc="b93e271c" map="10"/>
         </interleave>
         <!-- OKI6295 samples -->
         <part name="l1_nba_jam_u12_sound_rom.u12" crc="b94847f1"/>
