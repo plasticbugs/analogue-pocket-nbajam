@@ -136,3 +136,9 @@ that died belong here as much as the one that lived.
   word a clock are sound on the Pocket; reads at that pace are what garbled
   the palette. Fast with the earlier read capture was not reported. The same
   setting makes the original NBA Jam run smoothly too (the user's report).
+- 2026-09-24, `0e931f37…` (compile 14, 0.2.0 candidate): "solid". Service-mode
+  settings lost when the core is quit and restarted. The card had
+  `Saves/nbajam/plasticbugs.nbajam/nbajam.sav` and `nbajamte.sav`, 16 KB each,
+  the edited settings in them (30 bytes differ from MAME's factory CMOS): the
+  save path works. The LOAD did not: core_top's CMOS loader still took slot 1,
+  missed when the save moved to slot 2 for the game list. Fixed in compile 15.

@@ -700,7 +700,7 @@ module core_top
     logic        nv_rd_hi;
     always_ff @(posedge clk_sys) begin
         po_nv_we <= 1'b0;
-        if (nv_dl_download && nv_dl_index == 16'h1 && nv_dl_wr) begin
+        if (nv_dl_download && nv_dl_index == 16'h2 && nv_dl_wr) begin   // the save is slot 2 (0 the game's JSON, 1 the ROM)
             if (!nv_dl_addr[0]) nv_lo <= nv_dl_data;
             else begin po_nv_we <= 1'b1; po_nv_waddr <= nv_dl_addr[13:1]; po_nv_wdata <= {nv_dl_data, nv_lo}; end
         end
