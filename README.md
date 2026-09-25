@@ -1,13 +1,19 @@
 # NBA Jam — Analogue Pocket core (openFPGA)
 
-**NBA Jam** (Midway, 1993, rev 3.01) on the Analogue Pocket: Midway's
+**NBA Jam** (Midway, 1993, rev 3.01) and **NBA Jam Tournament Edition**
+(Midway, 1994, rev 4.0 3/23/94) on the Analogue Pocket: Midway's
 T-unit board in gateware — the TMS34010 graphics CPU at 50 MHz, the DMA
 blitter, two 512×512 16-bit frame buffers, a 32K-colour palette, and the
 Williams ADPCM sound board (MC6809E, YM2151, OKI MSM6295, DAC). Nothing is
 emulated in software.
 
 > **ROMs are not included and never will be.** You supply your own MAME
-> `nbajam` romset; the core reads one image built from it.
+> `nbajam` and/or `nbajamte` romsets; the core reads one image built from each.
+
+The two games are the same board: Tournament Edition differs only in its
+copy-protection table (and where it answers) and where the sound board keeps
+its 43 bytes of hidden RAM. Pick the game from the list when the core starts;
+the core recognises which one it was given from the ROM itself.
 
 | board part | implementation | verified by |
 |---|---|---|
@@ -23,8 +29,8 @@ emulated in software.
 
 ## Status
 
-**0.1.0 runs on a Pocket: picture and sound reported perfect** (2026-09-24,
-bitstream md5 `05629f94f775fc5f4a3e03e8254fe5d3`, SDRAM bursts on Normal).
+**0.2.0 runs both games on a Pocket**, picture and sound correct, Tournament
+Edition's play smooth (2026-09-24). 0.1.0 was NBA Jam alone.
 
 Proven in simulation, against MAME 0.288:
 * the reference models (`tools/render_model.py`, `tools/dma_model.py`) are
@@ -39,13 +45,23 @@ Proven in simulation, against MAME 0.288:
 * timing closes at 96 MHz (+0.05 ns worst setup in the released build, every
   corner, every SDC constraint applied), about 68% of the FPGA's logic;
 * scaled skip-mode blits, the one case not drawn exactly, never occur: 0 in
-  4.8 M blits over five minutes each of attract and play in MAME.
+  4.8 M blits over five minutes each of attract and play in MAME;
+* Tournament Edition: its image byte-identical to MAME's regions; the models
+  exact on 14 frozen TE moments; its CPU run from reset, 69.4 M instructions,
+  identical to MAME's; all 768 protection accesses of its boot identical;
+  the machine through the real memory glue boots it to a MAME-identical
+  frame, the game recognised from the image at any strobe length.
 
 Not yet proven: the per-chip balance of the mix (the waveforms drift apart,
 so only the total loudness was compared); a played game matching MAME (the
 game's random numbers come from the beam position, so it cannot match
-exactly); the CMOS save on hardware; the Fast SDRAM burst setting (it
-scrambles the palette on hardware; Normal is the default).
+exactly); the CMOS save on hardware.
+
+Known limit: when the game clears a whole screen with the CPU (at scene
+changes, such as the tip-off), this core takes about three frames where the
+arcade takes one, so those moments hitch briefly. Play itself runs at the
+arcade's pace: the memory bursts writes at one word a clock, reads at one
+every two (reads at full rate garble the palette on the Pocket).
 
 Not implemented: scaled skip-mode blits (never seen; counted on the panel);
 players 3 and 4.
@@ -53,12 +69,13 @@ players 3 and 4.
 ## Building the ROM image
 
 ```sh
-python3 mra_build.py nbajam.mra nbajam.zip
+python3 mra_build.py nbajam.mra nbajam.zip        # nbajam.rom
+python3 mra_build.py nbajamte.mra nbajamte.zip    # nbajamte.rom
 ```
 
 The builder needs only Python 3. It reads the MAME zip (or a directory of loose
 files), checks every ROM's CRC32, and verifies the finished image against a
-known md5. Copy the result to `Assets/nbajam/common/nbajam.rom` on the SD card.
+known md5. Copy the results to `Assets/nbajam/common/` on the SD card.
 
 ## Building the core
 

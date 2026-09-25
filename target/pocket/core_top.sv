@@ -984,7 +984,11 @@ module core_top
     // Slow; Normal was not on that build.  Normal is all bits clear, so it is
     // what runs whether or not the firmware writes the menu's default.
     wire g_burst_fast   =  mod_sw0[6] & ~mod_sw0[5];     // reads
-    wire g_burst_fast_wr =  mod_sw1[1] & ~mod_sw0[5];    // writes
+    // Writes one a clock by default: on hardware the blitter and the page
+    // clear need it (Normal dropped TE's busiest scenes to half rate) and the
+    // write pace is sound on the Pocket; reads stay one every 2 (one a clock
+    // garbled the palette byte).  All bits clear = this, as tested.
+    wire g_burst_fast_wr = ~mod_sw1[1] & ~mod_sw0[5];    // writes
     wire g_sram_slow    =  mod_sw0[7];
     wire g_sram_slow_wr =  mod_sw1[7];
 

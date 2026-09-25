@@ -81,7 +81,12 @@ read a pass (log, below). The test now puts back what it overwrote, and
 core worked; the logic is still in `core_top.sv` and every switch's
 all-clear value is the tested setting. To debug on hardware, restore their
 entries (ids 90-94) from commit `684fce7`'s `interact.json` -- the panel
-(id 90) included.
+(id 90) included -- and the split burst list (reads and writes separately)
+from commit `f86c875`.
+
+Since 0.2.0 the all-clear bursts are **writes one word a clock, reads one
+every two**: the only combination that is both clean and fast enough on
+hardware (see the log).
 
 | menu item | what it does | healthy setting |
 |---|---|---|
@@ -121,3 +126,13 @@ that died belong here as much as the one that lived.
   picture; still silent. Says nothing about compile 10.
 - 2026-09-24, `05629f94…` (compile 10): **"it's perfect"** — picture and
   sound. The SRAM self-test fix is confirmed on hardware.
+- 2026-09-24, `198afc75…` (compile 12, Tournament Edition added): both games
+  run; TE looks right. Frame drops in TE play with a basket in view.
+  Measured (sim/run_machine.sh, TE, frames 1600-2599): MAME flips the page on
+  975 frames of 1000, this core with Normal bursts on 796 -- half rate at
+  2201-2233, blitter busy ~94% of every frame.
+- 2026-09-24, `d6a02c5b…` (compile 13, test build, reads and writes split on
+  the menu): **"Fast writes only" -- clean and no frame drops.** Writes at one
+  word a clock are sound on the Pocket; reads at that pace are what garbled
+  the palette. Fast with the earlier read capture was not reported. The same
+  setting makes the original NBA Jam run smoothly too (the user's report).

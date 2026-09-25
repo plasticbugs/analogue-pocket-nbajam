@@ -475,6 +475,45 @@ those four bytes.
 
 The lesson, again: a test that says "pass" only proves what it looks at.
 
+## Step 21 — Tournament Edition
+
+NBA Jam Tournament Edition (1994) turned out to run on exactly the same
+board. MAME's own code treats the two with one routine and a single "TE"
+switch, which changes just two things: the copy-protection chip's secret
+answer table (and where in memory it answers), and where the sound board
+keeps 43 bytes of hidden memory. So the core now plays both. The Pocket shows
+a list of the two games, the way the Pleiads/Phoenix core does, and the core
+recognises which game it was handed by adding up the bytes of its program as
+they load: each game has its own total.
+
+Checked the same way as NBA Jam: the ROM image byte-identical to MAME's, 14
+frozen moments pixel-exact, the CPU identical to MAME's for 69 million
+instructions from power-on, and every one of the 768 protection questions
+and answers during boot identical.
+
+## Step 22 — The stutter at the basket
+
+On the Pocket, TE stuttered whenever a basket was in view. Counting page
+flips (the game shows a new picture by flipping between its two screens)
+made it concrete: the arcade, in MAME, shows a new picture on 975 frames out
+of 1000 of play; ours managed 796, and near a basket only every *other*
+frame. The drawing machine needed 94% of every frame just for memory, because
+the memory was running in its cautious "one word every two ticks" mode, the
+one earlier cores use, since the fast mode had scrambled colours on the first
+flash.
+
+So a test build let the person holding the Pocket choose fast *reads* and
+fast *writes* separately. Answer: fast writes are perfectly fine; it was only
+fast reads that garbled data. Writes are most of the drawing, so writes at
+full speed and reads at half is clean and smooth -- and, as it turned out,
+makes the original NBA Jam noticeably smoother as well. That's now the
+default.
+**[deep dive: why reading a chip at full speed is harder than writing it]**
+
+One smaller hitch remains, found on the way: at scene changes TE wipes a
+whole screen with its processor, one word at a time, and our memory path
+takes three frames for what the arcade does in one.
+
 ---
 
 *(continues as the work goes on)*

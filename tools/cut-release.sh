@@ -64,7 +64,7 @@ done
 for d in "$OUT"/Cores/*/; do
     [ -f "$d/bitstream.rbf_r" ] || { echo "no bitstream for $(basename "$d") in run $RUN"; exit 1; }
 done
-for extra in nbajam.mra README.md tools/mra_build.py; do
+for extra in nbajam.mra nbajamte.mra README.md tools/mra_build.py; do
     [ -f "$extra" ] && cp "$extra" "$OUT/$(basename "$extra")"
 done
 
