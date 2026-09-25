@@ -1,4 +1,23 @@
-# NBA Jam for Analogue Pocket — 0.2.0
+# NBA Jam for Analogue Pocket — 0.2.1
+
+**0.2.1 fixes the ROM recipes; the core itself is unchanged from 0.2.0**
+(same bitstream, md5 `97a294176f0ab618921b9efbc99ebab4`).
+
+- **The standard `mra` tool now builds correct images.** The `.mra` files
+  wrote their interleave `map` digits in the reverse of the MRA convention, so
+  `mra` produced scrambled images (with only an md5 warning). Both
+  `mra -z <romdir> nbajam.mra` and `mra -z <romdir> nbajamte.mra` now give
+  exactly the images below, and so does `mra_build.py`.
+- **Merged romsets work.** A merged `nbajamte.zip` also holds the clone
+  `nbajamte4`'s same-named `ug12` in a subfolder; `mra_build.py` picked the
+  wrong one. It now chooses by CRC.
+- Romset notes: Tournament Edition is MAME's `nbajamte` (rev 4.0 3/23/94).
+  With the standard `mra` tool, NBA Jam needs a MAME 0.253 or later set (the
+  two speech ROMs were renamed then); `mra_build.py` also accepts older sets.
+
+---
+
+## 0.2.0
 
 Midway's T-unit arcade board as an openFPGA core, now running **both NBA Jam
 (1993, rev 3.01)** and **NBA Jam Tournament Edition (1994, rev 4.0 3/23/94)**.
