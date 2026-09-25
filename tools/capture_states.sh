@@ -5,6 +5,7 @@
 #
 #   tools/capture_states.sh            gameplay set -> artifacts/states
 #   tools/capture_states.sh service    service menu -> artifacts/states_service
+#   GAME=nbajamte tools/capture_states.sh   -> artifacts/states_nbajamte
 set -e
 root=$(cd "$(dirname "$0")/.." && pwd)
 cd "$root"
@@ -15,6 +16,8 @@ case "${1:-play}" in
            frames=700,1000 ;;
   *) echo "usage: $0 [play|service]" >&2; exit 2 ;;
 esac
+# another game (GAME=nbajamte) gets its own set: artifacts/states_nbajamte
+[ "${GAME:-nbajam}" = nbajam ] || out=${out}_$GAME
 rm -rf .mame/nvram/"${GAME:-nbajam}" "$out"
 mkdir -p "$out"
 FRAMES=$frames INPUTS=$inputs OUT=$out tools/mame.sh -seconds_to_run $secs \
