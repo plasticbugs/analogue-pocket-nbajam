@@ -86,7 +86,8 @@ def get_part(parts, node):
     if name is None:
         return literal_bytes(node)
     crc = node.get('crc')
-    want = int(crc, 16) if crc else None
+    # "a|b" accepts either (the MRA format allows alternatives)
+    want = {int(c, 16) for c in crc.split('|')} if crc else None
     named = [(p, d) for p, b, d in parts if b == name.lower()]
     data = None
     if want is None:
@@ -98,9 +99,9 @@ def get_part(parts, node):
         # clone's same-named file in a subdirectory), else any file with that
         # CRC: older dumps carry some files under other names (nbau12.u12
         # for l1_nba_jam_u12_sound_rom.u12), and the CRC identifies them.
-        data = next((d for p, d in named if _crc(d) == want), None)
+        data = next((d for p, d in named if _crc(d) in want), None)
         if data is None:
-            data = next((d for p, b, d in parts if _crc(d) == want), None)
+            data = next((d for p, b, d in parts if _crc(d) in want), None)
         if data is None and named:
             got = ', '.join(f'{p} crc {_crc(d):08x}' for p, d in named)
             sys.exit(f'error: {name}: no copy has crc {crc} (found {got}); '

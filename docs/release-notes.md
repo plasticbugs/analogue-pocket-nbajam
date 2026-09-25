@@ -12,8 +12,9 @@
   `nbajamte4`'s same-named `ug12` in a subfolder; `mra_build.py` picked the
   wrong one. It now chooses by CRC.
 - Romset notes: Tournament Edition is MAME's `nbajamte` (rev 4.0 3/23/94).
-  With the standard `mra` tool, NBA Jam needs a MAME 0.253 or later set (the
-  two speech ROMs were renamed then); `mra_build.py` also accepts older sets.
+  Older sets that name NBA Jam's two speech ROMs `nbau12.u12` / `nbau13.u13`
+  (before MAME 0.253) work with both tools: `mra` and `mra_build.py` find a
+  file by its CRC as well as its name.
 
 ---
 
