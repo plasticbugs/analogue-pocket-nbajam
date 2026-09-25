@@ -110,6 +110,8 @@ int main(int argc, char **argv) {
         dut->b_req = 0;
         for (int i = 0; i < 4; i++) tick();
     }
+    printf("game recognised: %s\n", dut->game_te ? "Tournament Edition" : "NBA Jam (or unknown)");
+    if (getenv("EXPECT_TE") && atoi(getenv("EXPECT_TE")) != dut->game_te) { bad++; printf("  game recognition wrong\n"); }
     printf("SDRAM: %ld words checked through the core's ports, %ld wrong\n", checked, bad);
 
     // The power-on self-test, as the Pocket runs it: after the download, before

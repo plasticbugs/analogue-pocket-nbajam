@@ -34,8 +34,10 @@ module tb_system_top #(parameter bit BURST_FAST = 1'b1) (
     logic        srom_req, srom_ack; logic [16:0] srom_addr; logic [7:0] srom_q;
     logic        hsync, vsync, hblank; logic [15:0] snd_pc; logic [15:0] tst_q; logic tst_ack;
 
+    // the game, as nbajam_mem recognises it from the image it downloads
+    logic game_te;
     nbajam_core core (
-        .clk(clk), .rst(reset), .pause(1'b0), .pix_sync(1'b0),
+        .clk(clk), .rst(reset), .pause(1'b0), .pix_sync(1'b0), .te(game_te),
         .sd_req(sd_req), .sd_we(sd_we), .sd_addr(sd_addr), .sd_wdata(sd_wdata), .sd_be(sd_be),
         .sd_ack(sd_ack), .sd_q(sd_q),
         .b_addr(b_addr), .b_len(b_len), .b_req(b_req), .b_we(b_we), .b_wdata(b_wdata), .b_be(b_be),
@@ -51,6 +53,7 @@ module tb_system_top #(parameter bit BURST_FAST = 1'b1) (
     );
 
     nbajam_mem mem (
+        .game_te(game_te),
         .clk(clk), .clk_sdram(clk), .init(mem_init), .ready(mem_ready),
         .rd_late(1'b1), .burst_slow(1'b0), .burst_fast(BURST_FAST), .sram_slow(1'b0), .sram_slow_wr(1'b0),
         .dl_we(dl_we), .dl_addr(dl_addr), .dl_data(dl_data), .dl_active(dl_active),

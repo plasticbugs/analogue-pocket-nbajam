@@ -3,6 +3,7 @@
 // answered by sim/machine/tb_machine.cpp as the SRAM would.
 `default_nettype none
 module tb_machine_top (
+    input  logic        te,         // GAME=nbajamte (tb_machine.cpp)
     input  logic        clk,
     input  logic        init,
     output logic        ready,
@@ -31,7 +32,7 @@ module tb_machine_top (
     logic        hblank;
 
     nbajam_core core (
-        .clk(clk), .rst(rst), .pause(1'b0), .pix_sync(1'b0),
+        .clk(clk), .rst(rst), .pause(1'b0), .pix_sync(1'b0), .te(te),
         .sd_req(sd_req), .sd_we(sd_we), .sd_addr(sd_addr), .sd_wdata(sd_wdata), .sd_be(sd_be),
         .sd_ack(sd_ack), .sd_q(sd_q),
         .b_addr(b_addr), .b_len(b_len), .b_req(b_req), .b_we(b_we), .b_wdata(b_wdata), .b_be(b_be),

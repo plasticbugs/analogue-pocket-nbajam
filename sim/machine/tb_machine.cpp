@@ -84,6 +84,7 @@ int main(int argc, char **argv) {
     }
 
     dut = new Vtb_machine_top;
+    dut->te = (getenv("GAME") && std::string(getenv("GAME")) == "nbajamte");
     for (uint32_t w = 0; w < 0x510000; w++) mem()[w] = (img[2 * w] << 8) | img[2 * w + 1];
     uint16_t in[3] = {0xffff, 0xffff, 0xffff};
     dut->dsw = 0x7ffd;

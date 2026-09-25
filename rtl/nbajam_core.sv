@@ -17,6 +17,7 @@ module nbajam_core (
     input  logic        rst,
     input  logic        pause,          // freeze the CPUs and sound, keep the picture
     input  logic        pix_sync,       // see clk_enables.sv
+    input  logic        te,             // Tournament Edition (nbajam_mem recognises it as the image loads)
 
     // ---------------- SDRAM, random access (SDRAM word addresses)
     output logic        sd_req,
@@ -90,7 +91,7 @@ module nbajam_core (
     logic       snd_strobe, snd_reset;
 
     tunit_main u_main (
-        .clk(clk), .rst(rst), .cen_cpu(cen_cpu), .cen_dot(cen_dot),
+        .clk(clk), .rst(rst), .cen_cpu(cen_cpu), .cen_dot(cen_dot), .te(te),
         .sd_req(sd_req), .sd_we(sd_we), .sd_addr(sd_addr), .sd_wdata(sd_wdata),
         .sd_be(sd_be), .sd_ack(sd_ack), .sd_q(sd_q),
         .b_addr(b_addr), .b_len(b_len), .b_req(b_req), .b_we(b_we),
@@ -105,7 +106,7 @@ module nbajam_core (
     );
 
     tunit_sound u_sound (
-        .clk(clk), .rst(rst), .pause(pause),
+        .clk(clk), .rst(rst), .pause(pause), .te(te),
         .cmd(snd_cmd), .cmd_strobe(snd_strobe), .cmd_reset(snd_reset),
         .rom_addr(srom_addr), .rom_req(srom_req), .rom_q(srom_q), .rom_ack(srom_ack),
         .oki_addr(oki_addr), .oki_req(oki_req), .oki_q(oki_q), .oki_ack(oki_ack),

@@ -42,6 +42,7 @@ int main(int argc, char **argv) {
     std::string out = argv[4];
 
     auto *dut = new Vtb_sound_top;
+    dut->te = (getenv("GAME") && std::string(getenv("GAME")) == "nbajamte");
     uint64_t clk = 0;
     auto tick = [&]() { dut->clk = 0; dut->eval(); dut->clk = 1; dut->eval(); clk++; };
     dut->rst = 1; dut->cmd_strobe = 0; dut->cmd_reset = 0;

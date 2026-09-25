@@ -3,11 +3,19 @@
         "magic": "APF_VER_1",
         "data_slots": [
             {
-                "name": "ROM Set",
+                "name": "Arcade Game",
                 "id": 0,
                 "required": true,
-                "parameters": "0x8",
-                "filename": "nbajam.rom",
+                "parameters": "0x113",
+                "extensions": [
+                    "json"
+                ]
+            },
+            {
+                "name": "ROM",
+                "id": 1,
+                "required": true,
+                "parameters": "0x108",
                 "extensions": [
                     "rom"
                 ],
@@ -15,7 +23,7 @@
             },
             {
                 "name": "Settings & High Scores",
-                "id": 1,
+                "id": 2,
                 "required": false,
                 "parameters": "0x22",
                 "nonvolatile": true,

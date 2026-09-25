@@ -20,6 +20,7 @@ module tb_mem_top (
     input  logic        srom_req, input logic [16:0] srom_addr,
     output logic        srom_ack, output logic [7:0] srom_q,
     // the power-on self-test, the real module, as core_top runs it
+    output logic        game_te,
     input  logic        tst_hold,
     output logic        tst_done, output logic [15:0] tst_rd0, tst_rd1
 );
@@ -38,6 +39,7 @@ module tb_mem_top (
     logic [9:0] b_widx, b_wpre;
 
     nbajam_mem dut (
+        .game_te(game_te),
         .clk(clk), .clk_sdram(clk), .init(init), .ready(ready),
         .rd_late(rd_late), .burst_slow(burst_slow), .burst_fast(burst_fast), .sram_slow(1'b0), .sram_slow_wr(1'b0),
         .dl_we(dl_we), .dl_addr(dl_addr), .dl_data(dl_data), .dl_active(dl_active),

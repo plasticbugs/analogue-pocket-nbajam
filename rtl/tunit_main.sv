@@ -31,6 +31,7 @@ module tunit_main #(
     input  logic        rst,
     input  logic        cen_cpu,        // 6.25 MHz machine cycles
     input  logic        cen_dot,        // 8 MHz dots
+    input  logic        te,             // Tournament Edition: its protection (static after the load)
 
     // ---------------- SDRAM, random access (the CPU)
     output logic        sd_req,
@@ -109,7 +110,7 @@ module tunit_main #(
         else if (A[31:6]  == 26'h0058000)                        tgt = T_IN;     // 0160_0000-0160_003f
         else if (A[31:19] == 13'h0030)                           tgt = T_PAL;    // 0180_0000-0187_ffff
         else if (A[31:8]  == 24'h01a800)                         tgt = T_BLIT;   // 01a8_0000-01a8_00ff
-        else if (A >= 32'h01b1_4020 && A <= 32'h01b2_503f)       tgt = T_PROT;
+        else if (prot_hit)                                       tgt = T_PROT;
         else if (A[31:5]  == 27'h00d8000 || A[31:5] == 27'h00f8000) tgt = T_CTRL; // 01b0_0000, 01f0_0000
         else if (A[31:5]  == 27'h00e8000)                        tgt = T_SSTAT;  // 01d0_0000-01d0_001f
         else if (A[31:5]  == 27'h00e8081)                        tgt = T_SND;    // 01d0_1020-01d0_103f
@@ -126,8 +127,16 @@ module tunit_main #(
     // protection (docs/hardware.md 4.2): a five-word queue
     logic [15:0] pq [8];
     logic  [2:0] pq_i;
-    wire   [6:0] prot_idx = 7'((32'(A) - 32'h01b1_4020) >> 10);   // (word offset >> 6) & 0x7f
-    wire  [31:0] prot_val = nbajam_prot(prot_idx);
+    // The protection answers in one window on NBA Jam, 01b1_4020-01b2_503f,
+    // and in two on Tournament Edition, 01b1_5f40-01b3_7f5f and the same
+    // 0x80000 higher (init_nbajam_common).  Each lies in one 0x40000 (NBA
+    // Jam) or 0x80000 (TE, either copy) block, so only the low bits are
+    // compared; the index is (word offset from the window's start >> 6).
+    wire         prot_nba = (A[31:18] == 14'h006c) && (A[17:0] >= 18'h14020) && (A[17:0] <= 18'h2503f);
+    wire         prot_te  = (A[31:20] == 12'h01b)  && (A[18:0] >= 19'h15f40) && (A[18:0] <= 19'h37f5f);
+    wire         prot_hit = te ? prot_te : prot_nba;
+    wire   [6:0] prot_idx = te ? 7'((A[18:0] - 19'h15f40) >> 10) : 7'((A[17:0] - 18'h14020) >> 10);
+    wire  [31:0] prot_val = te ? nbajamte_prot(prot_idx) : nbajam_prot(prot_idx);
 
     // ------------------------------------------------------------ the parts
     logic        blit_we, vreg_we, pal_we;
@@ -496,6 +505,43 @@ module tunit_main #(
         if (sr_we && sr_waddr == 10'd0) sr_q_first <= b_data;
 
     // ------------------------------------------------------------ protection table
+    function automatic logic [31:0] nbajamte_prot(input logic [6:0] i);
+        // nbajamte_prot_values, midtunit_m.cpp (all 128 entries distinct)
+        case (i)
+            7'd0:  return 32'h00000000; 7'd1:  return 32'h04081020; 7'd2:  return 32'h08102000; 7'd3:  return 32'h0c183122;
+            7'd4:  return 32'h10200000; 7'd5:  return 32'h14281020; 7'd6:  return 32'h18312204; 7'd7:  return 32'h1c393326;
+            7'd8:  return 32'h20000001; 7'd9:  return 32'h24081021; 7'd10: return 32'h28102000; 7'd11: return 32'h2c183122;
+            7'd12: return 32'h30200001; 7'd13: return 32'h34281021; 7'd14: return 32'h38312204; 7'd15: return 32'h3c393326;
+            7'd16: return 32'h00000102; 7'd17: return 32'h04081122; 7'd18: return 32'h08102102; 7'd19: return 32'h0c183122;
+            7'd20: return 32'h10200000; 7'd21: return 32'h14281020; 7'd22: return 32'h18312204; 7'd23: return 32'h1c393326;
+            7'd24: return 32'h20000103; 7'd25: return 32'h24081123; 7'd26: return 32'h28102102; 7'd27: return 32'h2c183122;
+            7'd28: return 32'h30200001; 7'd29: return 32'h34281021; 7'd30: return 32'h38312204; 7'd31: return 32'h3c393326;
+            7'd32: return 32'h00010204; 7'd33: return 32'h04091224; 7'd34: return 32'h08112204; 7'd35: return 32'h0c193326;
+            7'd36: return 32'h10210204; 7'd37: return 32'h14291224; 7'd38: return 32'h18312204; 7'd39: return 32'h1c393326;
+            7'd40: return 32'h20000001; 7'd41: return 32'h24081021; 7'd42: return 32'h28102000; 7'd43: return 32'h2c183122;
+            7'd44: return 32'h30200001; 7'd45: return 32'h34281021; 7'd46: return 32'h38312204; 7'd47: return 32'h3c393326;
+            7'd48: return 32'h00010306; 7'd49: return 32'h04091326; 7'd50: return 32'h08112306; 7'd51: return 32'h0c193326;
+            7'd52: return 32'h10210204; 7'd53: return 32'h14291224; 7'd54: return 32'h18312204; 7'd55: return 32'h1c393326;
+            7'd56: return 32'h20000103; 7'd57: return 32'h24081123; 7'd58: return 32'h28102102; 7'd59: return 32'h2c183122;
+            7'd60: return 32'h30200001; 7'd61: return 32'h34281021; 7'd62: return 32'h38312204; 7'd63: return 32'h3c393326;
+            7'd64: return 32'h00000000; 7'd65: return 32'h01201028; 7'd66: return 32'h02213018; 7'd67: return 32'h03012030;
+            7'd68: return 32'h04223138; 7'd69: return 32'h05022110; 7'd70: return 32'h06030120; 7'd71: return 32'h07231108;
+            7'd72: return 32'h08042231; 7'd73: return 32'h09243219; 7'd74: return 32'h0a251229; 7'd75: return 32'h0b050201;
+            7'd76: return 32'h0c261309; 7'd77: return 32'h0d060321; 7'd78: return 32'h0e072311; 7'd79: return 32'h0f273339;
+            7'd80: return 32'h10080422; 7'd81: return 32'h1128140a; 7'd82: return 32'h1229343a; 7'd83: return 32'h13092412;
+            7'd84: return 32'h142a351a; 7'd85: return 32'h150a2532; 7'd86: return 32'h160b0502; 7'd87: return 32'h172b152a;
+            7'd88: return 32'h180c2613; 7'd89: return 32'h192c363b; 7'd90: return 32'h1a2d160b; 7'd91: return 32'h1b0d0623;
+            7'd92: return 32'h1c2e172b; 7'd93: return 32'h1d0e0703; 7'd94: return 32'h1e0f2733; 7'd95: return 32'h1f2f371b;
+            7'd96: return 32'h20100804; 7'd97: return 32'h2130182c; 7'd98: return 32'h2231381c; 7'd99: return 32'h23112834;
+            7'd100: return 32'h2432393c; 7'd101: return 32'h25122914; 7'd102: return 32'h26130924; 7'd103: return 32'h2733190c;
+            7'd104: return 32'h28142a35; 7'd105: return 32'h29343a1d; 7'd106: return 32'h2a351a2d; 7'd107: return 32'h2b150a05;
+            7'd108: return 32'h2c361b0d; 7'd109: return 32'h2d160b25; 7'd110: return 32'h2e172b15; 7'd111: return 32'h2f373b3d;
+            7'd112: return 32'h30180c26; 7'd113: return 32'h31381c0e; 7'd114: return 32'h32393c3e; 7'd115: return 32'h33192c16;
+            7'd116: return 32'h343a3d1e; 7'd117: return 32'h351a2d36; 7'd118: return 32'h361b0d06; 7'd119: return 32'h373b1d2e;
+            7'd120: return 32'h381c2e17; 7'd121: return 32'h393c3e3f; 7'd122: return 32'h3a3d1e0f; 7'd123: return 32'h3b1d0e27;
+            7'd124: return 32'h3c3e1f2f; 7'd125: return 32'h3d1e0f07; 7'd126: return 32'h3e1f2f37; default: return 32'h3f3f3f1f;
+        endcase
+    endfunction
     function automatic logic [31:0] nbajam_prot(input logic [6:0] i);
         // nbajam_prot_values, midtunit_m.cpp (entries 64-127 repeat 0-63)
         case (i[5:0])

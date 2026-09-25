@@ -431,11 +431,12 @@ module core_top
     wire  [31:0] datatable_q;
 
     // the save slot's size for the APF, written continuously as the NES core
-    // does (slot index 1 -> size entry 1*2+1): the 16 KB CMOS
+    // does (slot index 2 -> size entry 2*2+1): the 16 KB CMOS.  Slot 0 is the
+    // game's instance JSON, 1 the ROM, 2 the save (data.json).
     localparam [31:0] NV_BYTES = 32'h4000;
     always_ff @(posedge clk_74a) begin
         datatable_wren <= 1'b1;
-        datatable_addr <= 10'd3;
+        datatable_addr <= 10'd5;
         datatable_data <= NV_BYTES;
     end
 
@@ -665,7 +666,7 @@ module core_top
         target_dataslot_read     <= 1'b0;
         target_dataslot_getfile  <= 1'b0;
         target_dataslot_openfile <= 1'b0;
-        target_dataslot_id         <= 16'd1;
+        target_dataslot_id         <= 16'd2;
         target_dataslot_slotoffset <= 32'd0;
         target_dataslot_bridgeaddr <= 32'h2000_0000;
         target_dataslot_length     <= NV_BYTES;
@@ -940,7 +941,7 @@ module core_top
 
     //! ROM: one slot with the flat image tools/mra_build.py makes from nbajam.mra.
     //! Its layout is in target/pocket/nbajam_mem.sv; change the two together.
-    wire        ioctl_isROM = ioctl_download && ioctl_index == 16'h0;
+    wire        ioctl_isROM = ioctl_download && ioctl_index == 16'h1;   // slot 0 is the instance JSON (Pleiads' layout)
     wire        dl_we       = ioctl_isROM && ioctl_wr;
     wire [24:0] dl_addr     = ioctl_addr[24:0];
     wire  [7:0] dl_data     = ioctl_data;
@@ -1012,9 +1013,10 @@ module core_top
         .done(sram_done), .rd0(sram_rd0), .rd1(sram_rd1)
     );
 
+    wire g_te;      // Tournament Edition, recognised by nbajam_mem as the image loads
     nbajam_mem u_mem (
         .clk(clk_sys), .clk_sdram(clk_sdram), .init(mem_init), .ready(mem_ready),
-        .rd_late(g_rd_late), .burst_slow(g_burst_slow), .burst_fast(g_burst_fast),
+        .rd_late(g_rd_late), .burst_slow(g_burst_slow), .burst_fast(g_burst_fast), .game_te(g_te),
         .sram_slow(g_sram_slow), .sram_slow_wr(g_sram_slow_wr),
         .dl_we(dl_we), .dl_addr(dl_addr), .dl_data(dl_data), .dl_active(ioctl_isROM),
         .sd_req(sd_req), .sd_we(sd_we), .sd_addr(sd_addr), .sd_wdata(sd_wdata), .sd_be(sd_be),
@@ -1055,7 +1057,7 @@ module core_top
     nbajam_core u_core (
         //! pause_core is the Pocket's menu being open: it freezes the CPUs and
         //! the sound, never resets them (METHODOLOGY 5.5)
-        .clk(clk_sys), .rst(g_reset), .pause(pause_core), .pix_sync(pix_sync),
+        .clk(clk_sys), .rst(g_reset), .pause(pause_core), .pix_sync(pix_sync), .te(g_te),
         .sd_req(sd_req), .sd_we(sd_we), .sd_addr(sd_addr), .sd_wdata(sd_wdata), .sd_be(sd_be),
         .sd_ack(sd_ack), .sd_q(sd_q),
         .b_addr(b_addr), .b_len(b_len), .b_req(b_req), .b_we(b_we), .b_wdata(b_wdata), .b_be(b_be),

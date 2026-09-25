@@ -31,6 +31,7 @@ module nbajam_mem (
 
     input  logic        rd_late,        // SDRAM diagnostics, from the Pocket menu
     input  logic        burst_slow,
+    output logic        game_te,        // the image is Tournament Edition's (below)
     input  logic        burst_fast,     // 1: one burst word a clock; 0: one every 2 (hardware: see core_top)
     input  logic        sram_slow,
     input  logic        sram_slow_wr,
@@ -110,6 +111,23 @@ module nbajam_mem (
     wire         head_sram = dlq_head[40];
     logic        pop_sd, pop_sr;
     // the 6809's 128 KB is 64K words: sram_port's 16-bit address is enough
+
+    // Which game: the program region's bytes summed as they arrive, as the
+    // Pleiads/Phoenix core does, each byte once (nb is one clock per byte however
+    // long the loader holds its strobe).  Known sums: NBA Jam 0x06fc3c29,
+    // Tournament Edition 0x09745c8d (tools: sum of image bytes 0x800000-0x8fffff).
+    // Anything else runs as NBA Jam.  Decided when the download ends, before the
+    // core leaves reset.
+    localparam logic [31:0] SUM_TE = 32'h09745c8d;
+    logic [31:0] prog_sum;
+    logic        dl_active_d;
+    always_ff @(posedge clk) begin
+        dl_active_d <= dl_active;
+        if (init) game_te <= 1'b0;
+        if (dl_active && !dl_active_d) prog_sum <= '0;
+        else if (nb && dl_addr >= 25'h0800000 && dl_addr < 25'h0900000) prog_sum <= prog_sum + {24'd0, dl_data};
+        if (!dl_active && dl_active_d) game_te <= (prog_sum == SUM_TE);
+    end
 
     always_ff @(posedge clk) begin
         dl_we_d <= dl_we;

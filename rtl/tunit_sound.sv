@@ -29,6 +29,7 @@ module tunit_sound (
     input  logic        clk,          // 96 MHz
     input  logic        rst,          // power-up
     input  logic        pause,
+    input  logic        te,           // Tournament Edition: hidden RAM at fbec-fc16
 
     // the main board's write to 01d0_1030 (docs/hardware.md 5)
     input  logic  [7:0] cmd,
@@ -139,7 +140,8 @@ module tunit_sound (
     wire sel_cmd  = (cpu_addr[15:10] == 6'b0011_00);           // 3000
     wire sel_okb  = (cpu_addr[15:10] == 6'b0011_01);           // 3400
     wire sel_rom  = cpu_addr[15] || cpu_addr[14];              // 4000-ffff
-    wire sel_hid  = (cpu_addr >= 16'hfbaa) && (cpu_addr <= 16'hfbd4);
+    wire [15:0] hid_base = te ? 16'hfbec : 16'hfbaa;       // init_nbajam_common
+    wire sel_hid  = (cpu_addr >= hid_base) && (cpu_addr <= hid_base + 16'd42);
 
     // ---------------- RAM, 8 KB ----------------
     logic [7:0] ram [0:8191];
@@ -152,7 +154,7 @@ module tunit_sound (
     // ---------------- the hidden RAM ----------------
     logic [7:0] hid [0:63];
     logic [7:0] hid_q;
-    wire  [5:0] hid_a = 6'(cpu_addr - 16'hfbaa);
+    wire  [5:0] hid_a = 6'(cpu_addr - hid_base);
     logic [63:0] hid_set;                // written since power-up (zero before)
     always_ff @(posedge clk) begin
         if (sel_hid && wr_now) begin hid[hid_a] <= cpu_dout; hid_set[hid_a] <= 1'b1; end

@@ -33,6 +33,7 @@ So this checks the things the firmware cares about and a parser does not:
 
 It exits non-zero and prints every fault, not just the first.
 """
+import glob
 import json
 import os
 import re
@@ -180,8 +181,20 @@ def main(argv):
                 if i in seen:
                     fault(path, f'slot id {i} used twice')
                 seen[i] = s.get('name')
+                # With a game list (Pleiads' layout) the slot that takes the
+                # instance JSON has no filename, and the instances name the
+                # others' files: every instance must then name this slot's.
                 if s.get('required') and not s.get('filename'):
-                    fault(path, f'slot {i} is required but names no filename')
+                    if 'json' in s.get('extensions', []):
+                        continue
+                    core_dir = os.path.basename(os.path.dirname(path))
+                    insts = glob.glob(os.path.join(root, 'Assets', '*', core_dir, '*.json'))
+                    named = [any(ds.get('id') == i and ds.get('filename')
+                                 for ds in json.load(open(f))['instance'].get('data_slots', []))
+                             for f in insts]
+                    if not insts or not all(named):
+                        fault(path, f'slot {i} is required but names no filename'
+                                    + (' (and not every instance JSON names one)' if insts else ''))
 
     for f in bad:
         print('  ' + f)
