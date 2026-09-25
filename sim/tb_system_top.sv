@@ -55,7 +55,7 @@ module tb_system_top #(parameter bit BURST_FAST = 1'b1) (
     nbajam_mem mem (
         .game_te(game_te),
         .clk(clk), .clk_sdram(clk), .init(mem_init), .ready(mem_ready),
-        .rd_late(1'b1), .burst_slow(1'b0), .burst_fast(BURST_FAST), .sram_slow(1'b0), .sram_slow_wr(1'b0),
+        .rd_late(1'b1), .burst_slow(1'b0), .burst_fast(BURST_FAST), .burst_fast_wr(BURST_FAST), .sram_slow(1'b0), .sram_slow_wr(1'b0),
         .dl_we(dl_we), .dl_addr(dl_addr), .dl_data(dl_data), .dl_active(dl_active),
         .sd_req(sd_req), .sd_we(sd_we), .sd_addr(sd_addr), .sd_wdata(sd_wdata), .sd_be(sd_be),
         .sd_ack(sd_ack), .sd_q(sd_q),

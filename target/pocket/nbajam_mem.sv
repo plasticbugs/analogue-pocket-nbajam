@@ -32,7 +32,8 @@ module nbajam_mem (
     input  logic        rd_late,        // SDRAM diagnostics, from the Pocket menu
     input  logic        burst_slow,
     output logic        game_te,        // the image is Tournament Edition's (below)
-    input  logic        burst_fast,     // 1: one burst word a clock; 0: one every 2 (hardware: see core_top)
+    input  logic        burst_fast,     // burst reads one word a clock (else one every 2; see core_top)
+    input  logic        burst_fast_wr,  // burst writes the same
     input  logic        sram_slow,
     input  logic        sram_slow_wr,
 
@@ -201,7 +202,7 @@ module nbajam_mem (
 
     sdram_ctrl #(.NCLI(NCLI), .FAST_BURST(1'b1)) u_sdram (
         .clk(clk), .clk_pin(clk_sdram), .init(init),
-        .rd_late(rd_late), .burst_slow(burst_slow), .burst_fast(burst_fast), .ready(ready),
+        .rd_late(rd_late), .burst_slow(burst_slow), .burst_fast(burst_fast), .burst_fast_wr(burst_fast_wr), .ready(ready),
         .SDRAM_DQ(SDRAM_DQ), .SDRAM_A(SDRAM_A),
         .SDRAM_DQML(SDRAM_DQML), .SDRAM_DQMH(SDRAM_DQMH), .SDRAM_BA(SDRAM_BA),
         .SDRAM_nCS(SDRAM_nCS), .SDRAM_nWE(SDRAM_nWE),

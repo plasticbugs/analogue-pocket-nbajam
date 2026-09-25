@@ -43,7 +43,7 @@ module tb_blit_top (
 
     sdram_ctrl #(.NCLI(1), .FAST_BURST(`FAST)) u_sdram (
         .clk(clk), .clk_pin(clk), .init(init),
-        .rd_late(1'b1), .burst_slow(1'b0), .burst_fast(1'b1), .ready(ready),
+        .rd_late(1'b1), .burst_slow(1'b0), .burst_fast(1'b1), .burst_fast_wr(1'b1), .ready(ready),
         .SDRAM_DQ(SDRAM_DQ), .SDRAM_A(SDRAM_A),
         .SDRAM_DQML(SDRAM_DQML), .SDRAM_DQMH(SDRAM_DQMH), .SDRAM_BA(SDRAM_BA),
         .SDRAM_nCS(SDRAM_nCS), .SDRAM_nWE(SDRAM_nWE),

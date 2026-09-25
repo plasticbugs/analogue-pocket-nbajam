@@ -504,6 +504,25 @@ module tunit_main #(
     always_ff @(posedge clk)
         if (sr_we && sr_waddr == 10'd0) sr_q_first <= b_data;
 
+`ifdef PAL_LOG
+    // bench only: every palette access and each frame, to line up with MAME
+    logic vbl_q;
+    int tc [16];
+    always_ff @(posedge clk) begin
+        vbl_q <= vblank;
+        if (vblank && !vbl_q) begin
+            $display("VBL tgt %0d %0d %0d %0d %0d %0d %0d %0d %0d %0d %0d %0d %0d %0d", tc[0], tc[1], tc[2], tc[3], tc[4], tc[5], tc[6], tc[7], tc[8], tc[9], tc[10], tc[11], tc[12], tc[13]);
+            for (int k = 0; k < 16; k++) tc[k] <= 0;
+        end
+        if (c_ack) tc[tl] <= tc[tl] + 1;
+        if (vreg_we && A[8:4] == 5'h09) $display("FLIP %04x", c_wd);   // DPYSTRT
+        if (pal_we) $display("PALW %04x %04x", A[18:4], c_wd);
+        if (bst == B_WAIT && tl == T_PAL && pal_wait == 2'd1 && !c_we) $display("PALR %04x %04x", A[18:4], pal_q);
+        if (bst == B_IDLE && c_req && tgt == T_PROT && c_we && !(posted && tgt == T_RAM)) $display("PROTW %08x %04x", A, c_wd);
+        if (bst == B_IDLE && c_req && tgt == T_PROT && !c_we) $display("PROTR %08x %04x", A, pq[pq_i]);
+        if (bst == B_WAIT && tl == T_IO && !c_we && c_ack == 1'b0) $display("IOR %08x %04x", A, vreg_q);
+    end
+`endif
     // ------------------------------------------------------------ protection table
     function automatic logic [31:0] nbajamte_prot(input logic [6:0] i);
         // nbajamte_prot_values, midtunit_m.cpp (all 128 entries distinct)

@@ -36,7 +36,8 @@ module sdram_ctrl #(
     input  logic        init,         // reset / (re)initialise the chip
     input  logic        rd_late,      // 1: capture read data at READ+4 (in-phase chip clock)
     input  logic        burst_slow,   // 1: one burst READ every 5 clocks instead of 2
-    input  logic        burst_fast,   // with FAST_BURST: 1 = one a clock, 0 = one every 2 (a menu choice)
+    input  logic        burst_fast,   // with FAST_BURST: burst READs one a clock (else one every 2)
+    input  logic        burst_fast_wr, // with FAST_BURST: burst WRITEs one a clock (else one every 2)
     output logic        ready,        // init complete
 
     // chip
@@ -141,7 +142,10 @@ module sdram_ctrl #(
     logic        b_aborted;      // this burst was cut short (b_done even if nothing was issued)
     logic        b_is_we;        // this burst is a write
     logic  [2:0] b_gap;
-    wire         fast = FAST_BURST && burst_fast;
+    // reads and writes separately: on the Pocket one direction may take the
+    // one-a-clock pace where the other cannot (first flash: Fast garbled the
+    // palette byte, Normal was clean)
+    wire         fast = FAST_BURST && (b_is_we ? burst_fast_wr : burst_fast);
     assign b_widx = b_issued;
     wire   b_issue_now;
 

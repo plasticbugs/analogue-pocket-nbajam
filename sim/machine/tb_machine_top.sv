@@ -2,7 +2,7 @@
 // behavioural chip (preloaded by the bench, so no download), the sound ROM
 // answered by sim/machine/tb_machine.cpp as the SRAM would.
 `default_nettype none
-module tb_machine_top (
+module tb_machine_top #(parameter bit BURST_FAST = 1'b1) (
     input  logic        te,         // GAME=nbajamte (tb_machine.cpp)
     input  logic        clk,
     input  logic        init,
@@ -66,7 +66,7 @@ module tb_machine_top (
 
     sdram_ctrl #(.NCLI(2), .FAST_BURST(1'b1)) u_sdram (
         .clk(clk), .clk_pin(clk), .init(init),
-        .rd_late(1'b1), .burst_slow(1'b0), .burst_fast(1'b1), .ready(ready),
+        .rd_late(1'b1), .burst_slow(1'b0), .burst_fast(BURST_FAST), .burst_fast_wr(BURST_FAST), .ready(ready),
         .SDRAM_DQ(SDRAM_DQ), .SDRAM_A(SDRAM_A),
         .SDRAM_DQML(SDRAM_DQML), .SDRAM_DQMH(SDRAM_DQMH), .SDRAM_BA(SDRAM_BA),
         .SDRAM_nCS(SDRAM_nCS), .SDRAM_nWE(SDRAM_nWE),
