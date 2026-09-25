@@ -20,7 +20,9 @@ settings memory.
 
 ## Controls
 
-A shoot, B pass, X / Y / R turbo, Select coin, Start start.
+Laid out like the arcade panel (Turbo, Shoot, Pass from left to right):
+Y turbo, X shoot, A pass; B is a second pass, R a second turbo; Select
+coin, Start start.
 
 ## Menu
 

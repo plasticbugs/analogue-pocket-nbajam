@@ -12,9 +12,10 @@ from your own MAME nbajam romset with
 mra_build.py and nbajam.mra, and copy
 it to Assets/nbajam/common/nbajam.rom
 
-* A  shoot / block
-* B  pass / steal
-* X, Y or R  turbo
+Laid out like the arcade panel:
+* Y  turbo      (R also)
+* X  shoot / block
+* A  pass / steal (B also)
 * Select coin, Start start
 
 Two credits start a game. A new board

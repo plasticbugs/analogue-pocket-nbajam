@@ -951,9 +951,11 @@ module core_top
     //!   IN1  0 coin 1, 1 coin 2, 2 start 1, 3 tilt, 4 service (test),
     //!        5 start 2, 6 service credit, 7-8 coins 3-4, 9-10 starts 3-4
     //!   IN2  players 3 and 4 (not wired: two Pocket controllers)
-    //! On the Pocket: A shoot, B pass, X, Y or R turbo; select is a coin.
-    wire p1_sh = p1_btn_a, p1_pa = p1_btn_b, p1_tu = p1_btn_x | p1_btn_y | p1_btn_r1;
-    wire p2_sh = p2_btn_a, p2_pa = p2_btn_b, p2_tu = p2_btn_x | p2_btn_y | p2_btn_r1;
+    //! On the Pocket, laid out like the arcade panel's Turbo / Shoot / Pass
+    //! from left to right: Y turbo, X shoot, A pass; B is a second pass and R
+    //! a second turbo; select is a coin.
+    wire p1_sh = p1_btn_x, p1_pa = p1_btn_a | p1_btn_b, p1_tu = p1_btn_y | p1_btn_r1;
+    wire p2_sh = p2_btn_x, p2_pa = p2_btn_a | p2_btn_b, p2_tu = p2_btn_y | p2_btn_r1;
     wire svc   = mod_sw1[0] | svc_sw;
 
     wire [15:0] g_in0 = ~{1'b0, p2_tu, p2_pa, p2_sh,

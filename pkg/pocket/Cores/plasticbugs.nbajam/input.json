@@ -7,23 +7,23 @@
                 "mappings": [
                     {
                         "id": 200,
-                        "name": "Pass / Steal",
-                        "key": "pad_btn_b"
+                        "name": "Turbo",
+                        "key": "pad_btn_y"
                     },
                     {
                         "id": 201,
                         "name": "Shoot / Block",
-                        "key": "pad_btn_a"
-                    },
-                    {
-                        "id": 202,
-                        "name": "Turbo",
                         "key": "pad_btn_x"
                     },
                     {
+                        "id": 202,
+                        "name": "Pass / Steal",
+                        "key": "pad_btn_a"
+                    },
+                    {
                         "id": 203,
-                        "name": "Turbo (alt)",
-                        "key": "pad_btn_y"
+                        "name": "Pass / Steal (alt)",
+                        "key": "pad_btn_b"
                     },
                     {
                         "id": 204,
@@ -34,6 +34,11 @@
                         "id": 205,
                         "name": "Start",
                         "key": "pad_btn_start"
+                    },
+                    {
+                        "id": 206,
+                        "name": "Turbo (alt)",
+                        "key": "pad_trig_r"
                     }
                 ]
             }
