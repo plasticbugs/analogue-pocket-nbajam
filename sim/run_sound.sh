@@ -8,7 +8,9 @@ here=$(cd "$(dirname "$0")" && pwd)
 root=$(cd "$here/.." && pwd)
 abs() { case "$1" in /*) echo "$1" ;; *) echo "$PWD/$1" ;; esac; }
 cmds=$(abs "$1"); secs=$2; out=$(abs "${3:-$root/artifacts/audio}")
-rom="$root/.build/nbajam.rom"
+G=${GAME:-nbajam}
+rom="$root/.build/$G.rom"
+set_romset() { if [ -d "$root/$G" ]; then echo "$root/$G"; else echo "$root/$G.zip"; fi; }
 MODS=$(ls "$root"/modules/cpu-mc6809/*.v "$root"/modules/sound-jt51/*.v "$root"/modules/sound-jt6295/hdl/*.v)
 verilator --cc --exe --build -j "${JOBS:-8}" -O3 --x-assign fast --x-initial fast \
     -Wno-fatal -Wno-lint -Wno-style -Wno-TIMESCALEMOD -Wno-MULTIDRIVEN -Wno-SYNCASYNCNET \

@@ -1,0 +1,70 @@
+<misterromdescription>
+    <!--
+        The ROM recipe.  tools/mra_build.py reads this and your MAME romset and
+        writes nbajamte.rom; any standard MRA tool does the same.
+
+        Image layout (byte offsets; docs/core-design.md section 3), every
+        region at a power-of-two boundary and none padded:
+
+          0x000000  graphics ROM   8 MB   16-bit words, LITTLE-endian in the
+                                          word: SDRAM word k = {byte 2k+1,
+                                          byte 2k} of MAME's "video" region
+          0x800000  TMS34010 prog  1 MB   SDRAM word k = {ug12[k], uj12[k]} =
+                                          the 34010's little-endian word k
+          0x900000  OKI ADPCM      1 MB   u12 then u13, as bytes
+          0xa00000  6809 program 128 KB   u3, as bytes
+
+        The Pocket loads the image a byte at a time and the memory module
+        pairs each two bytes into one SDRAM word, first byte high.  So a
+        word-wide region whose CPU reads little-endian words puts the odd byte
+        first.  For the graphics that is (per 4 bytes of MAME's region)
+        byte 1, byte 0, byte 3, byte 2 = uj, ug, uj, ug.
+
+        tools/verify_rom.py checks every region against the bytes MAME hands
+        the chips; do not reason about the maps, run it.
+    -->
+    <name>NBA Jam Tournament Edition (rev 4.0 3/23/94)</name>
+    <setname>nbajamte</setname>
+    <rbf>nbajam</rbf>
+    <mameversion>0288</mameversion>
+    <year>1994</year>
+    <manufacturer>Midway</manufacturer>
+    <switches default="fd,7f"/>
+    <rom index="0" zip="nbajamte.zip" md5="1ae1931e7073e9131c9c9336bc6b0fdc">
+        <!-- graphics: MAME LOAD32_BYTE, ug = bytes 0 and 2, uj = bytes 1 and 3 -->
+        <interleave output="32">
+            <part name="l1_nba_jam_tournament_game_rom_uj14.uj14" crc="b34b7af3" map="1000"/>
+            <part name="l1_nba_jam_tournament_game_rom_ug14.ug14" crc="04bb9f64" map="0100"/>
+            <part name="l1_nba_jam_tournament_game_rom_uj19.uj19" crc="8130a8a2" map="0010"/>
+            <part name="l1_nba_jam_tournament_game_rom_ug19.ug19" crc="a8f22fbb" map="0001"/>
+        </interleave>
+        <interleave output="32">
+            <part name="l1_nba_jam_tournament_game_rom_uj16.uj16" crc="905ad88b" map="1000"/>
+            <part name="l1_nba_jam_tournament_game_rom_ug16.ug16" crc="c7ce74d0" map="0100"/>
+            <part name="l1_nba_jam_tournament_game_rom_uj20.uj20" crc="bf263d61" map="0010"/>
+            <part name="l1_nba_jam_tournament_game_rom_ug20.ug20" crc="8a48728c" map="0001"/>
+        </interleave>
+        <interleave output="32">
+            <part name="l1_nba_jam_tournament_game_rom_uj17.uj17" crc="8a852b9e" map="1000"/>
+            <part name="l1_nba_jam_tournament_game_rom_ug17.ug17" crc="9401be62" map="0100"/>
+            <part name="l1_nba_jam_tournament_game_rom_uj22.uj22" crc="39791051" map="0010"/>
+            <part name="l1_nba_jam_tournament_game_rom_ug22.ug22" crc="3b05133b" map="0001"/>
+        </interleave>
+        <interleave output="32">
+            <part name="l1_nba_jam_tournament_game_rom_uj18.uj18" crc="4eb73c26" map="1000"/>
+            <part name="l1_nba_jam_tournament_game_rom_ug18.ug18" crc="6fd08f57" map="0100"/>
+            <part name="l1_nba_jam_tournament_game_rom_uj23.uj23" crc="f8c30998" map="0010"/>
+            <part name="l1_nba_jam_tournament_game_rom_ug23.ug23" crc="854f73bc" map="0001"/>
+        </interleave>
+        <!-- TMS34010 program: MAME LOAD16_BYTE, uj12 = low byte, ug12 = high -->
+        <interleave output="16">
+            <part name="l4_nba_jam_tournament_game_rom_ug12.ug12" crc="7ad49229" map="10"/>
+            <part name="l4_nba_jam_tournament_game_rom_uj12.uj12" crc="d7c21bc4" map="01"/>
+        </interleave>
+        <!-- OKI6295 samples -->
+        <part name="l1_nba_jam_tournament_u12_sound_rom.u12" crc="4fac97bc"/>
+        <part name="l1_nba_jam_tournament_u13_sound_rom.u13" crc="6f27b202"/>
+        <!-- 6809 program -->
+        <part name="l1_nba_jam_tournament_u3_sound_rom.u3" crc="d4551195"/>
+    </rom>
+</misterromdescription>

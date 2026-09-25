@@ -14,9 +14,10 @@
 # -videodriver dummy says the same through MAME, and -window -nomaximize
 # means that if a window is created regardless it is a small one that steals
 # no Space.  Verified: snapshots come out byte-identical to a normal run.
+# GAME=nbajamte runs Tournament Edition (the romset linked in .mame/roms).
 root=$(cd "$(dirname "$0")/.." && pwd)
 SDL_VIDEODRIVER=dummy \
-exec mame nbajam -rompath "$root/.mame/roms" \
+exec mame "${GAME:-nbajam}" -rompath "$root/.mame/roms" \
     -video none -videodriver dummy -window -nomaximize \
     -sound none -nothrottle -skip_gameinfo \
     -cfg_directory "$root/.mame/cfg" -nvram_directory "$root/.mame/nvram" \

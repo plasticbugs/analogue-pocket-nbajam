@@ -15,9 +15,11 @@ dir="$root/.build/cputrace"
 live=
 if [ "$1" = "-live" ]; then live=$2; shift 2; fi
 case "$1" in -*|"") ;; *) dir=$1; shift;; esac
-rom="$root/.build/nbajam.rom"
+G=${GAME:-nbajam}
+rom="$root/.build/$G.rom"
+set_romset() { if [ -d "$root/$G" ]; then echo "$root/$G"; else echo "$root/$G.zip"; fi; }
 [ -f "$rom" ] || { mkdir -p "$root/.build"; python3 "$root/tools/mra_build.py" \
-    "$root/nbajam.mra" "$root/nbajam" "$rom" >/dev/null; }
+    "$root/$G.mra" "$(set_romset)" "$rom" >/dev/null; }
 [ -n "$live" ] || [ -f "$dir/trace_bus.bin" ] || { echo "no traces in $dir; run tools/cpu_trace.sh" >&2; exit 2; }
 verilator --cc --exe --build -j "${JOBS:-8}" -O2 \
     -Wall -Wno-DECLFILENAME -Wno-UNUSEDSIGNAL -Wno-UNUSEDPARAM \
@@ -31,7 +33,7 @@ if [ -z "$live" ]; then
 fi
 dir=$(mktemp -d "${TMPDIR:-/tmp}/njcpu.XXXXXX")
 mkfifo "$dir/trace_bus.bin" "$dir/trace_reg.txt"
-rm -rf "$root/.mame/nvram/nbajam"
+rm -rf "$root/.mame/nvram/${GAME:-nbajam}"
 INPUTS=${INPUTS:-$root/tools/inputs/play1.txt}; export INPUTS
 TRACE_DIR="$dir" TRACE_N=2000000000 "$root/tools/mame.sh" \
     -autoboot_script "$root/tools/bus_trace.lua" -seconds_to_run "$live" >/dev/null 2>&1 &

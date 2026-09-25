@@ -15,7 +15,7 @@ case "${1:-play}" in
            frames=700,1000 ;;
   *) echo "usage: $0 [play|service]" >&2; exit 2 ;;
 esac
-rm -rf .mame/nvram/nbajam "$out"
+rm -rf .mame/nvram/"${GAME:-nbajam}" "$out"
 mkdir -p "$out"
 FRAMES=$frames INPUTS=$inputs OUT=$out tools/mame.sh -seconds_to_run $secs \
     -autoboot_script tools/dump_state.lua

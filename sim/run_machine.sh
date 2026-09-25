@@ -5,9 +5,11 @@
 set -e
 here=$(cd "$(dirname "$0")" && pwd)
 root=$(cd "$here/.." && pwd)
-rom="$root/.build/nbajam.rom"
+G=${GAME:-nbajam}
+rom="$root/.build/$G.rom"
+set_romset() { if [ -d "$root/$G" ]; then echo "$root/$G"; else echo "$root/$G.zip"; fi; }
 [ -f "$rom" ] || { mkdir -p "$root/.build"; python3 "$root/tools/mra_build.py" \
-    "$root/nbajam.mra" "$root/nbajam" "$rom" >/dev/null; }
+    "$root/$G.mra" "$(set_romset)" "$rom" >/dev/null; }
 MODS=$(ls "$root"/modules/cpu-mc6809/*.v "$root"/modules/sound-jt51/*.v "$root"/modules/sound-jt6295/hdl/*.v)
 verilator --cc --exe --build -j "${JOBS:-8}" -O3 --x-assign fast --x-initial fast \
     -Wno-fatal -Wno-lint -Wno-style -Wno-TIMESCALEMOD -Wno-MULTIDRIVEN -Wno-SYNCASYNCNET \
