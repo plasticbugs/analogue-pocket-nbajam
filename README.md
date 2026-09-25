@@ -29,8 +29,9 @@ the core recognises which one it was given from the ROM itself.
 
 ## Status
 
-**0.2.0 runs both games on a Pocket**, picture and sound correct, Tournament
-Edition's play smooth (2026-09-24). 0.1.0 was NBA Jam alone.
+**0.2.0 runs both games on a Pocket**, picture and sound correct, play smooth,
+settings and high scores kept across restarts (2026-09-25, bitstream md5
+`97a294176f0ab618921b9efbc99ebab4`). 0.1.0 was NBA Jam alone.
 
 Proven in simulation, against MAME 0.288:
 * the reference models (`tools/render_model.py`, `tools/dma_model.py`) are
@@ -55,7 +56,7 @@ Proven in simulation, against MAME 0.288:
 Not yet proven: the per-chip balance of the mix (the waveforms drift apart,
 so only the total loudness was compared); a played game matching MAME (the
 game's random numbers come from the beam position, so it cannot match
-exactly); the CMOS save on hardware.
+exactly).
 
 Known limit: when the game clears a whole screen with the CPU (at scene
 changes, such as the tip-off), this core takes about three frames where the

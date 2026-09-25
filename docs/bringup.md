@@ -142,3 +142,4 @@ that died belong here as much as the one that lived.
   the edited settings in them (30 bytes differ from MAME's factory CMOS): the
   save path works. The LOAD did not: core_top's CMOS loader still took slot 1,
   missed when the save moved to slot 2 for the game list. Fixed in compile 15.
+- 2026-09-25, `97a29417…` (compile 15): "this is great" -- released as 0.2.0.

@@ -13,6 +13,10 @@ Tested on a Pocket: picture, sound and smooth play in both.
   the video memory now writes at full rate.
 - **Controls laid out like the arcade panel** (from 0.1.1): Y turbo, X shoot,
   A pass; B is a second pass and R a second turbo.
+- **Settings and high scores kept**: service-mode settings, audits and high
+  scores are saved to the SD card per game
+  (`Saves/nbajam/plasticbugs.nbajam/nbajam.sav`, `nbajamte.sav`) and loaded
+  back when the core starts.
 - The platform image, correct game details (Midway, 1993), and the
   diagnostic items gone from the menu.
 
@@ -51,8 +55,6 @@ and Service Switch + Reset Core for the game's own test menu.
 - Players 3 and 4 are not wired.
 - A game never replays exactly like MAME's: NBA Jam takes its random numbers
   from the video beam's position, as the arcade did.
-- Saving of settings and high scores to the SD card is in, not yet confirmed
-  on hardware.
 
 ## How it was checked
 
