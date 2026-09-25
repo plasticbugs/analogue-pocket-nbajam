@@ -55,3 +55,10 @@ MAME's midtunit driver (Alex Pasadyn, Zsolt Vasvari, Ernesto Corvi, Aaron
 Giles); jt51 and jt6295 by Jose Tejada; the MC6809 core by Greg Miller; the
 Pocket platform and build image by Marcus Andrade (OpenGateware); the Smash TV
 and S.T.U.N. Runner Pocket cores it grew from. See CREDITS.md.
+
+## Package revision
+
+The zip was replaced on 2026-09-24 to add the platform image and take the
+diagnostic items off the menu. The bitstream is unchanged, the one tested on
+hardware (md5 `05629f94f775fc5f4a3e03e8254fe5d3`); the definitions come from
+commit `f157e0d`, later than the tag, which differs only outside the gateware.
