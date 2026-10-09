@@ -1,4 +1,39 @@
-# NBA Jam for Analogue Pocket — 0.2.1
+# NBA Jam for Analogue Pocket — 0.3.0
+
+## New in 0.3.0: Analogizer support
+
+NBA Jam and Tournament Edition now work with RndMnkIII's
+[Analogizer](https://github.com/RndMnkIII/Analogizer) adapter: the board's own
+15 kHz picture on a CRT, and native controllers through SNAC. Tested on a
+Pocket with an Analogizer and a CRT.
+
+- **Video out of the adapter's VGA port**: RGBS, RGsB, YPbPr, Y/C (NTSC or
+  PAL), or scandoubled for a VGA monitor (plain, 25/50/75% scanlines, HQ2x).
+  The signal is the board's: 400x254 visible, 15.81 kHz, 54.71 Hz.
+- **Set up from the core's own menu**, like RndMnkIII's own cores: no
+  `analogizer.bin` file needed. **Analogizer** (Off, On, or "On, Pocket off"
+  to send the picture to the CRT only), **Analogizer Video**, **SNAC
+  Adapter** and **SNAC Assignment**. Off by default, and with it off the
+  core plays as before.
+- **Analogizer H Position / V Position** move the picture on the CRT (24
+  pixels left to 6 right, 14 lines up or down; the board leaves little room
+  to its right) for a set whose picture sits off centre. They move the sync,
+  not the picture, so nothing is cropped.
+- **SNAC controllers**: DB15, NES, SNES, PC Engine (2- and 6-button,
+  multitap), PlayStation (digital and analog), for players 1 and 2. SNAC has
+  not been tried with this core yet.
+- The memory clock's timing moved slightly to make room for the adapter;
+  play was checked on a Pocket with it.
+
+**With this core the Pocket powers the cartridge slot.** Take any game
+cartridge out first. Set the adapter up as its
+[How to use it](https://github.com/RndMnkIII/Analogizer/wiki/How-to-use-it%3F)
+page says (SNAC switch on A, 5 V into its USB-C port, the audio cable into
+the Pocket's headphone socket).
+
+---
+
+## 0.2.1
 
 **0.2.1 fixes the ROM recipes; the core itself is unchanged from 0.2.0**
 (same bitstream, md5 `97a294176f0ab618921b9efbc99ebab4`).
