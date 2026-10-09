@@ -73,3 +73,12 @@ in `platform/` and `modules/` are the licence, not decoration.
   Smash TV (the TMS34010, the video timing, the Williams sound-board plumbing,
   the CPU trace bench and its tools, the 8 MHz PLL) and S.T.U.N. Runner (the
   SDRAM controller's lineage and the JT6295 hookup).
+* **RndMnkIII** -- the [Analogizer](https://github.com/RndMnkIII/Analogizer)
+  adapter and its `openFPGA_Pocket_Analogizer` module
+  (`target/pocket/analogizer/`, taken verbatim from his MiraxPocket core),
+  with the parts it gathers from others: the Y/C encoder by **Mike Simone**
+  (MiSTerFPGA_YC_Encoder), the scandoubler and HQ2x by **Sorgelig** and
+  **Ludvig Strigeus** (MiSTer), the PlayStation controller interface after
+  **pgate1**'s psPAD, and the SNAC game-controller readers he credits to
+  **@MikeSimonson**, the **MiST** project, **@RandyS**, **jotego**,
+  **Scott Larson** (the PS/2 receiver) and **@tomasz**.

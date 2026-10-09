@@ -109,6 +109,35 @@ hardware (see the log).
 | glitches only while playing, gone in the menu | something the CPU shares with the video; section 5.17 |
 | menu restarts the game | `pause` has reached a reset; section 5.5 |
 
+## With an Analogizer
+
+Not yet run on hardware with this core (docs/analogizer.md says what the
+bench proved; the same wrapper has had one good run in Moo Mesa).  The
+first person with an adapter, in this order -- each step's reading tells
+the next one where to look:
+
+1. **Menu "Analogizer: Off"** (the default).  The core must play exactly as
+   without the adapter, Pocket screen and controls.  If it does not, the
+   cart port is not idle: stop there.
+2. **Menu: Analogizer On, Video RGBS, SNAC Adapter None.**
+   Expected: the same picture on the Pocket and on the CRT, 15.81 kHz /
+   54.71 Hz (a PVM's info screen shows it).  The bring-up panel shows on
+   the CRT too, so it can be read there.  No picture at all: say whether
+   the CRT reports a signal (sync but no colour points at the DAC clock;
+   nothing at all points at sync).  A picture that rolls on a consumer set
+   may be the 54.7 Hz frame rate rather than the core: try a PVM or the
+   scandoubler.
+3. **Each other video mode in turn** (RGsB and YPbPr need the SOG switch on).
+4. **SNAC**: one pad, assignment "SNAC P1 -> P1"; the Pocket's own
+   controls are then player 2.
+5. **The menu's memory**: change Video, quit the core and load it again.
+   The setting, and Analogizer On, should still be there.  Then change one
+   entry and check the others did not move.
+6. **Position**: "Analogizer V Position" + should move the picture down
+   by that many lines, + on "H Position" to the right (only 6 dots: the
+   board's own blanking leaves no more room on that side), and both
+   should be kept across a reload.
+
 ## Log
 
 Date, build md5, what was seen, what it ruled out. One line each. The theories
@@ -143,3 +172,9 @@ that died belong here as much as the one that lived.
   save path works. The LOAD did not: core_top's CMOS loader still took slot 1,
   missed when the save moved to slot 2 for the game list. Fixed in compile 15.
 - 2026-09-25, `97a29417…` (compile 15): "this is great" -- released as 0.2.0.
+- 2026-10-08, `7adeae84…` (Analogizer, menu settings and position sliders;
+  SDRAM clock shift 5.859 -> 6.119 ns): not yet run.  With "Analogizer: Off"
+  it should play exactly as 97a29417 did.  The shift is the one change that
+  reaches the machine on hardware: if colours garble or the picture tears,
+  try the SDRAM bring-up switches first and say so -- the read pace was
+  chosen at 5.859.

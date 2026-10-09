@@ -24,3 +24,9 @@ Laid out like the arcade panel:
 
 Two credits start a game. A new board
 shows CMOS INVALID: press any button.
+
+Analogizer: CRT video and SNAC pads,
+set in this core's menu (Analogizer:
+On; H and V Position centre the
+picture). The slot is powered: remove
+any cartridge first.

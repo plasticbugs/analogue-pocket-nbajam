@@ -67,6 +67,20 @@ every two (reads at full rate garble the palette on the Pocket).
 Not implemented: scaled skip-mode blits (never seen; counted on the panel);
 players 3 and 4.
 
+## Analogizer
+
+The core supports RndMnkIII's [Analogizer](https://github.com/RndMnkIII/Analogizer)
+adapter: the board's native 15.8 kHz, 54.7 Hz picture out of the VGA port
+(RGBS, RGsB, YPbPr, Y/C, or scandoubled for a VGA monitor), and SNAC
+controllers for both players.  It is set up in the core's own menu
+(Analogizer, Analogizer Video, SNAC Adapter, SNAC Assignment, and H and V
+Position to centre the picture on the CRT); with "Analogizer" off, the
+default, the core is unchanged.  Because the core declares a cartridge
+adapter, the Pocket powers the slot: take any game cartridge out first.
+`docs/analogizer.md` has the modes, the controller assignments, and what
+has and has not been checked (the path is proven in simulation; no
+Analogizer has been tried with this core yet).
+
 ## Building the ROM image
 
 ```sh
@@ -96,6 +110,7 @@ sim/run_video.sh                                                   # scan-out RT
 tools/cpu_trace.sh; sim/run_cpu.sh     # the CPU vs MAME's traces (or -live <seconds>)
 sim/run_machine.sh -frames N -inputs tools/inputs/play1.txt -snap ...   # the machine
 sim/run_system.sh  -frames N ...       # the machine through the real memory glue
+sim/run_analogizer.sh                  # the Analogizer path, read at the cartridge pins
 ```
 
 ## Credits
@@ -111,6 +126,8 @@ his Gateman CLI, `target/pocket/core_top.sv` starts from his template, and
 every build here runs in his `raetro/quartus:pocket` Docker image.
 
 Then: MAME, for the driver and devices this was written against (`ref/mame/`);
-the vendored cores and their authors (`modules/VENDOR.md`); Analogue, for the
+the vendored cores and their authors (`modules/VENDOR.md`); **RndMnkIII**,
+for the Analogizer and its module, with Mike Simone's Y/C encoder and
+MiSTer's scandoubler inside it; Analogue, for the
 APF; and anyone whose board photographs, schematics or measurements are in
 `docs/hardware.md`.

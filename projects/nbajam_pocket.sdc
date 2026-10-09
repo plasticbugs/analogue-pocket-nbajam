@@ -1,11 +1,14 @@
 # ==============================================================================
 # NBA Jam on the Pocket: timing constraints beyond the BSP's
-# sys_constr.sdc. The 96 MHz system clock, its 6.857 MHz video pair and the
+# sys_constr.sdc. The 96 MHz system clock, its 8 MHz video pair and the
 # shifted SDRAM clock all come from core_pll and are timed as one related
 # group; the two 74.25 MHz inputs and the audio PLL are asynchronous to it.
-# The PLL's fifth output drives nothing in core_top, so no clock of its own
-# reaches the netlist and it is not named here -- naming it only bought an
-# ignored-filter warning that hid the ones that mattered.
+# The PLL's fifth output is the Analogizer's 48 MHz (clk_sys / 2, in phase),
+# in the same group: the pixel hand-over into it (pocket_analogizer.sv) is a
+# held register under a toggle, timed as the related-clock path it is.  If a
+# build sets USE_ANALOGIZER = 0 that output drives nothing, and this name
+# matches nothing -- take it out of the group then (the CI constraint check
+# says so).
 # ==============================================================================
 set_clock_groups -asynchronous \
  -group { bridge_spiclk } \
@@ -14,7 +17,8 @@ set_clock_groups -asynchronous \
  -group { ic|core_pll|core_pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk \
           ic|core_pll|core_pll_inst|altera_pll_i|general[1].gpll~PLL_OUTPUT_COUNTER|divclk \
           ic|core_pll|core_pll_inst|altera_pll_i|general[2].gpll~PLL_OUTPUT_COUNTER|divclk \
-          ic|core_pll|core_pll_inst|altera_pll_i|general[3].gpll~PLL_OUTPUT_COUNTER|divclk } \
+          ic|core_pll|core_pll_inst|altera_pll_i|general[3].gpll~PLL_OUTPUT_COUNTER|divclk \
+          ic|core_pll|core_pll_inst|altera_pll_i|general[4].gpll~PLL_OUTPUT_COUNTER|divclk } \
  -group { ic|pocket_audio_mixer|audio_pll|mf_audio_pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk } \
  -group { ic|pocket_audio_mixer|audio_pll|mf_audio_pll_inst|altera_pll_i|general[1].gpll~PLL_OUTPUT_COUNTER|divclk }
 
@@ -34,6 +38,12 @@ set_clock_groups -asynchronous \
 # 130.2 ps, the step the 960 MHz VCO can make.  projects/report_worst.tcl
 # writes the reports to read: worst_paths*.txt for setup, worst_hold_fast.txt
 # for hold.  METHODOLOGY.md section 5.20.
+#
+# NBA Jam ran on hardware at 5.859 ns until the Analogizer (2026-10-08) moved
+# the fit and took dq_in hold to -0.056 ns at fast 0C (capture setup +1.548
+# at slow 85C).  The balance would be about 6.66 ns, but this core's SDRAM
+# read pace was chosen on hardware at 5.859 (docs/bringup.md log), so the
+# shift moved the least that gives a real margin: two VCO steps, 6.119 ns.
 create_generated_clock -name dram_clk -source \
     [get_pins {ic|core_pll|core_pll_inst|altera_pll_i|general[3].gpll~PLL_OUTPUT_COUNTER|divclk}] \
     [get_ports {dram_clk}]
